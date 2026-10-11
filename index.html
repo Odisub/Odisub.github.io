@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HOME</title>
+  <title>ALEXEY YU. MILLER</title>
 
   <style>
     @font-face {
@@ -24,7 +24,7 @@
     html, body { margin: 0; min-height: 100%; }
 
     body {
-      background: #ad4b33;
+      background: #808080;
       color: #000000;
       font-family: 'Alpino', sans-serif;
       font-weight: 700;
@@ -39,13 +39,9 @@
       align-items: center;
       justify-content: space-between;
       gap: 24px;
-      background: #c0c0c0;
+      background: #4a170d;
       padding: 14px 20px;
-      box-shadow:
-        inset -1px -1px #0a0a0a,
-        inset 1px 1px #dfdfdf,
-        inset -2px -2px #808080,
-        inset 2px 2px #ffffff;
+      border-bottom: 2px solid #2a0d06;
     }
 
     #pagename {
@@ -53,6 +49,7 @@
       line-height: 1;
       font-weight: 700;
       letter-spacing: 0.05em;
+      color: #e4e4e4;
     }
 
     /* ---------- Кнопки меню (Windows 98) ---------- */
@@ -118,12 +115,13 @@
         inset -1px -1px #0a0a0a,
         inset 1px 1px #dfdfdf,
         inset -2px -2px #808080,
-        inset 2px 2px #ffffff;
+        inset 2px 2px #ffffff,
+        8px 8px 0 rgba(0, 0, 0, 0.45);
     }
 
     .titlebar {
-      background: linear-gradient(90deg, #2e0f07, #7a2c1a);
-      color: #ffffff;
+      background: #4a170d;
+      color: #e4e4e4;
       padding: 4px 8px;
       margin-bottom: 3px;
       font-size: 1rem;
@@ -131,7 +129,7 @@
 
     /* Список как в Проводнике (вид «Таблица») */
     .list {
-      background: #ffffff;
+      background: #e4e4e4;
       padding: 4px;
       box-shadow:
         inset -1px -1px #ffffff,
@@ -192,7 +190,7 @@
 <body>
 
   <header>
-    <div id="pagename">HOME</div>
+    <div id="pagename">ALEXEY YU. MILLER</div>
     <nav>
       <a href="#home">HOME</a>
       <a href="#math">MATH</a>
@@ -271,8 +269,9 @@
       pages.forEach(function (p) {
         document.getElementById(p).hidden = (p !== current);
       });
-      document.getElementById('pagename').textContent = current.toUpperCase();
-      document.title = current.toUpperCase();
+      const label = (current === 'home') ? 'ALEXEY YU. MILLER' : current.toUpperCase();
+      document.getElementById('pagename').textContent = label;
+      document.title = label;
       window.scrollTo(0, 0);
     }
 
