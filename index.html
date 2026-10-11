@@ -7,12 +7,24 @@
 
   <style>
     /* Шрифт: файл лежит рядом с index.html (см. шаг 2) */
+   @font-face {
+      font-family: 'Alpino';
+      src: url('Alpino-Medium.woff2') format('woff2');
+      font-weight: 400;
+      font-display: swap;
+    }
+
     @font-face {
-      font-family: 'GG Zaglav';
-      src: url('GGZaglav.woff2') format('woff2'),
-           url('GGZaglav.woff') format('woff'),
-           url('GGZaglav.otf') format('opentype'),
-           url('GGZaglav.ttf') format('truetype');
+      font-family: 'Alpino';
+      src: url('Alpino-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-display: swap;
+    }
+
+     @font-face {
+      font-family: 'Alpino';
+      src: url('Alpino-Black.woff2') format('woff2');
+      font-weight: 900;
       font-display: swap;
     }
 
@@ -26,7 +38,8 @@
     body {
       background: #ad4b33;
       color: #000000;
-      font-family: 'GG Zaglav', serif;
+      'Alpino', sans-serif;
+       font-weight: 700;
     }
 
     /* Кнопки в правом верхнем углу */
@@ -67,7 +80,7 @@
     .page h1 {
       margin: 0;
       font-size: 4rem;
-      font-weight: normal;
+      font-weight: 700;
     }
   </style>
 </head>
