@@ -49,7 +49,7 @@
       line-height: 1;
       font-weight: 700;
       letter-spacing: 0.05em;
-      color: #e4e4e4;
+      color: #f6f6f6;
     }
 
     /* ---------- Кнопки меню (Windows 98) ---------- */
@@ -144,8 +144,8 @@
       display: grid;
     }
 
-    /* Papers: автор | название | журнал | год */
-    .cols4 .colhead, .cols4 .item { grid-template-columns: 1.6fr 2.4fr 1.2fr 56px; }
+    /* Papers: автор | название | журнал | год | pdf */
+    .cols4 .colhead, .cols4 .item { grid-template-columns: 2.4fr 2.2fr 1.2fr 56px 56px; }
     /* Courses, Notes: автор | название | год */
     .cols3 .colhead, .cols3 .item { grid-template-columns: 1fr 2.6fr 52px; }
     /* Talks: название | событие | год */
@@ -178,6 +178,44 @@
       overflow-wrap: anywhere;
     }
 
+    .nw { font-style: normal; white-space: nowrap; }
+
+    .rowlink {
+      display: contents;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Кнопка PDF в стиле Windows 98 */
+    .pdf {
+      align-self: center;
+      justify-self: center;
+      width: 34px;
+      height: 26px;
+      background: #c0c0c0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        inset -1px -1px #0a0a0a,
+        inset 1px 1px #ffffff,
+        inset -2px -2px #808080,
+        inset 2px 2px #dfdfdf;
+    }
+
+    .pdf svg { width: 16px; height: 18px; }
+
+    .pdf:hover { background: #cfcfcf; }
+
+    .pdf:active {
+      box-shadow:
+        inset 1px 1px #0a0a0a,
+        inset -1px -1px #ffffff,
+        inset 2px 2px #808080,
+        inset -2px -2px #dfdfdf;
+      padding: 2px 0 0 2px;
+    }
+
     .item:hover,
     .item:focus {
       background: #6b2214;
@@ -206,12 +244,27 @@
         <div class="win papers">
           <div class="titlebar">Papers</div>
           <div class="list cols4">
-            <div class="colhead"><span>Author</span><span>Title</span><span>Journal</span><span>Year</span></div>
-            <a class="item" href="https://example.com" target="_blank"><span>A. Yu. Miller</span><span>A note on a remarkable pattern in the Gordian graph</span><span>Zap. Nauchn. Sem. POMI</span><span>2026</span></a>
-            <a class="item" href="https://example.com" target="_blank"><span>S. A. Kurapova, A. Yu. Miller</span><span>Clique ladders in the Gordian graph</span><span>Zap. Nauchn. Sem. POMI</span><span>2026</span></a>
-            <a class="item" href="https://example.com" target="_blank"><span>A. Yu. Miller, A. V. Malyutin, I. S. Alekseev</span><span>Infinite midway cliques in the Gordian graph</span><span>Zap. Nauchn. Sem. POMI</span><span>2025</span></a>
-            <a class="item" href="https://example.com" target="_blank"><span>A. Yu. Miller</span><span>The Gordian graph is one-ended</span><span>Zap. Nauchn. Sem. POMI</span><span>2025</span></a>
-            <a class="item" href="https://example.com" target="_blank"><span>Yu. Belousov, M. V. Karev, A. V. Malyutin, A. Yu. Miller, E. A. Fominykh</span><span>Lernaean knots and band surgery</span><span>Algebra i Analiz</span><span>2021</span></a>
+            <div class="colhead"><span>Author</span><span>Title</span><span>Journal</span><span>Year</span><span>PDF</span></div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span><i class="nw">A. Yu. Miller</i></span><span>A note on a remarkable pattern in the Gordian graph</span><span>Zap. Nauchn. Sem. POMI</span><span>2026</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span><i class="nw">S. A. Kurapova,</i> <i class="nw">A. Yu. Miller</i></span><span>Clique ladders in the Gordian graph</span><span>Zap. Nauchn. Sem. POMI</span><span>2026</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span><i class="nw">A. Yu. Miller,</i> <i class="nw">A. V. Malyutin,</i> <i class="nw">I. S. Alekseev</i></span><span>Infinite midway cliques in the Gordian graph</span><span>Zap. Nauchn. Sem. POMI</span><span>2025</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span><i class="nw">A. Yu. Miller</i></span><span>The Gordian graph is one-ended</span><span>Zap. Nauchn. Sem. POMI</span><span>2025</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span><i class="nw">Yu. Belousov,</i> <i class="nw">M. V. Karev,</i> <i class="nw">A. V. Malyutin,</i><br><i class="nw">A. Yu. Miller,</i> <i class="nw">E. A. Fominykh</i></span><span>Lernaean knots and band surgery</span><span>Algebra i Analiz</span><span>2021</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
           </div>
         </div>
         <div class="win">
