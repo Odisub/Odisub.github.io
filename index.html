@@ -2,9 +2,105 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <title>Тест</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home</title>
+
+  <style>
+    /* Шрифт: файл лежит рядом с index.html (см. шаг 2) */
+    @font-face {
+      font-family: 'GG Zaglav';
+      src: url('GGZaglav.woff2') format('woff2'),
+           url('GGZaglav.woff') format('woff'),
+           url('GGZaglav.otf') format('opentype'),
+           url('GGZaglav.ttf') format('truetype');
+      font-display: swap;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      background: #ad4b33;
+      color: #000000;
+      font-family: 'GG Zaglav', serif;
+    }
+
+    /* Кнопки в правом верхнем углу */
+    nav {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+    }
+
+    nav a {
+      background: #494949;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+
+    nav a:hover {
+      background: #000000;
+    }
+
+    /* Страницы: текст ровно посередине */
+    .page {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .page[hidden] { display: none; }
+
+    .page h1 {
+      margin: 0;
+      font-size: 4rem;
+      font-weight: normal;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Сайт работает!</h1>
+
+  <nav>
+    <a href="#home">HOME</a>
+    <a href="#math">MATH</a>
+    <a href="#art">ART</a>
+  </nav>
+
+  <main>
+    <section class="page" id="home"><h1>FIRST</h1></section>
+    <section class="page" id="math" hidden><h1>SECOND</h1></section>
+    <section class="page" id="art" hidden><h1>THIRD</h1></section>
+  </main>
+
+  <script>
+    const pages = ['home', 'math', 'art'];
+
+    function showPage() {
+      let current = location.hash.slice(1);
+      if (!pages.includes(current)) current = 'home';
+      pages.forEach(function (p) {
+        document.getElementById(p).hidden = (p !== current);
+      });
+      document.title = current.toUpperCase();
+    }
+
+    window.addEventListener('hashchange', showPage);
+    showPage();
+  </script>
+
 </body>
 </html>
