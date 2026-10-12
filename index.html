@@ -146,10 +146,10 @@
 
     /* Papers: автор | название | журнал | год | pdf */
     .cols4 .colhead, .cols4 .item { grid-template-columns: 2.1fr 2.5fr 1.2fr 56px 56px; }
-    /* Courses, Notes: автор | название | год */
-    .cols3 .colhead, .cols3 .item { grid-template-columns: 1fr 2.6fr 52px; }
-    /* Notes: автор | название | год | pdf */
-    .cols3p .colhead, .cols3p .item { grid-template-columns: 1fr 2.6fr 56px 56px; }
+    /* Courses: название | учреждение | год */
+    .cols3 .colhead, .cols3 .item { grid-template-columns: 2fr 1fr 52px; }
+    /* Notes: название | год | pdf */
+    .cols2p .colhead, .cols2p .item { grid-template-columns: 1fr 56px 56px; }
     /* Talks: название | событие | год | pdf */
     .cols3t .colhead, .cols3t .item { grid-template-columns: 2fr 1.4fr 56px 56px; }
     /* Drawings: название | год */
@@ -231,10 +231,16 @@
       flex-wrap: wrap;
       gap: 28px;
       justify-content: center;
-      align-items: flex-start;
+      align-items: stretch;   /* окна в ряду одной высоты: равняемся на большее */
     }
 
-    .vwin { flex: none; }
+    .vwin {
+      flex: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .vwin .viewer { flex: 1; }
 
     .viewer {
       display: flex;
@@ -350,7 +356,7 @@
               <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
             <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span><i class="nw">Yu. Belousov,</i> <i class="nw">M. V. Karev,</i> <i class="nw">A. V. Malyutin,</i><br><i class="nw">A. Yu. Miller,</i> <i class="nw">E. A. Fominykh</i></span><span>Lernaean knots and band surgery</span><span>Algebra i Analiz</span><span>2021</span></a>
+              <a class="rowlink" href="https://example.com" target="_blank"><span><i class="nw">Yu. Belousov,</i> <i class="nw">M. V. Karev,</i> <i class="nw">A. V. Malyutin,</i><br><i class="nw">A. Yu. Miller,</i> <i class="nw">E. A. Fominykh</i></span><span>Lernaean knots and band surgery</span><span>St. Petersburg Mathematical Journal</span><span>2021</span></a>
               <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
           </div>
@@ -358,31 +364,31 @@
         <div class="win">
           <div class="titlebar">Courses</div>
           <div class="list cols3">
-            <div class="colhead"><span>Author</span><span>Title</span><span>Year</span></div>
-            <a class="item" href="https://example.com" target="_blank"><span>Author</span><span>Course title 1</span><span>2024</span></a>
-            <a class="item" href="https://example.com" target="_blank"><span>Author</span><span>Course title 2</span><span>2024</span></a>
-            <a class="item" href="https://example.com" target="_blank"><span>Author</span><span>Course title 3</span><span>2024</span></a>
-            <a class="item" href="https://example.com" target="_blank"><span>Author</span><span>Course title 4</span><span>2024</span></a>
+            <div class="colhead"><span>Title</span><span>Institution</span><span>Year</span></div>
+            <a class="item" href="https://example.com" target="_blank"><span>Low-dimensional dynamics</span><span>SPBU</span><span>2025</span></a>
+            <a class="item" href="https://example.com" target="_blank"><span>Geometric knot theory</span><span>SPBU</span><span>2023</span></a>
+            <a class="item" href="https://example.com" target="_blank"><span>Course title 3</span><span>Institution</span><span>2024</span></a>
+            <a class="item" href="https://example.com" target="_blank"><span>Course title 4</span><span>Institution</span><span>2024</span></a>
           </div>
         </div>
         <div class="win">
           <div class="titlebar">Notes</div>
-          <div class="list cols3p">
-            <div class="colhead"><span>Author</span><span>Title</span><span>Year</span><span>PDF</span></div>
+          <div class="list cols2p">
+            <div class="colhead"><span>Title</span><span>Year</span><span>PDF</span></div>
             <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>Author</span><span>Note title 1</span><span>2024</span></a>
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Note title 1</span><span>2024</span></a>
               <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
             <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>Author</span><span>Note title 2</span><span>2024</span></a>
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Note title 2</span><span>2024</span></a>
               <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
             <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>Author</span><span>Note title 3</span><span>2024</span></a>
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Note title 3</span><span>2024</span></a>
               <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
             <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>Author</span><span>Note title 4</span><span>2024</span></a>
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Note title 4</span><span>2024</span></a>
               <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
           </div>
@@ -454,12 +460,12 @@
         title: 'The Knot Complement',
         windows: [
           {
-            title: 'The Knot Complement (1)',
+            title: 'The Knot Complement [1]',
             folder: 'images/complement/',
             files: Array.from({ length: 9 }, function (_, i) { return i + '.jpg'; })
           },
           {
-            title: 'The Knot Complement (2)',
+            title: 'The Knot Complement [2]',
             folder: 'images/complement/',
             files: ['vsph1.jpg', 'vsph2.jpg']
           }
