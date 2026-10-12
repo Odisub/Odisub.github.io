@@ -145,11 +145,13 @@
     }
 
     /* Papers: автор | название | журнал | год | pdf */
-    .cols4 .colhead, .cols4 .item { grid-template-columns: 2.4fr 2.2fr 1.2fr 56px 56px; }
+    .cols4 .colhead, .cols4 .item { grid-template-columns: 2.1fr 2.5fr 1.2fr 56px 56px; }
     /* Courses, Notes: автор | название | год */
     .cols3 .colhead, .cols3 .item { grid-template-columns: 1fr 2.6fr 52px; }
-    /* Talks: название | событие | год */
-    .cols3t .colhead, .cols3t .item { grid-template-columns: 2fr 1.4fr 52px; }
+    /* Notes: автор | название | год | pdf */
+    .cols3p .colhead, .cols3p .item { grid-template-columns: 1fr 2.6fr 56px 56px; }
+    /* Talks: название | событие | год | pdf */
+    .cols3t .colhead, .cols3t .item { grid-template-columns: 2fr 1.4fr 56px 56px; }
     /* Drawings: название | год */
     .cols2 .colhead, .cols2 .item { grid-template-columns: 1fr 52px; }
 
@@ -222,6 +224,84 @@
       color: #ffffff;
       outline: none;
     }
+
+    /* ---------- Просмотрщик изображений ---------- */
+    .viewer-wrap {
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    .viewer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+    }
+
+    .stage {
+      flex: 1;
+      min-width: 0;
+      min-height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .stage img {
+      display: block;
+      max-width: 100%;
+      max-height: 72vh;
+      height: auto;
+    }
+
+    #verr {
+      font-weight: 400;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .vbtn {
+      flex: none;
+      width: 52px;
+      height: 52px;
+      border: 0;
+      border-radius: 0;
+      background: #c0c0c0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow:
+        inset -1px -1px #0a0a0a,
+        inset 1px 1px #ffffff,
+        inset -2px -2px #808080,
+        inset 2px 2px #dfdfdf;
+    }
+
+    .vbtn:hover { background: #cfcfcf; }
+
+    .vbtn:active {
+      box-shadow:
+        inset 1px 1px #0a0a0a,
+        inset -1px -1px #ffffff,
+        inset 2px 2px #808080,
+        inset -2px -2px #dfdfdf;
+      padding: 2px 0 0 2px;
+    }
+
+    .vbtn svg { width: 14px; height: 18px; }
+
+    .vcount {
+      text-align: center;
+      padding: 6px 0 3px;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 800px) {
+      .viewer { gap: 6px; padding: 8px; }
+      .vbtn { width: 38px; height: 38px; }
+    }
   </style>
 </head>
 
@@ -279,19 +359,31 @@
         </div>
         <div class="win">
           <div class="titlebar">Notes</div>
-          <div class="list cols3">
-            <div class="colhead"><span>Author</span><span>Title</span><span>Year</span></div>
-            <a class="item" href="https://example.com" target="_blank"><span>Author</span><span>Note title 1</span><span>2024</span></a>
-            <a class="item" href="https://example.com" target="_blank"><span>Author</span><span>Note title 2</span><span>2024</span></a>
-            <a class="item" href="https://example.com" target="_blank"><span>Author</span><span>Note title 3</span><span>2024</span></a>
-            <a class="item" href="https://example.com" target="_blank"><span>Author</span><span>Note title 4</span><span>2024</span></a>
+          <div class="list cols3p">
+            <div class="colhead"><span>Author</span><span>Title</span><span>Year</span><span>PDF</span></div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Author</span><span>Note title 1</span><span>2024</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Author</span><span>Note title 2</span><span>2024</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Author</span><span>Note title 3</span><span>2024</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Author</span><span>Note title 4</span><span>2024</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
           </div>
         </div>
         <div class="win">
           <div class="titlebar">Drawings</div>
           <div class="list cols2">
             <div class="colhead"><span>Title</span><span>Year</span></div>
-            <a class="item" href="https://example.com" target="_blank"><span>Work title 1</span><span>2024</span></a>
+            <a class="item" href="#grope"><span>The Grope</span><span>2024</span></a>
             <a class="item" href="https://example.com" target="_blank"><span>Work title 2</span><span>2024</span></a>
             <a class="item" href="https://example.com" target="_blank"><span>Work title 3</span><span>2024</span></a>
             <a class="item" href="https://example.com" target="_blank"><span>Work title 4</span><span>2024</span></a>
@@ -300,12 +392,45 @@
         <div class="win">
           <div class="titlebar">Talks</div>
           <div class="list cols3t">
-            <div class="colhead"><span>Title</span><span>Event</span><span>Year</span></div>
-            <a class="item" href="https://example.com" target="_blank"><span>Talk title 1</span><span>Event</span><span>2024</span></a>
-            <a class="item" href="https://example.com" target="_blank"><span>Talk title 2</span><span>Event</span><span>2024</span></a>
-            <a class="item" href="https://example.com" target="_blank"><span>Talk title 3</span><span>Event</span><span>2024</span></a>
-            <a class="item" href="https://example.com" target="_blank"><span>Talk title 4</span><span>Event</span><span>2024</span></a>
+            <div class="colhead"><span>Title</span><span>Event</span><span>Year</span><span>PDF</span></div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Talk title 1</span><span>Event</span><span>2024</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Talk title 2</span><span>Event</span><span>2024</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Talk title 3</span><span>Event</span><span>2024</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Talk title 4</span><span>Event</span><span>2024</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page top" id="viewer" hidden>
+      <div class="viewer-wrap">
+        <div class="win">
+          <div class="titlebar" id="viewer-title">The Grope</div>
+          <div class="list viewer">
+            <button class="vbtn" id="prev" type="button" aria-label="Previous">
+              <svg viewBox="0 0 12 16" aria-hidden="true"><polygon points="10,1 10,15 2,8" fill="#000"/></svg>
+            </button>
+            <div class="stage">
+              <img id="vimg" alt="">
+              <div id="verr" hidden></div>
+            </div>
+            <button class="vbtn" id="next" type="button" aria-label="Next">
+              <svg viewBox="0 0 12 16" aria-hidden="true"><polygon points="2,1 2,15 10,8" fill="#000"/></svg>
+            </button>
+          </div>
+          <div class="vcount" id="vcount"></div>
         </div>
       </div>
     </section>
@@ -316,13 +441,79 @@
   <script>
     const pages = ['home', 'math', 'art'];
 
+    /* Наборы изображений. Чтобы добавить новый набор, добавьте сюда ещё один пункт
+       и ссылку вида <a href="#ключ"> на нужной странице. */
+    const sets = {
+      grope: {
+        title: 'The Grope',
+        folder: 'images/grope/',
+        files: Array.from({ length: 12 }, function (_, i) { return 'toriQ vert ' + i + '.png'; })
+      }
+    };
+
+    let currentSet = null;
+    let idx = 0;
+
+    const vimg = document.getElementById('vimg');
+    const verr = document.getElementById('verr');
+
+    function imgUrl(set, i) {
+      return set.folder + encodeURIComponent(set.files[i]);
+    }
+
+    function render() {
+      const set = sets[currentSet];
+      const n = set.files.length;
+      const url = imgUrl(set, idx);
+      verr.hidden = true;
+      vimg.hidden = false;
+      vimg.onerror = function () {
+        vimg.hidden = true;
+        verr.hidden = false;
+        verr.textContent = 'Не удалось загрузить файл: ' + url;
+      };
+      vimg.src = url;
+      vimg.alt = set.title + ' — ' + (idx + 1) + ' / ' + n;
+      document.getElementById('vcount').textContent = (idx + 1) + ' / ' + n;
+      // подгружаем соседние картинки заранее
+      new Image().src = imgUrl(set, (idx + 1) % n);
+      new Image().src = imgUrl(set, (idx - 1 + n) % n);
+    }
+
+    function step(d) {
+      if (!currentSet) return;
+      const n = sets[currentSet].files.length;
+      idx = (idx + d + n) % n;
+      render();
+    }
+
+    document.getElementById('prev').addEventListener('click', function () { step(-1); });
+    document.getElementById('next').addEventListener('click', function () { step(1); });
+    document.addEventListener('keydown', function (e) {
+      if (document.getElementById('viewer').hidden) return;
+      if (e.key === 'ArrowLeft') step(-1);
+      if (e.key === 'ArrowRight') step(1);
+    });
+
     function showPage() {
       let current = location.hash.slice(1);
-      if (!pages.includes(current)) current = 'home';
+      const isSet = Object.prototype.hasOwnProperty.call(sets, current);
+      if (!isSet && !pages.includes(current)) current = 'home';
+
       pages.forEach(function (p) {
         document.getElementById(p).hidden = (p !== current);
       });
-      const label = (current === 'home') ? 'ALEXEY YU. MILLER' : current.toUpperCase();
+      document.getElementById('viewer').hidden = !isSet;
+
+      let label;
+      if (isSet) {
+        if (currentSet !== current) { currentSet = current; idx = 0; }
+        document.getElementById('viewer-title').textContent = sets[current].title;
+        label = sets[current].title.toUpperCase();
+        render();
+      } else {
+        label = (current === 'home') ? 'ALEXEY YU. MILLER' : current.toUpperCase();
+      }
       document.getElementById('pagename').textContent = label;
       document.title = label;
       window.scrollTo(0, 0);
