@@ -122,10 +122,60 @@
     .titlebar {
       background: #4a170d;
       color: #e4e4e4;
-      padding: 4px 8px;
+      padding: 3px 3px 3px 8px;
       margin-bottom: 3px;
       font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 28px;
     }
+
+    .tb-title {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Кнопка «развернуть / свернуть» в заголовке окна */
+    .tb-max {
+      flex: none;
+      width: 22px;
+      height: 20px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: #c0c0c0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow:
+        inset -1px -1px #0a0a0a,
+        inset 1px 1px #ffffff,
+        inset -2px -2px #808080,
+        inset 2px 2px #dfdfdf;
+    }
+
+    .tb-max:hover { background: #cfcfcf; }
+
+    .tb-max:active {
+      box-shadow:
+        inset 1px 1px #0a0a0a,
+        inset -1px -1px #ffffff,
+        inset 2px 2px #808080,
+        inset -2px -2px #dfdfdf;
+      padding: 1px 0 0 1px;
+    }
+
+    .tb-max svg { width: 11px; height: 11px; }
+    .tb-max .ic-restore { display: none; }
+    .vwin.fullscreen .tb-max .ic-max,
+    .fswin .tb-max .ic-max { display: none; }
+    .vwin.fullscreen .tb-max .ic-restore,
+    .fswin .tb-max .ic-restore { display: block; }
 
     /* Список как в Проводнике (вид «Таблица») */
     .list {
@@ -316,6 +366,276 @@
       header { flex-wrap: wrap; }
       #pagename { font-size: 1.5rem; }
     }
+
+    /* ---------- Полоса прокрутки в стиле Windows 98 ---------- */
+    .list.has-sb {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Строка заголовков + «плитка» над полосой прокрутки */
+    .headwrap {
+      display: flex;
+      margin-bottom: 4px;
+    }
+
+    .headwrap > .colhead {
+      flex: 1;
+      min-width: 0;
+      margin-bottom: 0;
+    }
+
+    .headwrap > .corner {
+      flex: none;
+      width: 16px;
+      background: #c0c0c0;
+      box-shadow:
+        inset -1px -1px #0a0a0a,
+        inset 1px 1px #ffffff,
+        inset -2px -2px #808080,
+        inset 2px 2px #dfdfdf;
+    }
+
+    .rowswrap {
+      display: flex;
+      min-height: 0;
+    }
+
+    .rows {
+      flex: 1;
+      min-width: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+
+    .rows::-webkit-scrollbar { display: none; }
+
+    .vsb {
+      flex: none;
+      width: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sb-btn {
+      flex: none;
+      width: 16px;
+      height: 16px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: #c0c0c0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: default;
+      box-shadow:
+        inset -1px -1px #0a0a0a,
+        inset 1px 1px #ffffff,
+        inset -2px -2px #808080,
+        inset 2px 2px #dfdfdf;
+    }
+
+    .sb-btn:active {
+      box-shadow:
+        inset 1px 1px #808080,
+        inset -1px -1px #808080;
+      padding: 1px 0 0 1px;
+    }
+
+    .sb-btn svg { width: 7px; height: 4px; }
+
+    .sb-track {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+      background-color: #ffffff;
+      background-image:
+        linear-gradient(45deg, #c0c0c0 25%, transparent 25%, transparent 75%, #c0c0c0 75%),
+        linear-gradient(45deg, #c0c0c0 25%, transparent 25%, transparent 75%, #c0c0c0 75%);
+      background-size: 2px 2px;
+      background-position: 0 0, 1px 1px;
+    }
+
+    .sb-thumb {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      min-height: 16px;
+      background: #c0c0c0;
+      box-shadow:
+        inset -1px -1px #0a0a0a,
+        inset 1px 1px #ffffff,
+        inset -2px -2px #808080,
+        inset 2px 2px #dfdfdf;
+    }
+
+    .vsb.disabled .sb-btn { pointer-events: none; }
+    .vsb.disabled .sb-btn polygon { fill: #808080; }
+
+    /* ---------- Анимация Windows 98: рамка-контур, растущая ступеньками ---------- */
+    .zoomframe {
+      position: fixed;
+      z-index: 400;
+      pointer-events: none;
+      box-sizing: border-box;
+      border: 2px dotted #ffffff;
+      mix-blend-mode: difference;
+    }
+
+    html.noscroll,
+    html.noscroll body { overflow: hidden; }
+
+    /* ---------- Окно с картинками на весь экран ---------- */
+    .vwin.fullscreen {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      width: auto;
+      height: auto;
+      box-shadow:
+        inset -1px -1px #0a0a0a,
+        inset 1px 1px #dfdfdf,
+        inset -2px -2px #808080,
+        inset 2px 2px #ffffff;
+    }
+
+    .vwin.fullscreen.animating { visibility: hidden; }
+
+    .vwin.fullscreen .viewer {
+      align-items: stretch;
+      min-height: 0;
+      padding: 16px;
+      gap: 16px;
+    }
+
+    .vwin.fullscreen .vbtn {
+      align-self: center;
+      width: 60px;
+      height: 60px;
+    }
+
+    .vwin.fullscreen .stage {
+      flex: 1 1 0 !important;
+      width: auto !important;
+      aspect-ratio: auto !important;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    /* ---------- Список на весь экран: панель слева, список по центру, пустая панель справа ---------- */
+    .fs {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+    }
+
+    .fs[hidden] { display: none; }
+
+    .fswin {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      box-shadow:
+        inset -1px -1px #0a0a0a,
+        inset 1px 1px #dfdfdf,
+        inset -2px -2px #808080,
+        inset 2px 2px #ffffff;
+    }
+
+    .fsbody {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) clamp(520px, 38vw, 900px) minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr);
+      gap: 12px;
+      padding: 12px;
+    }
+
+    .fspanel {
+      background: #c0c0c0;
+      padding: 12px;
+      overflow: auto;
+      box-shadow:
+        inset 1px 1px #808080,
+        inset -1px -1px #ffffff,
+        inset 2px 2px #0a0a0a,
+        inset -2px -2px #dfdfdf;
+    }
+
+    .fsnav {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .fsbtn {
+      width: 100%;
+      max-width: 240px;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 0;
+      background: #c0c0c0;
+      color: #000000;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-align: left;
+      cursor: pointer;
+      box-shadow:
+        inset -1px -1px #0a0a0a,
+        inset 1px 1px #ffffff,
+        inset -2px -2px #808080,
+        inset 2px 2px #dfdfdf;
+    }
+
+    .fsbtn:hover { background: #cfcfcf; }
+
+    .fsbtn.on,
+    .fsbtn:active {
+      box-shadow:
+        inset 1px 1px #0a0a0a,
+        inset -1px -1px #ffffff,
+        inset 2px 2px #808080,
+        inset -2px -2px #dfdfdf;
+      padding: 13px 15px 11px 17px;
+    }
+
+    .fscenter {
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .fscenter .list {
+      flex: 1;
+      min-height: 0;
+    }
+
+    .fscenter .rowswrap {
+      flex: 1;
+      min-height: 0;
+    }
+
+    .fscenter .rows { height: auto !important; }
+
+    @media (max-width: 800px) {
+      .fsbody {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto minmax(0, 1fr);
+        padding: 8px;
+        gap: 8px;
+      }
+      .fsright { display: none; }
+      .fsnav { flex-direction: row; flex-wrap: wrap; }
+      .fsbtn { width: auto; max-width: none; padding: 8px 12px; font-size: 1rem; }
+      .fsbtn.on, .fsbtn:active { padding: 9px 11px 7px 13px; }
+    }
   </style>
 </head>
 
@@ -335,8 +655,8 @@
 
     <section class="page top" id="math" hidden>
       <div class="grid">
-        <div class="win papers">
-          <div class="titlebar">Papers</div>
+        <div class="win papers" data-id="papers">
+          <div class="titlebar"><span class="tb-title">Papers</span><button class="tb-max" type="button" aria-label="Maximize / Restore" title="Maximize / Restore"><svg class="ic-max" viewBox="0 0 11 11" aria-hidden="true"><rect x="0.5" y="0.5" width="10" height="10" fill="none" stroke="#000"/><rect x="0.5" y="0.5" width="10" height="2.5" fill="#000"/></svg><svg class="ic-restore" viewBox="0 0 11 11" aria-hidden="true"><rect x="3.5" y="0.5" width="7" height="7" fill="none" stroke="#000"/><rect x="3.5" y="0.5" width="7" height="2" fill="#000"/><rect x="0.5" y="3.5" width="7" height="7" fill="#c0c0c0" stroke="#000"/><rect x="0.5" y="3.5" width="7" height="2" fill="#000"/></svg></button></div>
           <div class="list cols4">
             <div class="colhead"><span>Author</span><span>Title</span><span>Journal</span><span>Year</span><span>PDF</span></div>
             <div class="item">
@@ -359,20 +679,35 @@
               <a class="rowlink" href="https://example.com" target="_blank"><span><i class="nw">Yu. Belousov,</i> <i class="nw">M. V. Karev,</i> <i class="nw">A. V. Malyutin,</i><br><i class="nw">A. Yu. Miller,</i> <i class="nw">E. A. Fominykh</i></span><span>Lernaean knots and band surgery</span><span>St. Petersburg Mathematical Journal</span><span>2021</span></a>
               <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Author</span><span>Paper title 1</span><span>Journal</span><span>2024</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Author</span><span>Paper title 2</span><span>Journal</span><span>2024</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Author</span><span>Paper title 3</span><span>Journal</span><span>2024</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
           </div>
         </div>
-        <div class="win">
-          <div class="titlebar">Courses</div>
+        <div class="win" data-id="courses">
+          <div class="titlebar"><span class="tb-title">Courses</span><button class="tb-max" type="button" aria-label="Maximize / Restore" title="Maximize / Restore"><svg class="ic-max" viewBox="0 0 11 11" aria-hidden="true"><rect x="0.5" y="0.5" width="10" height="10" fill="none" stroke="#000"/><rect x="0.5" y="0.5" width="10" height="2.5" fill="#000"/></svg><svg class="ic-restore" viewBox="0 0 11 11" aria-hidden="true"><rect x="3.5" y="0.5" width="7" height="7" fill="none" stroke="#000"/><rect x="3.5" y="0.5" width="7" height="2" fill="#000"/><rect x="0.5" y="3.5" width="7" height="7" fill="#c0c0c0" stroke="#000"/><rect x="0.5" y="3.5" width="7" height="2" fill="#000"/></svg></button></div>
           <div class="list cols3">
             <div class="colhead"><span>Title</span><span>Institution</span><span>Year</span></div>
             <a class="item" href="https://example.com" target="_blank"><span>Low-dimensional dynamics</span><span>SPBU</span><span>2025</span></a>
             <a class="item" href="https://example.com" target="_blank"><span>Geometric knot theory</span><span>SPBU</span><span>2023</span></a>
             <a class="item" href="https://example.com" target="_blank"><span>Course title 3</span><span>Institution</span><span>2024</span></a>
             <a class="item" href="https://example.com" target="_blank"><span>Course title 4</span><span>Institution</span><span>2024</span></a>
+            <a class="item" href="https://example.com" target="_blank"><span>Course title 5</span><span>Institution</span><span>2024</span></a>
+            <a class="item" href="https://example.com" target="_blank"><span>Course title 6</span><span>Institution</span><span>2024</span></a>
+            <a class="item" href="https://example.com" target="_blank"><span>Course title 7</span><span>Institution</span><span>2024</span></a>
           </div>
         </div>
-        <div class="win">
-          <div class="titlebar">Notes</div>
+        <div class="win" data-id="notes">
+          <div class="titlebar"><span class="tb-title">Notes</span><button class="tb-max" type="button" aria-label="Maximize / Restore" title="Maximize / Restore"><svg class="ic-max" viewBox="0 0 11 11" aria-hidden="true"><rect x="0.5" y="0.5" width="10" height="10" fill="none" stroke="#000"/><rect x="0.5" y="0.5" width="10" height="2.5" fill="#000"/></svg><svg class="ic-restore" viewBox="0 0 11 11" aria-hidden="true"><rect x="3.5" y="0.5" width="7" height="7" fill="none" stroke="#000"/><rect x="3.5" y="0.5" width="7" height="2" fill="#000"/><rect x="0.5" y="3.5" width="7" height="7" fill="#c0c0c0" stroke="#000"/><rect x="0.5" y="3.5" width="7" height="2" fill="#000"/></svg></button></div>
           <div class="list cols2p">
             <div class="colhead"><span>Title</span><span>Year</span><span>PDF</span></div>
             <div class="item">
@@ -391,20 +726,35 @@
               <a class="rowlink" href="https://example.com" target="_blank"><span>Note title 4</span><span>2024</span></a>
               <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Note title 5</span><span>2024</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Note title 6</span><span>2024</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Note title 7</span><span>2024</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
           </div>
         </div>
-        <div class="win">
-          <div class="titlebar">Drawings</div>
+        <div class="win" data-id="drawings">
+          <div class="titlebar"><span class="tb-title">Drawings</span><button class="tb-max" type="button" aria-label="Maximize / Restore" title="Maximize / Restore"><svg class="ic-max" viewBox="0 0 11 11" aria-hidden="true"><rect x="0.5" y="0.5" width="10" height="10" fill="none" stroke="#000"/><rect x="0.5" y="0.5" width="10" height="2.5" fill="#000"/></svg><svg class="ic-restore" viewBox="0 0 11 11" aria-hidden="true"><rect x="3.5" y="0.5" width="7" height="7" fill="none" stroke="#000"/><rect x="3.5" y="0.5" width="7" height="2" fill="#000"/><rect x="0.5" y="3.5" width="7" height="7" fill="#c0c0c0" stroke="#000"/><rect x="0.5" y="3.5" width="7" height="2" fill="#000"/></svg></button></div>
           <div class="list cols2">
             <div class="colhead"><span>Title</span><span>Year</span></div>
             <a class="item" href="#grope"><span>The Grope</span><span>2026</span></a>
             <a class="item" href="#complement"><span>The Knot Complement</span><span>2022</span></a>
             <a class="item" href="https://example.com" target="_blank"><span>Work title 3</span><span>2024</span></a>
             <a class="item" href="https://example.com" target="_blank"><span>Work title 4</span><span>2024</span></a>
+            <a class="item" href="https://example.com" target="_blank"><span>Work title 5</span><span>2024</span></a>
+            <a class="item" href="https://example.com" target="_blank"><span>Work title 6</span><span>2024</span></a>
+            <a class="item" href="https://example.com" target="_blank"><span>Work title 7</span><span>2024</span></a>
           </div>
         </div>
-        <div class="win">
-          <div class="titlebar">Talks</div>
+        <div class="win" data-id="talks">
+          <div class="titlebar"><span class="tb-title">Talks</span><button class="tb-max" type="button" aria-label="Maximize / Restore" title="Maximize / Restore"><svg class="ic-max" viewBox="0 0 11 11" aria-hidden="true"><rect x="0.5" y="0.5" width="10" height="10" fill="none" stroke="#000"/><rect x="0.5" y="0.5" width="10" height="2.5" fill="#000"/></svg><svg class="ic-restore" viewBox="0 0 11 11" aria-hidden="true"><rect x="3.5" y="0.5" width="7" height="7" fill="none" stroke="#000"/><rect x="3.5" y="0.5" width="7" height="2" fill="#000"/><rect x="0.5" y="3.5" width="7" height="7" fill="#c0c0c0" stroke="#000"/><rect x="0.5" y="3.5" width="7" height="2" fill="#000"/></svg></button></div>
           <div class="list cols3t">
             <div class="colhead"><span>Title</span><span>Event</span><span>Year</span><span>PDF</span></div>
             <div class="item">
@@ -421,6 +771,18 @@
             </div>
             <div class="item">
               <a class="rowlink" href="https://example.com" target="_blank"><span>Talk title 4</span><span>Event</span><span>2024</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Talk title 5</span><span>Event</span><span>2024</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Talk title 6</span><span>Event</span><span>2024</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Talk title 7</span><span>Event</span><span>2024</span></a>
               <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
           </div>
@@ -442,7 +804,8 @@
        или нескольких окон-прокруток. Чтобы добавить новый набор, добавьте пункт сюда и
        ссылку <a href="#ключ"> на нужной странице.
        У окна: title, folder, files; aspect (необязательно) задаёт пропорции вручную,
-       если его нет, пропорции берутся из первой картинки окна. */
+       если его нет, пропорции берутся из первой картинки окна.
+       Номера окон в заголовках пишем в квадратных скобках: [1], [2] ... */
     const sets = {
       grope: {
         title: 'The Grope',
@@ -475,6 +838,9 @@
 
     const ARROW_LEFT = '<svg viewBox="0 0 12 16" aria-hidden="true"><polygon points="10,1 10,15 2,8" fill="#000"/></svg>';
     const ARROW_RIGHT = '<svg viewBox="0 0 12 16" aria-hidden="true"><polygon points="2,1 2,15 10,8" fill="#000"/></svg>';
+    const SB_UP = '<svg viewBox="0 0 7 4" aria-hidden="true"><polygon points="3.5,0 7,4 0,4" fill="#000"/></svg>';
+    const SB_DOWN = '<svg viewBox="0 0 7 4" aria-hidden="true"><polygon points="0,0 7,0 3.5,4" fill="#000"/></svg>';
+    const MAX_BTN = '<button class="tb-max" type="button" aria-label="Maximize / Restore" title="Maximize / Restore"><svg class="ic-max" viewBox="0 0 11 11" aria-hidden="true"><rect x="0.5" y="0.5" width="10" height="10" fill="none" stroke="#000"/><rect x="0.5" y="0.5" width="10" height="2.5" fill="#000"/></svg><svg class="ic-restore" viewBox="0 0 11 11" aria-hidden="true"><rect x="3.5" y="0.5" width="7" height="7" fill="none" stroke="#000"/><rect x="3.5" y="0.5" width="7" height="2" fill="#000"/><rect x="0.5" y="3.5" width="7" height="7" fill="#c0c0c0" stroke="#000"/><rect x="0.5" y="3.5" width="7" height="2" fill="#000"/></svg></button>';
 
     const viewerSection = document.getElementById('viewer');
     const grid = document.getElementById('vgrid');
@@ -482,6 +848,279 @@
     let wins = [];
     let active = 0;
     let token = 0;
+
+    let busy = false;      // идёт анимация, ввод временно игнорируется
+    let epoch = 0;         // меняется при переходе на другую страницу, чтобы отменять «хвосты» анимаций
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* =====================  Анимация в стиле Windows 98  ===================== */
+
+    function fullRect() {
+      return { left: 0, top: 0, width: document.documentElement.clientWidth, height: window.innerHeight };
+    }
+
+    /* Пунктирная рамка, которая ступеньками растёт (или сжимается) от одного прямоугольника к другому */
+    function zoomOutline(from, to, done) {
+      if (reduceMotion || !document.body.animate) { if (done) done(); return; }
+      const el = document.createElement('div');
+      el.className = 'zoomframe';
+      document.body.appendChild(el);
+      function f(r) {
+        return { left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px' };
+      }
+      const a = el.animate([f(from), f(to)], { duration: 260, easing: 'steps(8, end)', fill: 'forwards' });
+      a.onfinish = function () { el.remove(); if (done) done(); };
+    }
+
+    function lockScroll(on) {
+      document.documentElement.classList.toggle('noscroll', on);
+    }
+
+    /* =====================  Полоса прокрутки Windows 98  ===================== */
+
+    const scrollers = [];   // полосы на самой странице (не в полноэкранном окне)
+
+    /* list: элемент .list со строкой .colhead и строками .item.
+       opt.fit: сколько строк показывать в свёрнутом окне (остальное прокручивается) */
+    function initScroll(list, opt) {
+      opt = opt || {};
+      const items = Array.prototype.filter.call(list.children, function (c) { return c.classList.contains('item'); });
+      const wrap = document.createElement('div');
+      wrap.className = 'rowswrap';
+      const rows = document.createElement('div');
+      rows.className = 'rows';
+      items.forEach(function (it) { rows.appendChild(it); });
+      const sb = document.createElement('div');
+      sb.className = 'vsb';
+      sb.innerHTML =
+        '<button class="sb-btn up" type="button" tabindex="-1" aria-label="Scroll up">' + SB_UP + '</button>' +
+        '<div class="sb-track"><div class="sb-thumb"></div></div>' +
+        '<button class="sb-btn down" type="button" tabindex="-1" aria-label="Scroll down">' + SB_DOWN + '</button>';
+      wrap.appendChild(rows);
+      wrap.appendChild(sb);
+
+      /* пустая «плитка» заголовка над полосой прокрутки */
+      const head = Array.prototype.filter.call(list.children, function (c) { return c.classList.contains('colhead'); })[0];
+      if (head) {
+        const hw = document.createElement('div');
+        hw.className = 'headwrap';
+        const corner = document.createElement('div');
+        corner.className = 'corner';
+        list.insertBefore(hw, head);
+        hw.appendChild(head);
+        hw.appendChild(corner);
+      }
+
+      list.appendChild(wrap);
+      list.classList.add('has-sb');
+
+      const track = sb.querySelector('.sb-track');
+      const thumb = sb.querySelector('.sb-thumb');
+
+      function rowH() {
+        const it = rows.firstElementChild;
+        return (it && it.getBoundingClientRect().height) || 32;
+      }
+
+      /* высота свёрнутого окна = сумма высот первых N строк */
+      function fit() {
+        if (!opt.fit || !rows.clientWidth) return;
+        const kids = rows.children;
+        const cnt = kids.length;
+        const k = Math.min(opt.fit, cnt);
+        let h = 0;
+        for (let i = 0; i < k; i++) h += kids[i].getBoundingClientRect().height;
+        if (cnt && cnt < opt.fit) h += (opt.fit - cnt) * (h / cnt);
+        rows.style.height = Math.ceil(h) + 'px';
+      }
+
+      function update() {
+        const vh = rows.clientHeight;
+        const ch = rows.scrollHeight;
+        const tl = track.clientHeight;
+        if (!tl) return;
+        if (ch <= vh + 1) {
+          sb.classList.add('disabled');
+          thumb.style.display = 'none';
+          return;
+        }
+        sb.classList.remove('disabled');
+        thumb.style.display = 'block';
+        const th = Math.max(16, Math.round(tl * vh / ch));
+        const max = ch - vh;
+        thumb.style.height = th + 'px';
+        thumb.style.top = Math.round((tl - th) * rows.scrollTop / max) + 'px';
+      }
+
+      rows.addEventListener('scroll', update);
+
+      /* кнопки-стрелки: нажатие и удержание */
+      function hold(btn, dir) {
+        btn.addEventListener('pointerdown', function (e) {
+          e.preventDefault();
+          function step() { rows.scrollTop += dir * rowH(); }
+          step();
+          let iv = null;
+          const t = setTimeout(function () { iv = setInterval(step, 55); }, 350);
+          function stop() {
+            clearTimeout(t);
+            if (iv) clearInterval(iv);
+            window.removeEventListener('pointerup', stop);
+            window.removeEventListener('pointercancel', stop);
+          }
+          window.addEventListener('pointerup', stop);
+          window.addEventListener('pointercancel', stop);
+        });
+      }
+      hold(sb.querySelector('.up'), -1);
+      hold(sb.querySelector('.down'), 1);
+
+      /* клик по дорожке: страница вверх / вниз */
+      track.addEventListener('pointerdown', function (e) {
+        if (e.target === thumb) return;
+        const r = thumb.getBoundingClientRect();
+        rows.scrollTop += (e.clientY < r.top ? -1 : 1) * rows.clientHeight * 0.9;
+      });
+
+      /* перетаскивание бегунка */
+      thumb.addEventListener('pointerdown', function (e) {
+        e.preventDefault();
+        thumb.setPointerCapture(e.pointerId);
+        const y0 = e.clientY;
+        const s0 = rows.scrollTop;
+        const range = (track.clientHeight - thumb.offsetHeight) || 1;
+        const max = rows.scrollHeight - rows.clientHeight;
+        function move(ev) { rows.scrollTop = s0 + (ev.clientY - y0) * max / range; }
+        function up() {
+          thumb.removeEventListener('pointermove', move);
+          thumb.removeEventListener('pointerup', up);
+          thumb.removeEventListener('pointercancel', up);
+        }
+        thumb.addEventListener('pointermove', move);
+        thumb.addEventListener('pointerup', up);
+        thumb.addEventListener('pointercancel', up);
+      });
+
+      function refresh() { fit(); update(); }
+
+      if (window.ResizeObserver) {
+        let lastW = -1;
+        new ResizeObserver(function () {
+          if (rows.clientWidth !== lastW) { lastW = rows.clientWidth; fit(); }
+          update();
+        }).observe(rows);
+      }
+
+      refresh();
+      return { refresh: refresh };
+    }
+
+    /* =====================  Окна на странице MATH  ===================== */
+
+    const FS_ORDER = ['papers', 'notes', 'courses', 'drawings', 'talks'];
+    const ROWS_COLLAPSED = { papers: 5, notes: 4, courses: 4, drawings: 4, talks: 4 };
+    const pristine = {};   // исходное содержимое списков (для полноэкранного режима)
+
+    document.querySelectorAll('#math .win[data-id]').forEach(function (w) {
+      const id = w.dataset.id;
+      pristine[id] = {
+        title: w.querySelector('.tb-title').textContent,
+        list: w.querySelector('.list').outerHTML
+      };
+    });
+
+    document.querySelectorAll('#math .win[data-id]').forEach(function (w) {
+      scrollers.push(initScroll(w.querySelector('.list'), { fit: ROWS_COLLAPSED[w.dataset.id] }));
+    });
+
+    /* Полноэкранное окно списка */
+    const fs = document.createElement('div');
+    fs.className = 'fs';
+    fs.hidden = true;
+    fs.innerHTML =
+      '<div class="win fswin">' +
+        '<div class="titlebar"><span class="tb-title"></span>' + MAX_BTN + '</div>' +
+        '<div class="fsbody">' +
+          '<div class="fspanel fsnav"></div>' +
+          '<div class="fscenter"></div>' +
+          '<div class="fspanel fsright"></div>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(fs);
+
+    const fsNav = fs.querySelector('.fsnav');
+    const fsCenter = fs.querySelector('.fscenter');
+    let fsCurrent = null;
+
+    FS_ORDER.forEach(function (id) {
+      if (!pristine[id]) return;
+      const b = document.createElement('button');
+      b.className = 'fsbtn';
+      b.type = 'button';
+      b.dataset.id = id;
+      b.textContent = pristine[id].title;
+      b.addEventListener('click', function () { if (!busy) fsShow(id); });
+      fsNav.appendChild(b);
+    });
+
+    function fsShow(id) {
+      fsCurrent = id;
+      fs.querySelector('.tb-title').textContent = pristine[id].title;
+      fsCenter.innerHTML = pristine[id].list;
+      initScroll(fsCenter.querySelector('.list'), {});
+      Array.prototype.forEach.call(fsNav.children, function (b) {
+        const on = b.dataset.id === id;
+        b.classList.toggle('on', on);
+        if (on) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+      });
+    }
+
+    function mathWindow(id) {
+      return document.querySelector('#math .win[data-id="' + id + '"]');
+    }
+
+    function openFs(id) {
+      if (busy) return;
+      busy = true;
+      const my = epoch;
+      zoomOutline(mathWindow(id).getBoundingClientRect(), fullRect(), function () {
+        if (my !== epoch) return;
+        fs.hidden = false;
+        lockScroll(true);
+        fsShow(id);
+        busy = false;
+      });
+    }
+
+    function closeFs() {
+      if (busy || fs.hidden) return;
+      busy = true;
+      const my = epoch;
+      const w = mathWindow(fsCurrent);
+      fs.hidden = true;
+      lockScroll(false);
+      w.scrollIntoView({ block: 'nearest' });
+      zoomOutline(fullRect(), w.getBoundingClientRect(), function () {
+        if (my !== epoch) return;
+        busy = false;
+      });
+    }
+
+    document.getElementById('math').addEventListener('click', function (e) {
+      const b = e.target.closest('.tb-max');
+      if (!b) return;
+      const w = b.closest('.win[data-id]');
+      if (w) openFs(w.dataset.id);
+    });
+
+    fs.querySelector('.tb-max').addEventListener('click', closeFs);
+
+    /* Переход по ссылке из полноэкранного окна (например, на The Grope) */
+    fs.addEventListener('click', function (e) {
+      if (e.target.closest('a.rowlink, a.item')) { epoch++; closeAllInstant(); }
+    });
+
+    /* =====================  Окна-прокрутки (картинки)  ===================== */
 
     function imgUrl(w, i) {
       return w.folder + encodeURIComponent(w.files[i]);
@@ -531,24 +1170,61 @@
       render(st);
     }
 
+    /* Окно картинок на весь экран и обратно */
+    function maxViewer(st) {
+      if (busy) return;
+      busy = true;
+      const my = epoch;
+      const from = st.el.getBoundingClientRect();
+      zoomOutline(from, fullRect(), function () {
+        if (my !== epoch) return;
+        const ph = document.createElement('div');   // держит место в сетке, пока окно развёрнуто
+        ph.style.cssText = 'flex:none;width:' + from.width + 'px;height:' + from.height + 'px';
+        st.el.parentNode.insertBefore(ph, st.el);
+        st.ph = ph;
+        st.el.classList.add('fullscreen');
+        lockScroll(true);
+        active = wins.indexOf(st);
+        busy = false;
+      });
+    }
+
+    function restoreViewer(st) {
+      if (busy || !st.el.classList.contains('fullscreen')) return;
+      busy = true;
+      const my = epoch;
+      st.el.classList.add('animating');
+      zoomOutline(fullRect(), st.ph.getBoundingClientRect(), function () {
+        if (my !== epoch) return;
+        st.el.classList.remove('fullscreen', 'animating');
+        st.ph.remove();
+        st.ph = null;
+        lockScroll(false);
+        busy = false;
+        layout();
+      });
+    }
+
     function build(key) {
       grid.innerHTML = '';
       wins = sets[key].windows.map(function (w, i) {
         const el = document.createElement('div');
         el.className = 'win vwin';
         el.innerHTML =
-          '<div class="titlebar"></div>' +
+          '<div class="titlebar"><span class="tb-title"></span>' + MAX_BTN + '</div>' +
           '<div class="list viewer">' +
             '<button class="vbtn prev" type="button" aria-label="Previous">' + ARROW_LEFT + '</button>' +
             '<div class="stage"><img alt=""><div class="verr" hidden></div></div>' +
             '<button class="vbtn next" type="button" aria-label="Next">' + ARROW_RIGHT + '</button>' +
           '</div>' +
           '<div class="vcount"></div>';
-        el.querySelector('.titlebar').textContent = w.title;
+        el.querySelector('.tb-title').textContent = w.title;
         grid.appendChild(el);
         const st = {
           cfg: w,
           idx: 0,
+          el: el,
+          ph: null,
           stage: el.querySelector('.stage'),
           img: el.querySelector('img'),
           err: el.querySelector('.verr'),
@@ -556,6 +1232,9 @@
         };
         el.querySelector('.prev').addEventListener('click', function () { active = i; step(st, -1); });
         el.querySelector('.next').addEventListener('click', function () { active = i; step(st, 1); });
+        el.querySelector('.tb-max').addEventListener('click', function () {
+          if (el.classList.contains('fullscreen')) restoreViewer(st); else maxViewer(st);
+        });
         el.addEventListener('mouseenter', function () { active = i; });
         return st;
       });
@@ -592,17 +1271,39 @@
       wins.forEach(render);
     }
 
+    /* =====================  Общие обработчики  ===================== */
+
+    /* мгновенно закрыть все полноэкранные окна (при смене страницы) */
+    function closeAllInstant() {
+      epoch++;
+      fs.hidden = true;
+      wins.forEach(function (st) {
+        st.el.classList.remove('fullscreen', 'animating');
+        if (st.ph) { st.ph.remove(); st.ph = null; }
+      });
+      lockScroll(false);
+      busy = false;
+    }
+
     document.addEventListener('keydown', function (e) {
-      if (viewerSection.hidden || !wins.length) return;
+      if (e.key === 'Escape') {
+        if (busy) return;
+        if (!fs.hidden) { closeFs(); return; }
+        const full = wins.filter(function (st) { return st.el.classList.contains('fullscreen'); })[0];
+        if (full) { restoreViewer(full); return; }
+      }
+      if (viewerSection.hidden || !wins.length || busy) return;
       if (e.key === 'ArrowLeft') step(wins[active], -1);
       if (e.key === 'ArrowRight') step(wins[active], 1);
     });
 
     window.addEventListener('resize', function () {
       if (!viewerSection.hidden) layout();
+      scrollers.forEach(function (s) { s.refresh(); });
     });
 
     function showPage() {
+      closeAllInstant();
       let current = location.hash.slice(1);
       const isSet = Object.prototype.hasOwnProperty.call(sets, current);
       if (!isSet && !pages.includes(current)) current = 'home';
@@ -619,6 +1320,7 @@
       } else {
         token++;
         label = (current === 'home') ? 'ALEXEY YU. MILLER' : current.toUpperCase();
+        if (current === 'math') scrollers.forEach(function (s) { s.refresh(); });
       }
       document.getElementById('pagename').textContent = label;
       document.title = label;
