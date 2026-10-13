@@ -636,6 +636,46 @@
       .fsbtn { width: auto; max-width: none; padding: 8px 12px; font-size: 1rem; }
       .fsbtn.on, .fsbtn:active { padding: 9px 11px 7px 13px; }
     }
+
+    /* ---------- Кнопка «назад» на подстраницах ---------- */
+    #viewer.page.top { padding-bottom: 96px; }
+
+    .backbtn {
+      position: fixed;
+      left: 20px;
+      bottom: 20px;
+      z-index: 20;
+      background: #c0c0c0;
+      color: #000000;
+      border: 0;
+      border-radius: 0;
+      padding: 10px 24px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 1.25rem;
+      cursor: pointer;
+      box-shadow:
+        inset -1px -1px #0a0a0a,
+        inset 1px 1px #ffffff,
+        inset -2px -2px #808080,
+        inset 2px 2px #dfdfdf;
+    }
+
+    .backbtn:hover { background: #cfcfcf; }
+
+    .backbtn:active {
+      box-shadow:
+        inset 1px 1px #0a0a0a,
+        inset -1px -1px #ffffff,
+        inset 2px 2px #808080,
+        inset -2px -2px #dfdfdf;
+      padding: 11px 23px 9px 25px;
+    }
+
+    @media (max-width: 800px) {
+      .backbtn { left: 12px; bottom: 12px; padding: 8px 16px; font-size: 1.05rem; }
+      .backbtn:active { padding: 9px 15px 7px 17px; }
+    }
   </style>
 </head>
 
@@ -711,31 +751,55 @@
           <div class="list cols2p">
             <div class="colhead"><span>Title</span><span>Year</span><span>PDF</span></div>
             <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>Note title 1</span><span>2024</span></a>
+              <a class="rowlink" href="https://example.com" target="_blank"><span>The 3-Torus in 4-Space</span><span>2025</span></a>
               <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
             <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>Note title 2</span><span>2024</span></a>
+              <a class="rowlink" href="https://example.com" target="_blank"><span>The Topology of Surfaces</span><span>2025</span></a>
               <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
             <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>Note title 3</span><span>2024</span></a>
+              <a class="rowlink" href="https://example.com" target="_blank"><span>A Narrative Introduction to Topology</span><span>2024</span></a>
               <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
             <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>Note title 4</span><span>2024</span></a>
+              <a class="rowlink" href="https://example.com" target="_blank"><span>The Lickorish–Wallace Theorem</span><span>2024</span></a>
               <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
             <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>Note title 5</span><span>2024</span></a>
+              <a class="rowlink" href="https://example.com" target="_blank"><span>The Diamond Lemma</span><span>2024</span></a>
               <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
             <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>Note title 6</span><span>2024</span></a>
+              <a class="rowlink" href="https://example.com" target="_blank"><span>The Mazur–Eilenberg Swindle</span><span>2023</span></a>
               <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
             <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>Note title 7</span><span>2024</span></a>
+              <a class="rowlink" href="https://example.com" target="_blank"><span>The Reidemeister Theorem</span><span>2023</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>The Knot Group</span><span>2023</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>The Additivity of Knot Genus</span><span>2023</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>The Conway Knot</span><span>2022</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>The Montesinos Trick</span><span>2022</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Notes on One-Dimensional Dynamics</span><span>2022</span></a>
+              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+            </div>
+            <div class="item">
+              <a class="rowlink" href="https://example.com" target="_blank"><span>Notes on Complex Analysis</span><span>2018</span></a>
               <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
           </div>
@@ -792,6 +856,7 @@
 
     <section class="page top" id="viewer" hidden>
       <div class="vgrid" id="vgrid"></div>
+      <button class="backbtn" id="backbtn" type="button">Back to Drawings</button>
     </section>
 
     <section class="page" id="art" hidden></section>
@@ -809,6 +874,7 @@
     const sets = {
       grope: {
         title: 'The Grope',
+        from: 'drawings',   /* из какого окна MATH открыт набор: на него ведёт кнопка Back */
         windows: [
           {
             title: 'The Grope',
@@ -821,6 +887,7 @@
       },
       complement: {
         title: 'The Knot Complement',
+        from: 'drawings',
         windows: [
           {
             title: 'The Knot Complement [1]',
@@ -849,6 +916,7 @@
     let active = 0;
     let token = 0;
 
+    let pendingFs = null;  // какое окно MATH открыть на весь экран после перехода (кнопка Back)
     let busy = false;      // идёт анимация, ввод временно игнорируется
     let epoch = 0;         // меняется при переходе на другую страницу, чтобы отменять «хвосты» анимаций
     const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1316,6 +1384,8 @@
       let label;
       if (isSet) {
         label = sets[current].title.toUpperCase();
+        const from = sets[current].from;
+        document.getElementById('backbtn').textContent = 'Back to ' + (pristine[from] ? pristine[from].title : 'MATH');
         openSet(current);
       } else {
         token++;
@@ -1325,7 +1395,21 @@
       document.getElementById('pagename').textContent = label;
       document.title = label;
       window.scrollTo(0, 0);
+
+      if (current === 'math' && pendingFs) {
+        const id = pendingFs;
+        pendingFs = null;
+        openFs(id);
+      } else {
+        pendingFs = null;
+      }
     }
+
+    document.getElementById('backbtn').addEventListener('click', function () {
+      if (busy) return;
+      pendingFs = (sets[currentSet] && sets[currentSet].from) || null;
+      location.hash = '#math';
+    });
 
     window.addEventListener('hashchange', showPage);
     showPage();
