@@ -688,16 +688,22 @@
       padding: 20px;
     }
 
-    /* Фото в выпуклой рамке, как у окон */
+    /* Фото: вдавлено в панель, как окошки ввода; вокруг тонкая рамка #4a170d */
+    .photo-col { align-self: center; }   /* по центру высоты панели */
+
     .photo-frame {
       background: #c0c0c0;
-      padding: 3px;
+      padding: 5px;
       box-shadow:
-        inset -1px -1px #0a0a0a,
-        inset 1px 1px #dfdfdf,
-        inset -2px -2px #808080,
-        inset 2px 2px #ffffff,
-        6px 6px 0 rgba(0, 0, 0, 0.45);
+        inset -1px -1px #ffffff,
+        inset 1px 1px #808080,
+        inset -2px -2px #dfdfdf,
+        inset 2px 2px #0a0a0a;
+    }
+
+    .photo-inner {
+      background: #4a170d;
+      border: 4px solid #4a170d;
     }
 
     .photo-frame img {
@@ -814,9 +820,11 @@
         <!-- Фото в выпуклой рамке. Файл: images/photos/NN.jpg (пропорции 1439 x 1083) -->
         <div class="photo-col">
           <div class="photo-frame">
-            <img src="images/photos/NN.jpg" alt="Alexey Yu. Miller"
-                 onerror="this.style.display='none';this.nextElementSibling.hidden=false;">
-            <div class="photo-err" hidden>Не удалось загрузить фото: images/photos/NN.jpg</div>
+            <div class="photo-inner">
+              <img src="images/photos/NN.jpg" alt="Alexey Yu. Miller"
+                   onerror="this.style.display='none';this.nextElementSibling.hidden=false;">
+              <div class="photo-err" hidden>Не удалось загрузить фото: images/photos/NN.jpg</div>
+            </div>
           </div>
         </div>
 
