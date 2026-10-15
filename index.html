@@ -676,6 +676,123 @@
       .backbtn { left: 12px; bottom: 12px; padding: 8px 16px; font-size: 1.05rem; }
       .backbtn:active { padding: 9px 15px 7px 17px; }
     }
+
+    /* ---------- Страница HOME ---------- */
+    .homepanel {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.5fr) 260px;
+      gap: 28px;
+      align-items: start;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Фото в выпуклой рамке, как у окон */
+    .photo-frame {
+      background: #c0c0c0;
+      padding: 3px;
+      box-shadow:
+        inset -1px -1px #0a0a0a,
+        inset 1px 1px #dfdfdf,
+        inset -2px -2px #808080,
+        inset 2px 2px #ffffff,
+        6px 6px 0 rgba(0, 0, 0, 0.45);
+    }
+
+    .photo-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1439 / 1083;
+      object-fit: cover;
+    }
+
+    .photo-err {
+      padding: 16px;
+      font-weight: 400;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    /* Анкета */
+    .form {
+      margin: 0;
+      align-self: center;   /* анкета по центру высоты панели */
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr);
+      gap: 14px 16px;
+      align-items: start;
+    }
+
+    .form dt {
+      padding-top: 8px;
+      font-size: 1.05rem;
+      line-height: 1.3;
+    }
+
+    .form dd { margin: 0; }
+
+    /* «Окошко ввода»: вдавленное поле, редактировать нельзя */
+    .field {
+      width: 100%;
+      padding: 6px 10px;
+      background: #e4e4e4;
+      font-weight: 400;
+      font-size: 1.05rem;
+      line-height: 1.3;
+      box-shadow:
+        inset -1px -1px #ffffff,
+        inset 1px 1px #808080,
+        inset -2px -2px #dfdfdf,
+        inset 2px 2px #0a0a0a;
+    }
+
+    /* Кнопки справа */
+    .homebtns {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .homebtn {
+      width: 100%;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 0;
+      background: #c0c0c0;
+      color: #000000;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow:
+        inset -1px -1px #0a0a0a,
+        inset 1px 1px #ffffff,
+        inset -2px -2px #808080,
+        inset 2px 2px #dfdfdf;
+    }
+
+    .homebtn:hover { background: #cfcfcf; }
+
+    .homebtn:active {
+      box-shadow:
+        inset 1px 1px #0a0a0a,
+        inset -1px -1px #ffffff,
+        inset 2px 2px #808080,
+        inset -2px -2px #dfdfdf;
+      padding: 13px 15px 11px 17px;
+    }
+
+    @media (max-width: 1000px) {
+      .homepanel { grid-template-columns: minmax(0, 1fr); padding: 14px; }
+      .homebtns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 800px) {
+      .form { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+      .form dt { padding-top: 10px; }
+    }
   </style>
 </head>
 
@@ -691,7 +808,56 @@
   </header>
 
   <main>
-    <section class="page" id="home"></section>
+    <section class="page top" id="home">
+      <div class="win homepanel">
+
+        <!-- Фото в выпуклой рамке. Файл: images/photos/NN.jpg (пропорции 1439 x 1083) -->
+        <div class="photo-col">
+          <div class="photo-frame">
+            <img src="images/photos/NN.jpg" alt="Alexey Yu. Miller"
+                 onerror="this.style.display='none';this.nextElementSibling.hidden=false;">
+            <div class="photo-err" hidden>Не удалось загрузить фото: images/photos/NN.jpg</div>
+          </div>
+        </div>
+
+        <!-- Анкета: вопросы слева, ответы в «окошках ввода» справа -->
+        <dl class="form">
+          <dt>Full Name:</dt>
+          <dd><div class="field">Alexey Yu. Miller</div></dd>
+
+          <dt>Date of Birth:</dt>
+          <dd><div class="field">17 December 1998</div></dd>
+
+          <dt>Place of Birth:</dt>
+          <dd><div class="field">Chelyabinsk, Russian Federation</div></dd>
+
+          <dt>Ethnicity:</dt>
+          <dd><div class="field">Wolgadeutsche</div></dd>
+
+          <dt>Affiliation:</dt>
+          <dd><div class="field">PhD Student at the St. Petersburg Department of Steklov Mathematical Institute of Russian Academy of Sciences</div></dd>
+
+          <dt>Academic Advisor:</dt>
+          <dd><div class="field">Andrey V. Malyutin</div></dd>
+
+          <dt>Field of Research:</dt>
+          <dd><div class="field">Low-Dimensional Topology</div></dd>
+        </dl>
+
+        <!-- Кнопки (позже станут ссылками на подстраницы) -->
+        <div class="homebtns">
+          <button class="homebtn" type="button">Genealogy</button>
+          <button class="homebtn" type="button">Early Life</button>
+          <button class="homebtn" type="button">Molodost Cappella</button>
+          <button class="homebtn" type="button">Research</button>
+          <button class="homebtn" type="button">Conference Organization</button>
+          <button class="homebtn" type="button">LDTSS</button>
+          <button class="homebtn" type="button">Photo Gallery</button>
+          <button class="homebtn" type="button">Illustrations</button>
+        </div>
+
+      </div>
+    </section>
 
     <section class="page top" id="math" hidden>
       <div class="grid">
@@ -1147,8 +1313,14 @@
       return document.querySelector('#math .win[data-id="' + id + '"]');
     }
 
-    function openFs(id) {
+    function openFs(id, instant) {
       if (busy) return;
+      if (instant) {   // без анимации (например, при возврате кнопкой Back)
+        fs.hidden = false;
+        lockScroll(true);
+        fsShow(id);
+        return;
+      }
       busy = true;
       const my = epoch;
       zoomOutline(mathWindow(id).getBoundingClientRect(), fullRect(), function () {
@@ -1399,7 +1571,7 @@
       if (current === 'math' && pendingFs) {
         const id = pendingFs;
         pendingFs = null;
-        openFs(id);
+        openFs(id, true);
       } else {
         pendingFs = null;
       }
