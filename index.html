@@ -679,6 +679,7 @@
 
     /* ---------- Страница HOME ---------- */
     .homepanel {
+      min-height: 470px;   /* высота панели не зависит от числа кнопок */
       display: grid;
       grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.5fr) 260px;
       gap: 28px;
@@ -756,12 +757,17 @@
 
     /* Кнопки справа */
     .homebtns {
+      align-self: center;   /* кнопки по центру высоты панели */
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
 
     .homebtn {
+      display: block;
+      box-sizing: border-box;
+      text-align: center;
+      text-decoration: none;
       width: 100%;
       padding: 12px 16px;
       border: 0;
@@ -791,13 +797,102 @@
     }
 
     @media (max-width: 1000px) {
-      .homepanel { grid-template-columns: minmax(0, 1fr); padding: 14px; }
+      .homepanel { grid-template-columns: minmax(0, 1fr); padding: 14px; min-height: 0; }
       .homebtns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 800px) {
       .form { grid-template-columns: minmax(0, 1fr); gap: 4px; }
       .form dt { padding-top: 10px; }
+    }
+
+    /* ---------- Подстраницы: серая панель, как на HOME ---------- */
+    .subpanel {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .emptypanel { min-height: 470px; }
+
+    /* Research: две панели рядом */
+    .rpanels {
+      display: grid;
+      grid-template-columns: minmax(0, 37fr) minmax(0, 63fr);
+      gap: 28px;
+      align-items: stretch;
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    .rpanel { padding: 20px; }
+
+    /* левая: OVERVIEW, окошко с текстом, кнопки 2 x 2 */
+    .rpanel-left {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .rlabel {
+      color: #000000;
+      font-size: 1.15rem;
+    }
+
+    .rpanel-left .field {
+      flex: 1;
+      line-height: 1.45;
+    }
+
+    .rbuttons {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    /* правая: название темы чёрным по панели, под ним окошко с текстом и узкие кнопки по его бокам */
+    .rpanel-right {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* название темы начинается там же, где окно с текстом (после кнопки: 34px + отступ 12px) */
+    #rtitle { padding-left: 46px; }
+
+    /* цифры в названиях тем; масштаб подбирается скриптом под высоту заглавных букв шрифта */
+    .num {
+      font-size: calc(1em * var(--numscale, 1));
+      line-height: 0;
+    }
+
+    .rrow {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: stretch;
+      gap: 12px;
+    }
+
+    .rbody {
+      flex: 1;
+      width: auto;
+      min-width: 0;
+      min-height: 140px;
+      line-height: 1.45;
+    }
+
+    /* узкие кнопки листания, вытянутые по вертикали */
+    .rbtn {
+      width: 34px;
+      height: auto;
+      min-height: 52px;
+      align-self: stretch;
+    }
+
+    @media (max-width: 1000px) {
+      .rpanels { grid-template-columns: minmax(0, 1fr); }
+      .emptypanel { min-height: 300px; }
     }
   </style>
 </head>
@@ -854,14 +949,12 @@
 
         <!-- Кнопки (позже станут ссылками на подстраницы) -->
         <div class="homebtns">
-          <button class="homebtn" type="button">Genealogy</button>
-          <button class="homebtn" type="button">Early Life</button>
-          <button class="homebtn" type="button">Molodost Cappella</button>
-          <button class="homebtn" type="button">Research</button>
-          <button class="homebtn" type="button">Conference Organization</button>
-          <button class="homebtn" type="button">LDTSS</button>
-          <button class="homebtn" type="button">Photo Gallery</button>
-          <button class="homebtn" type="button">Illustrations</button>
+          <a class="homebtn" href="#early-life">Early Life</a>
+          <a class="homebtn" href="#research">Research</a>
+          <a class="homebtn" href="#ldtss">LDTSS</a>
+          <a class="homebtn" href="#conference-organization">Conference Organization</a>
+          <a class="homebtn" href="#photo-gallery">Photo Gallery</a>
+          <a class="homebtn" href="#illustrations">Illustrations</a>
         </div>
 
       </div>
@@ -1028,6 +1121,55 @@
       </div>
     </section>
 
+    <!-- Подстраница Research -->
+    <section class="page top" id="research" hidden>
+      <div class="rpanels">
+
+        <!-- Левая панель: OVERVIEW, окошко с текстом, четыре кнопки -->
+        <div class="win rpanel rpanel-left">
+          <div class="rlabel">OVERVIEW</div>
+          <div class="field">My research interests lie in low-dimensional topology, particularly knot theory, 3- and 4-manifolds, and discrete low-dimensional dynamics. I value visual intuition in mathematics. My current research focuses on crossing changes, which are local moves on knots, and Dehn surgery on 3-manifolds.</div>
+          <div class="rbuttons">
+            <button class="homebtn" type="button" data-fs="papers">Papers</button>
+            <button class="homebtn" type="button" data-cv>CV</button>
+            <button class="homebtn" type="button" data-fs="notes">Notes</button>
+            <button class="homebtn" type="button" data-fs="talks">Talks</button>
+          </div>
+        </div>
+
+        <!-- Правая панель: название темы чёрным по панели, под ним текст; кнопки листания по бокам окна с текстом -->
+        <div class="win rpanel rpanel-right">
+          <div class="rlabel" id="rtitle"></div>
+          <div class="rrow">
+            <button class="vbtn rbtn" id="rprev" type="button" aria-label="Previous"><svg viewBox="0 0 12 16" aria-hidden="true"><polygon points="10,1 10,15 2,8" fill="#000"/></svg></button>
+            <div class="field rbody" id="rbody"></div>
+            <button class="vbtn rbtn" id="rnext" type="button" aria-label="Next"><svg viewBox="0 0 12 16" aria-hidden="true"><polygon points="2,1 2,15 10,8" fill="#000"/></svg></button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="page top" id="early-life" hidden>
+      <div class="win subpanel emptypanel"></div>
+    </section>
+
+    <section class="page top" id="conference-organization" hidden>
+      <div class="win subpanel emptypanel"></div>
+    </section>
+
+    <section class="page top" id="ldtss" hidden>
+      <div class="win subpanel emptypanel"></div>
+    </section>
+
+    <section class="page top" id="photo-gallery" hidden>
+      <div class="win subpanel emptypanel"></div>
+    </section>
+
+    <section class="page top" id="illustrations" hidden>
+      <div class="win subpanel emptypanel"></div>
+    </section>
+
     <section class="page top" id="viewer" hidden>
       <div class="vgrid" id="vgrid"></div>
       <button class="backbtn" id="backbtn" type="button">Back to Drawings</button>
@@ -1037,7 +1179,7 @@
   </main>
 
   <script>
-    const pages = ['home', 'math', 'art'];
+    const pages = ['home', 'math', 'art', 'early-life', 'research', 'conference-organization', 'ldtss', 'photo-gallery', 'illustrations'];
 
     /* Наборы изображений. Каждый набор открывается по ссылке #ключ и состоит из одного
        или нескольких окон-прокруток. Чтобы добавить новый набор, добавьте пункт сюда и
@@ -1293,6 +1435,7 @@
     const fsNav = fs.querySelector('.fsnav');
     const fsCenter = fs.querySelector('.fscenter');
     let fsCurrent = null;
+    let fsOrigin = null;   // null: открыто со страницы MATH; 'research': открыто с подстраницы Research
 
     FS_ORDER.forEach(function (id) {
       if (!pristine[id]) return;
@@ -1321,9 +1464,11 @@
       return document.querySelector('#math .win[data-id="' + id + '"]');
     }
 
-    function openFs(id, instant) {
+    /* instant: без анимации; origin: откуда открыто (null = страница MATH) */
+    function openFs(id, instant, origin) {
       if (busy) return;
-      if (instant) {   // без анимации (например, при возврате кнопкой Back)
+      fsOrigin = origin || null;
+      if (instant) {
         fs.hidden = false;
         lockScroll(true);
         fsShow(id);
@@ -1342,6 +1487,12 @@
 
     function closeFs() {
       if (busy || fs.hidden) return;
+      if (fsOrigin) {   // открыто не со страницы MATH: просто возвращаемся на ту страницу, без анимации
+        fs.hidden = true;
+        lockScroll(false);
+        fsOrigin = null;
+        return;
+      }
       busy = true;
       const my = epoch;
       const w = mathWindow(fsCurrent);
@@ -1525,6 +1676,7 @@
     function closeAllInstant() {
       epoch++;
       fs.hidden = true;
+      fsOrigin = null;
       wins.forEach(function (st) {
         st.el.classList.remove('fullscreen', 'animating');
         if (st.ph) { st.ph.remove(); st.ph = null; }
@@ -1533,6 +1685,56 @@
       busy = false;
     }
 
+    /* ---------- Research: листание тем и кнопки Papers / Notes / Talks ---------- */
+    const researchSection = document.getElementById('research');
+    const topics = [
+      { title: 'KNOT THEORY', text: 'I value visual intuition in mathematics.' },
+      { title: '3-MANIFOLDS', text: 'I value visual intuition in mathematics.' },
+      { title: '4-MANIFOLDS', text: 'I value visual intuition in mathematics.' },
+      { title: 'DISCRETE DYNAMICS', text: 'I value visual intuition in mathematics.' }
+    ];
+    let topicIdx = 0;
+
+    function setTopic(i) {
+      topicIdx = (i + topics.length) % topics.length;
+      /* цифры оборачиваем в <span class="num">, чтобы выровнять их по высоте с заглавными буквами */
+      document.getElementById('rtitle').innerHTML =
+        topics[topicIdx].title.replace(/\d+/g, function (m) { return '<span class="num">' + m + '</span>'; });
+      document.getElementById('rbody').textContent = topics[topicIdx].text;
+    }
+
+    /* Насколько увеличивать цифры в заголовках: 0 = не увеличивать совсем,
+       1 = ровно до высоты заглавных букв, 0.5 = примерно на полпути */
+    const NUM_BLEND = 0.5;
+
+    /* Если в шрифте цифры ниже заглавных букв, подбираем коэффициент увеличения цифр */
+    function fitNumbers() {
+      if (!document.fonts || !document.fonts.load) return;
+      document.fonts.load('700 100px Alpino', 'H0123456789').then(function () {
+        const cv = document.createElement('canvas').getContext('2d');
+        cv.font = '700 100px Alpino, sans-serif';
+        const cap = cv.measureText('H').actualBoundingBoxAscent;
+        const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].map(function (c) {
+          return cv.measureText(c).actualBoundingBoxAscent;
+        });
+        const dig = digits.reduce(function (a, b) { return a + b; }, 0) / digits.length;
+        if (cap > 0 && dig > 0 && cap / dig > 1.08) {
+          const full = Math.min(cap / dig, 1.8);
+          document.documentElement.style.setProperty('--numscale', (1 + (full - 1) * NUM_BLEND).toFixed(3));
+        }
+      }).catch(function () {});
+    }
+    fitNumbers();
+
+    document.getElementById('rprev').addEventListener('click', function () { setTopic(topicIdx - 1); });
+    document.getElementById('rnext').addEventListener('click', function () { setTopic(topicIdx + 1); });
+    setTopic(0);
+
+    /* открыть окно со списком на весь экран без анимации; Esc вернёт на Research (кнопка CV пока ничего не делает) */
+    document.querySelectorAll('#research [data-fs]').forEach(function (b) {
+      b.addEventListener('click', function () { openFs(b.dataset.fs, true, 'research'); });
+    });
+
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') {
         if (busy) return;
@@ -1540,7 +1742,13 @@
         const full = wins.filter(function (st) { return st.el.classList.contains('fullscreen'); })[0];
         if (full) { restoreViewer(full); return; }
       }
-      if (viewerSection.hidden || !wins.length || busy) return;
+      if (busy || !fs.hidden) return;
+      if (!researchSection.hidden) {
+        if (e.key === 'ArrowLeft') setTopic(topicIdx - 1);
+        if (e.key === 'ArrowRight') setTopic(topicIdx + 1);
+        return;
+      }
+      if (viewerSection.hidden || !wins.length) return;
       if (e.key === 'ArrowLeft') step(wins[active], -1);
       if (e.key === 'ArrowRight') step(wins[active], 1);
     });
@@ -1569,7 +1777,7 @@
         openSet(current);
       } else {
         token++;
-        label = (current === 'home') ? 'ALEXEY YU. MILLER' : current.toUpperCase();
+        label = (current === 'home') ? 'ALEXEY YU. MILLER' : current.replace(/-/g, ' ').toUpperCase();
         if (current === 'math') scrollers.forEach(function (s) { s.refresh(); });
       }
       document.getElementById('pagename').textContent = label;
