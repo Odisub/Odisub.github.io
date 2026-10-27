@@ -860,10 +860,16 @@
     /* название темы начинается там же, где окно с текстом (после кнопки: 34px + отступ 12px) */
     #rtitle { padding-left: 46px; }
 
-    /* цифры в названиях тем; масштаб подбирается скриптом под высоту заглавных букв шрифта */
+    /* Цифры в названиях тем: «линейные» (на уровне строки), а не «старого стиля», которые опускаются под строку.
+       Если в шрифте такой возможности нет, скрипт добавляет класс numfb, и цифры рисуются обычным шрифтом. */
     .num {
-      font-size: calc(1em * var(--numscale, 1));
-      line-height: 0;
+      font-feature-settings: "lnum" 1;
+      font-variant-numeric: lining-nums;
+    }
+
+    .numfb .num {
+      font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+      font-weight: 700;
     }
 
     .rrow {
@@ -1703,26 +1709,21 @@
       document.getElementById('rbody').textContent = topics[topicIdx].text;
     }
 
-    /* Насколько увеличивать цифры в заголовках: 0 = не увеличивать совсем,
-       1 = ровно до высоты заглавных букв, 0.5 = примерно на полпути */
-    const NUM_BLEND = 0.5;
-
-    /* Если в шрифте цифры ниже заглавных букв, подбираем коэффициент увеличения цифр */
+    /* Проверяем, умеет ли шрифт «линейные» цифры (lnum). Если нет, цифры в названиях тем рисуем обычным шрифтом */
     function fitNumbers() {
       if (!document.fonts || !document.fonts.load) return;
-      document.fonts.load('700 100px Alpino', 'H0123456789').then(function () {
-        const cv = document.createElement('canvas').getContext('2d');
-        cv.font = '700 100px Alpino, sans-serif';
-        const cap = cv.measureText('H').actualBoundingBoxAscent;
-        const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].map(function (c) {
-          return cv.measureText(c).actualBoundingBoxAscent;
-        });
-        const dig = digits.reduce(function (a, b) { return a + b; }, 0) / digits.length;
-        if (cap > 0 && dig > 0 && cap / dig > 1.08) {
-          const full = Math.min(cap / dig, 1.8);
-          document.documentElement.style.setProperty('--numscale', (1 + (full - 1) * NUM_BLEND).toFixed(3));
-        }
-      }).catch(function () {});
+      document.fonts.load('700 40px Alpino', '0123456789').then(function () {
+        const probe = document.createElement('span');
+        probe.style.cssText = 'position:absolute;left:-9999px;top:0;white-space:nowrap;font:700 40px Alpino, sans-serif;font-feature-settings:normal;';
+        probe.textContent = '0123456789';
+        document.body.appendChild(probe);
+        const w0 = probe.getBoundingClientRect().width;
+        probe.style.fontFeatureSettings = '"lnum" 1';
+        probe.style.fontVariantNumeric = 'lining-nums';
+        const w1 = probe.getBoundingClientRect().width;
+        probe.remove();
+        if (Math.abs(w1 - w0) < 0.5) document.documentElement.classList.add('numfb');
+      }).catch(function () { document.documentElement.classList.add('numfb'); });
     }
     fitNumbers();
 
