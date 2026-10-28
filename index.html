@@ -880,13 +880,34 @@
       gap: 12px;
     }
 
+    /* окно с текстом справа: внутри прокручиваемая область и полоса прокрутки Windows 98.
+       Содержимое лежит в абсолютно позиционированном блоке, поэтому длинный текст не растягивает панель. */
     .rbody {
+      position: relative;
       flex: 1;
       width: auto;
       min-width: 0;
       min-height: 140px;
+      padding: 0;
+    }
+
+    .rbwrap {
+      position: absolute;
+      inset: 4px;
+      display: flex;
+    }
+
+    .rbwrap .rows {
+      padding: 2px 10px 2px 6px;
       line-height: 1.45;
     }
+
+    .rbwrap .rows p { margin: 0 0 0.9em; }
+    .rbwrap .rows p:last-child { margin-bottom: 0; }
+    .rbwrap sup { font-size: 0.75em; line-height: 0; }
+    .rbwrap b { font-weight: 700; }
+    .rbwrap i { font-style: italic; }
+    .nobr { white-space: nowrap; }   /* формула не разрывается между строками */
 
     /* узкие кнопки листания, вытянутые по вертикали */
     .rbtn {
@@ -1304,10 +1325,18 @@
       list.appendChild(wrap);
       list.classList.add('has-sb');
 
+      return bindScrollbar(rows, sb, opt);
+    }
+
+    /* Вешает поведение полосы прокрутки Windows 98 на прокручиваемый блок rows и разметку полосы sb.
+       opt.fit: число строк в свёрнутом окне; opt.step: шаг стрелок в пикселях (по умолчанию высота строки) */
+    function bindScrollbar(rows, sb, opt) {
+      opt = opt || {};
       const track = sb.querySelector('.sb-track');
       const thumb = sb.querySelector('.sb-thumb');
 
       function rowH() {
+        if (opt.step) return opt.step;
         const it = rows.firstElementChild;
         return (it && it.getBoundingClientRect().height) || 32;
       }
@@ -1403,6 +1432,25 @@
 
       refresh();
       return { refresh: refresh };
+    }
+
+
+    /* Текстовое окно ввода с полосой прокрутки справа (если текст не помещается) */
+    function initTextScroll(field) {
+      const wrap = document.createElement('div');
+      wrap.className = 'rbwrap';
+      const rows = document.createElement('div');
+      rows.className = 'rows';
+      const sb = document.createElement('div');
+      sb.className = 'vsb';
+      sb.innerHTML =
+        '<button class="sb-btn up" type="button" tabindex="-1" aria-label="Scroll up">' + SB_UP + '</button>' +
+        '<div class="sb-track"><div class="sb-thumb"></div></div>' +
+        '<button class="sb-btn down" type="button" tabindex="-1" aria-label="Scroll down">' + SB_DOWN + '</button>';
+      wrap.appendChild(rows);
+      wrap.appendChild(sb);
+      field.appendChild(wrap);
+      return { rows: rows, api: bindScrollbar(rows, sb, { step: 40 }) };
     }
 
     /* =====================  Окна на странице MATH  ===================== */
@@ -1693,20 +1741,52 @@
 
     /* ---------- Research: листание тем и кнопки Papers / Notes / Talks ---------- */
     const researchSection = document.getElementById('research');
+    /* text: список абзацев (допускается простая разметка, например <sup>) */
     const topics = [
-      { title: 'KNOT THEORY', text: 'I value visual intuition in mathematics.' },
-      { title: '3-MANIFOLDS', text: 'I value visual intuition in mathematics.' },
-      { title: '4-MANIFOLDS', text: 'I value visual intuition in mathematics.' },
-      { title: 'DISCRETE DYNAMICS', text: 'I value visual intuition in mathematics.' }
+      {
+        title: 'KNOT THEORY',
+        text: [
+          'Classical tame knots are objects of reality, and I see their study as having a profound ontological dimension.',
+          'I am interested in the global structure of the space of knots: how knots relate to one another, what patterns emerge, and what makes them similar or distinct. Rather than relying on formal criteria such as algebraic invariants, I seek to understand their underlying geometric structure. A natural framework for this is the Gordian graph, whose vertices represent isotopy classes of knots, with two vertices joined by an edge precisely when the corresponding knots differ by a single crossing change. I study the geometry of this graph and its associated clique complex, the Gordian complex.',
+          'I have proved that the Gordian graph is one-ended and that the Gordian complex exhibits regular geometric patterns implying that its geometric realization is an <span class="nobr">\u211D<sup>\u221E</sup>-manifold</span>. A central open question in my current research is whether the Gordian complex is contractible.',
+          'My other interests include criteria for detecting non-splittable links, the splitting number, and the Lernaean knot problem. I am also interested in the relationship between knot genus and unknotting number, the placement of knots on minimal-genus Seifert surfaces, and the construction of Seifert surfaces in 3-manifolds. Further interests include Goussarov\u2013Habiro clasper calculus, grope theory, and branched covers of the 3-sphere over knots.'
+        ]
+      },
+      {
+        title: '3-MANIFOLDS',
+        text: [
+          'My approach to low-dimensional topology is guided by a principle that finds its clearest expression in the study of 3-manifolds: to see, one must cut.',
+          'I am particularly interested in Dehn surgery and the surgery distance between closed, orientable 3-manifolds, defined as the minimum number of Dehn surgeries along knots needed to transform one manifold into another. A central open question is whether homology 3-spheres can lie at arbitrarily large surgery distance from the 3-sphere.',
+          'I am fascinated by Kirby calculus and its visual language, and I enjoy developing geometric and diagrammatic proofs. My other interests include adjacency of 3-manifolds, splicing and sewn-up constructions, Heegaard genus, Brieskorn homology spheres, and irregular branched coverings of 3-sphere over knots in the spirit of Montesinos.'
+        ]
+      },
+      {
+        title: '4-MANIFOLDS',
+        text: [
+          'I am drawn to the geometry of 4-manifolds in its own right. I am particularly interested in applying 4-manifold topology, especially four-dimensional Kirby calculus, to knot theory, for instance, to proving that knots are not slice. Other interests include Gluck twists, pochette surgery, Akbulut corks, exotic smooth structures, and branched covers of 4-manifolds.'
+        ]
+      },
+      {
+        title: 'DISCRETE DYNAMICS',
+        text: [
+          'I am interested in the interplay between knot theory and three-dimensional flows, particularly template theory. My other interests include real and complex one-dimensional dynamics, especially interval exchange transformations, as well as chaotic dynamics and strange attractors.'
+        ]
+      }
     ];
     let topicIdx = 0;
+
+    const rbodyScroll = initTextScroll(document.getElementById('rbody'));
 
     function setTopic(i) {
       topicIdx = (i + topics.length) % topics.length;
       /* цифры оборачиваем в <span class="num">, чтобы выровнять их по высоте с заглавными буквами */
       document.getElementById('rtitle').innerHTML =
         topics[topicIdx].title.replace(/\d+/g, function (m) { return '<span class="num">' + m + '</span>'; });
-      document.getElementById('rbody').textContent = topics[topicIdx].text;
+      /* сочетания вида «3-manifolds», «3-sphere» не разрываем между строками */
+      function nb(t) { return t.replace(/\d+-[A-Za-z]+/g, function (m) { return '<span class="nobr">' + m + '</span>'; }); }
+      rbodyScroll.rows.innerHTML = topics[topicIdx].text.map(function (t) { return '<p>' + nb(t) + '</p>'; }).join('');
+      rbodyScroll.rows.scrollTop = 0;
+      rbodyScroll.api.refresh();
     }
 
     /* Проверяем, умеет ли шрифт «линейные» цифры (lnum). Если нет, цифры в названиях тем рисуем обычным шрифтом */
