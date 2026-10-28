@@ -921,6 +921,75 @@
       .rpanels { grid-template-columns: minmax(0, 1fr); }
       .emptypanel { min-height: 300px; }
     }
+
+    /* ---------- Страница LDTSS ---------- */
+    .ldgrid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 28px;
+      align-items: stretch;
+      margin-top: 12px;
+    }
+
+    .ldtext { line-height: 1.45; }
+    .ldtext p { margin: 0 0 0.9em; }
+    .ldtext p:last-child { margin-bottom: 0; }
+
+    /* ссылки на имена: цвет шапки, подчёркивание */
+    .plink,
+    .plink:visited {
+      color: #4a170d;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .plink:hover,
+    .plink:focus {
+      background: #4a170d;
+      color: #e4e4e4;
+      outline: none;
+    }
+
+    /* видео 16:9 внутри выемки с рамкой */
+    .video16 {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #000000;
+    }
+
+    .video16 iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video16.loading iframe { visibility: hidden; }
+
+    .ytload {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #c0c0c0;
+      font-weight: 400;
+      font-size: 0.95rem;
+    }
+
+    .video16:not(.loading) .ytload { display: none; }
+
+    .ytnote {
+      margin-top: 12px;
+      font-weight: 400;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 1000px) {
+      .ldgrid { grid-template-columns: minmax(0, 1fr); }
+    }
   </style>
 </head>
 
@@ -1185,8 +1254,34 @@
       <div class="win subpanel emptypanel"></div>
     </section>
 
+    <!-- Подстраница LDTSS -->
     <section class="page top" id="ldtss" hidden>
-      <div class="win subpanel emptypanel"></div>
+      <div class="win subpanel">
+        <div class="rlabel">LOW-DIMENSIONAL TOPOLOGY STUDENT SEMINAR</div>
+        <div class="ldgrid">
+
+          <!-- Слева: вдавленная выемка с рамкой #4a170d, в ней последнее видео плейлиста -->
+          <div class="ldleft">
+            <div class="photo-frame">
+              <div class="photo-inner">
+                <div class="video16 loading" id="ytbox"><div class="ytload">Loading video…</div></div>
+              </div>
+            </div>
+            <div class="ytnote" id="ytfallback" hidden>
+              The video could not be loaded.
+              <a class="plink" href="https://www.youtube.com/playlist?list=PLSF3rmygvD9Lgr5NK-VSzwg8Pe7XTQlOG" target="_blank" rel="noopener">Open the playlist on YouTube</a>
+            </div>
+          </div>
+
+          <!-- Справа: окно с текстом -->
+          <div class="field ldtext">
+            <p>Founded in 2020 at the Euler International Mathematical Institute, the Low-Dimensional Topology Student Seminar (LDTSS) provides a forum for early-career mathematicians to discuss current research and related topics.</p>
+            <p>I co-organize the seminar with <a class="plink" href="https://www.researchgate.net/profile/Ilya-Alekseev-5" target="_blank" rel="noopener">Ilya Alekseev</a>, <a class="plink" href="https://www.mathnet.ru/php/person.phtml?personid=206807&amp;option_lang=eng" target="_blank" rel="noopener">Arshak Aivazian</a>, <a class="plink" href="https://www.mathnet.ru/php/person.phtml?&amp;personid=176401&amp;option_lang=eng" target="_blank" rel="noopener">Daria Aksenova</a>, <a class="plink" href="https://arxiv.org/search/math?searchtype=author&amp;query=Ionin,+V" target="_blank" rel="noopener">Vasily Ionin</a>, and <a class="plink" href="https://www.mathnet.ru/php/person.phtml?personid=233775&amp;option_lang=eng" target="_blank" rel="noopener">Simona Kurapova</a>.</p>
+            <p>The seminar is held in Russian. During the current semester, meetings take place on Fridays at 4:00 p.m. in Room 201, 29 14th Line, Vasilyevsky Island, St. Petersburg, and are also streamed via Zoom.</p>
+          </div>
+
+        </div>
+      </div>
     </section>
 
     <section class="page top" id="photo-gallery" hidden>
@@ -1724,6 +1819,101 @@
       wins.forEach(render);
     }
 
+
+    /* =====================  LDTSS: последнее видео плейлиста  ===================== */
+
+    const YT_PLAYLIST = 'PLSF3rmygvD9Lgr5NK-VSzwg8Pe7XTQlOG';
+
+    /* Необязательно: ключ YouTube Data API. С ключом самое новое видео определяется точно, по дате загрузки.
+       Без ключа берётся первое или последнее видео плейлиста (см. ниже). */
+    const YT_API_KEY = '';
+
+    /* Без ключа: true  = новые видео в плейлист добавляются в конец, берём последнее;
+                  false = новые видео добавляются в начало, берём первое. */
+    const YT_LATEST_IS_LAST = true;
+
+    let ytStarted = false;
+
+    function ytDone(ok) {
+      document.getElementById('ytbox').classList.remove('loading');
+      if (!ok) document.getElementById('ytfallback').hidden = false;
+    }
+
+    function loadYtApi() {
+      return new Promise(function (resolve, reject) {
+        if (window.YT && window.YT.Player) { resolve(); return; }
+        const prev = window.onYouTubeIframeAPIReady;
+        window.onYouTubeIframeAPIReady = function () { if (prev) prev(); resolve(); };
+        const sc = document.createElement('script');
+        sc.src = 'https://www.youtube.com/iframe_api';
+        sc.onerror = reject;
+        document.head.appendChild(sc);
+      });
+    }
+
+    /* Точный способ (нужен ключ): ищем в плейлисте видео с самой поздней датой загрузки */
+    async function latestViaApi() {
+      let token = '';
+      let best = null;
+      for (let i = 0; i < 20; i++) {
+        const url = 'https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=50' +
+          '&playlistId=' + YT_PLAYLIST + '&key=' + encodeURIComponent(YT_API_KEY) + (token ? '&pageToken=' + token : '');
+        const r = await fetch(url);
+        if (!r.ok) throw new Error('api');
+        const d = await r.json();
+        (d.items || []).forEach(function (it) {
+          const t = it.contentDetails.videoPublishedAt || '';
+          if (t && (!best || t > best.t)) best = { id: it.contentDetails.videoId, t: t };
+        });
+        if (!d.nextPageToken) break;
+        token = d.nextPageToken;
+      }
+      if (!best) throw new Error('empty');
+      const box = document.getElementById('ytbox');
+      box.insertAdjacentHTML('beforeend',
+        '<iframe src="https://www.youtube-nocookie.com/embed/' + best.id + '" title="LDTSS: latest video" ' +
+        'allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
+        'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>');
+    }
+
+    /* Способ без ключа: плеер загружает плейлист, из его списка берём нужное видео */
+    async function latestViaPlayer() {
+      await loadYtApi();
+      await new Promise(function (resolve, reject) {
+        const host = document.createElement('div');
+        document.getElementById('ytbox').appendChild(host);
+        let tries = 0;
+        const player = new YT.Player(host, {
+          host: 'https://www.youtube-nocookie.com',
+          playerVars: { listType: 'playlist', list: YT_PLAYLIST, rel: 0 },
+          events: {
+            onReady: function () {
+              const iv = setInterval(function () {
+                const ids = player.getPlaylist && player.getPlaylist();
+                if (ids && ids.length) {
+                  clearInterval(iv);
+                  player.cueVideoById(YT_LATEST_IS_LAST ? ids[ids.length - 1] : ids[0]);
+                  resolve();
+                } else if (++tries > 25) {
+                  clearInterval(iv);
+                  reject(new Error('no playlist'));
+                }
+              }, 300);
+            },
+            onError: function () { reject(new Error('player')); }
+          }
+        });
+      });
+    }
+
+    function startLatestVideo() {
+      if (ytStarted) return;
+      ytStarted = true;
+      (YT_API_KEY ? latestViaApi() : latestViaPlayer())
+        .then(function () { ytDone(true); })
+        .catch(function () { ytDone(false); });
+    }
+
     /* =====================  Общие обработчики  ===================== */
 
     /* мгновенно закрыть все полноэкранные окна (при смене страницы) */
@@ -1864,6 +2054,8 @@
       document.getElementById('pagename').textContent = label;
       document.title = label;
       window.scrollTo(0, 0);
+
+      if (current === 'ldtss') startLatestVideo();
 
       if (current === 'math' && pendingFs) {
         const id = pendingFs;
