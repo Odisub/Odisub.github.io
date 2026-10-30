@@ -992,6 +992,77 @@
     @media (max-width: 1000px) {
       .ldgrid { grid-template-columns: minmax(0, 1fr); }
     }
+
+    /* ---------- Просмотрщик PDF в полноэкранном окне ---------- */
+    .fs.viewing .fsbody {
+      grid-template-columns: minmax(0, 1fr) clamp(600px, 52vw, 1000px) minmax(0, 1fr);
+    }
+
+    .pdfframe {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+    }
+
+    .pdfframe .photo-inner {
+      flex: 1;
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+    }
+
+    .pdfwrap {
+      flex: 1;
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      background: #808080;
+    }
+
+    .pdfscroll {
+      position: relative;
+      background: #808080;
+    }
+
+    .pdfpages {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .pdfpage {
+      flex: none;
+      background: #ffffff;
+      box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.45);
+    }
+
+    .pdfpage canvas { display: block; }
+
+    .pdfmsg {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e4e4e4;
+      font-weight: 400;
+      font-size: 0.95rem;
+      text-align: center;
+      padding: 16px;
+    }
+
+    .pdffallback {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #ffffff;
+    }
+
+    @media (max-width: 800px) {
+      .fs.viewing .fsbody { grid-template-columns: minmax(0, 1fr); }
+    }
   </style>
 </head>
 
@@ -1069,24 +1140,24 @@
               <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
             <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span><i class="nw">A. Yu. Miller</i></span><span>A note on a remarkable pattern in the Gordian graph</span><span>Zap. Nauchn. Sem. POMI</span><span>2026</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              <a class="rowlink" href="images/pdf/papers/pattern.pdf" data-pdf="images/pdf/papers/pattern.pdf"><span><i class="nw">A. Yu. Miller</i></span><span>A note on a remarkable pattern in the Gordian graph</span><span>Zap. Nauchn. Sem. POMI</span><span>2026</span></a>
+              <a class="pdf" href="images/pdf/papers/pattern.pdf" download="pattern.pdf" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
             <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span><i class="nw">S. A. Kurapova,</i> <i class="nw">A. Yu. Miller</i></span><span>Clique ladders in the Gordian graph</span><span>Zap. Nauchn. Sem. POMI</span><span>2026</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              <a class="rowlink" href="images/pdf/papers/ladders.pdf" data-pdf="images/pdf/papers/ladders.pdf"><span><i class="nw">S. A. Kurapova,</i> <i class="nw">A. Yu. Miller</i></span><span>Clique ladders in the Gordian graph</span><span>Zap. Nauchn. Sem. POMI</span><span>2026</span></a>
+              <a class="pdf" href="images/pdf/papers/ladders.pdf" download="ladders.pdf" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
             <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span><i class="nw">A. Yu. Miller,</i> <i class="nw">A. V. Malyutin,</i> <i class="nw">I. S. Alekseev</i></span><span>Infinite midway cliques in the Gordian graph</span><span>Zap. Nauchn. Sem. POMI</span><span>2025</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              <a class="rowlink" href="images/pdf/papers/midway.pdf" data-pdf="images/pdf/papers/midway.pdf"><span><i class="nw">A. Yu. Miller,</i> <i class="nw">A. V. Malyutin,</i> <i class="nw">I. S. Alekseev</i></span><span>Infinite midway cliques in the Gordian graph</span><span>Zap. Nauchn. Sem. POMI</span><span>2025</span></a>
+              <a class="pdf" href="images/pdf/papers/midway.pdf" download="midway.pdf" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
             <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span><i class="nw">A. Yu. Miller</i></span><span>The Gordian graph is one-ended</span><span>Zap. Nauchn. Sem. POMI</span><span>2025</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              <a class="rowlink" href="images/pdf/papers/one.pdf" data-pdf="images/pdf/papers/one.pdf"><span><i class="nw">A. Yu. Miller</i></span><span>The Gordian graph is one-ended</span><span>Zap. Nauchn. Sem. POMI</span><span>2025</span></a>
+              <a class="pdf" href="images/pdf/papers/one.pdf" download="one.pdf" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
             <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span><i class="nw">Yu. Belousov,</i> <i class="nw">M. V. Karev,</i> <i class="nw">A. V. Malyutin,</i><br><i class="nw">A. Yu. Miller,</i> <i class="nw">E. A. Fominykh</i></span><span>Lernaean knots and band surgery</span><span>St. Petersburg Mathematical Journal</span><span>2021</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              <a class="rowlink" href="images/pdf/papers/lernaean.pdf" data-pdf="images/pdf/papers/lernaean.pdf"><span><i class="nw">Yu. Belousov,</i> <i class="nw">M. V. Karev,</i> <i class="nw">A. V. Malyutin,</i><br><i class="nw">A. Yu. Miller,</i> <i class="nw">E. A. Fominykh</i></span><span>Lernaean knots and band surgery</span><span>St. Petersburg Mathematical Journal</span><span>2021</span></a>
+              <a class="pdf" href="images/pdf/papers/lernaean.pdf" download="lernaean.pdf" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
             </div>
           </div>
         </div>
@@ -1570,7 +1641,9 @@
     const fsNav = fs.querySelector('.fsnav');
     const fsCenter = fs.querySelector('.fscenter');
     let fsCurrent = null;
-    let fsOrigin = null;   // null: открыто со страницы MATH; 'research': открыто с подстраницы Research
+    let fsOrigin = null;   // null: открыто со страницы MATH; 'research': с подстраницы Research; 'direct': сразу в просмотрщик PDF
+    let pdfState = null;   // открыт просмотрщик PDF: { from: 'list' | 'direct' }
+    let pdfCtl = null;
 
     FS_ORDER.forEach(function (id) {
       if (!pristine[id]) return;
@@ -1583,16 +1656,23 @@
       fsNav.appendChild(b);
     });
 
-    function fsShow(id) {
-      fsCurrent = id;
-      fs.querySelector('.tb-title').textContent = pristine[id].title;
-      fsCenter.innerHTML = pristine[id].list;
-      initScroll(fsCenter.querySelector('.list'), {});
+    function fsMarkNav(id) {
       Array.prototype.forEach.call(fsNav.children, function (b) {
         const on = b.dataset.id === id;
         b.classList.toggle('on', on);
         if (on) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
       });
+    }
+
+    function fsShow(id) {
+      destroyPdf();            // если был открыт просмотрщик PDF, закрываем его
+      pdfState = null;
+      fs.classList.remove('viewing');
+      fsCurrent = id;
+      fs.querySelector('.tb-title').textContent = pristine[id].title;
+      fsCenter.innerHTML = pristine[id].list;
+      initScroll(fsCenter.querySelector('.list'), {});
+      fsMarkNav(id);
     }
 
     function mathWindow(id) {
@@ -1647,11 +1727,12 @@
       if (w) openFs(w.dataset.id);
     });
 
-    fs.querySelector('.tb-max').addEventListener('click', closeFs);
+    fs.querySelector('.tb-max').addEventListener('click', function () { escFs(); });
 
     /* Переход по ссылке из полноэкранного окна (например, на The Grope) */
     fs.addEventListener('click', function (e) {
-      if (e.target.closest('a.rowlink, a.item')) { epoch++; closeAllInstant(); }
+      const a = e.target.closest('a.rowlink, a.item');
+      if (a && (a.getAttribute('href') || '').charAt(0) === '#') { epoch++; closeAllInstant(); }
     });
 
     /* =====================  Окна-прокрутки (картинки)  ===================== */
@@ -1900,11 +1981,233 @@
         .catch(function () { ytDone(false); });
     }
 
+    /* =====================  Просмотрщик PDF  ===================== */
+
+    /* Библиотека PDF.js подгружается с CDN только при первом открытии статьи */
+    const PDFJS_BASES = [
+      'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/',
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/'
+    ];
+    let pdfjsPromise = null;
+
+    function loadPdfJs() {
+      if (pdfjsPromise) return pdfjsPromise;
+      pdfjsPromise = new Promise(function (resolve, reject) {
+        let i = 0;
+        function next() {
+          if (i >= PDFJS_BASES.length) { reject(new Error('pdfjs')); return; }
+          const base = PDFJS_BASES[i++];
+          const sc = document.createElement('script');
+          sc.src = base + 'pdf.min.js';
+          sc.onload = function () {
+            const lib = window.pdfjsLib || window['pdfjs-dist/build/pdf'];
+            if (!lib) { next(); return; }
+            lib.GlobalWorkerOptions.workerSrc = base + 'pdf.worker.min.js';
+            resolve(lib);
+          };
+          sc.onerror = function () { sc.remove(); next(); };
+          document.head.appendChild(sc);
+        }
+        next();
+      });
+      pdfjsPromise.catch(function () { pdfjsPromise = null; });
+      return pdfjsPromise;
+    }
+
+    function destroyPdf() {
+      if (pdfCtl) { pdfCtl.destroy(); pdfCtl = null; }
+    }
+
+    /* Выемка с рамкой #4a170d, внутри страницы PDF и полоса прокрутки Windows 98 */
+    function buildPdfView(url) {
+      fsCenter.innerHTML =
+        '<div class="photo-frame pdfframe"><div class="photo-inner"><div class="pdfwrap">' +
+          '<div class="rows pdfscroll" tabindex="0"><div class="pdfmsg">Loading PDF…</div><div class="pdfpages"></div></div>' +
+          '<div class="vsb">' +
+            '<button class="sb-btn up" type="button" tabindex="-1" aria-label="Scroll up">' + SB_UP + '</button>' +
+            '<div class="sb-track"><div class="sb-thumb"></div></div>' +
+            '<button class="sb-btn down" type="button" tabindex="-1" aria-label="Scroll down">' + SB_DOWN + '</button>' +
+          '</div>' +
+        '</div></div></div>';
+
+      const wrap = fsCenter.querySelector('.pdfwrap');
+      const scrollEl = fsCenter.querySelector('.pdfscroll');
+      const pagesEl = fsCenter.querySelector('.pdfpages');
+      const msg = fsCenter.querySelector('.pdfmsg');
+      const api = bindScrollbar(scrollEl, fsCenter.querySelector('.vsb'), { step: 60 });
+
+      let dead = false;
+      let loadTask = null;
+      let doc = null;
+      let ro = null;
+      const infos = [];
+
+      function fallback() {
+        if (dead) return;
+        wrap.innerHTML = '<iframe class="pdffallback" src="' + url + '" title="PDF"></iframe>';
+      }
+
+      function renderPage(p) {
+        p.busy = true;
+        const sc = p.scale;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const vp = p.page.getViewport({ scale: sc * dpr });
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.floor(vp.width);
+        canvas.height = Math.floor(vp.height);
+        canvas.style.width = p.cssW + 'px';
+        canvas.style.height = p.cssH + 'px';
+        p.task = p.page.render({ canvasContext: canvas.getContext('2d'), viewport: vp });
+        p.task.promise.then(function () {
+          p.busy = false;
+          p.task = null;
+          if (dead || p.scale !== sc) return;
+          p.el.innerHTML = '';
+          p.el.appendChild(canvas);
+          p.done = true;
+        }).catch(function () { p.busy = false; p.task = null; });
+      }
+
+      /* рисуем только страницы рядом с видимой областью */
+      function renderVisible() {
+        if (dead) return;
+        const top = scrollEl.scrollTop;
+        const h = scrollEl.clientHeight;
+        infos.forEach(function (p) {
+          const y = p.el.offsetTop;
+          if (y + p.cssH > top - h && y < top + 2 * h && !p.done && !p.busy) renderPage(p);
+        });
+      }
+
+      /* страницы подгоняются по ширине окна просмотра */
+      function layout() {
+        if (dead || !infos.length) return;
+        const availW = Math.max(100, scrollEl.clientWidth - 24);
+        infos.forEach(function (p) {
+          const scale = availW / p.w;
+          p.cssW = availW;
+          p.cssH = Math.round(p.h * scale);
+          p.el.style.width = p.cssW + 'px';
+          p.el.style.height = p.cssH + 'px';
+          if (Math.abs(p.scale - scale) > 0.001) {
+            if (p.task) { try { p.task.cancel(); } catch (e) {} }
+            p.scale = scale;
+            p.done = false;
+            p.busy = false;
+            p.el.innerHTML = '';
+          }
+        });
+        api.update();
+        renderVisible();
+      }
+
+      loadPdfJs()
+        .then(function (lib) {
+          if (dead) return null;
+          loadTask = lib.getDocument({ url: url });
+          return loadTask.promise;
+        })
+        .then(async function (d) {
+          if (!d) return;
+          if (dead) { d.destroy(); return; }
+          doc = d;
+          for (let i = 1; i <= doc.numPages; i++) {
+            const page = await doc.getPage(i);
+            if (dead) return;
+            const vp = page.getViewport({ scale: 1 });
+            const el = document.createElement('div');
+            el.className = 'pdfpage';
+            pagesEl.appendChild(el);
+            infos.push({ page: page, w: vp.width, h: vp.height, el: el, scale: 0, done: false, busy: false, task: null });
+          }
+          msg.hidden = true;
+          layout();
+          scrollEl.addEventListener('scroll', renderVisible);
+          if (window.ResizeObserver) {
+            ro = new ResizeObserver(function () { requestAnimationFrame(layout); });
+            ro.observe(scrollEl);
+          }
+        })
+        .catch(fallback);
+
+      return {
+        destroy: function () {
+          dead = true;
+          if (ro) ro.disconnect();
+          infos.forEach(function (p) { if (p.task) { try { p.task.cancel(); } catch (e) {} } });
+          if (loadTask) { try { loadTask.destroy(); } catch (e) {} }
+          if (doc) { try { doc.destroy(); } catch (e) {} }
+        },
+        key: function (e) {
+          const h = scrollEl.clientHeight;
+          if (e.key === 'ArrowDown') scrollEl.scrollTop += 60;
+          else if (e.key === 'ArrowUp') scrollEl.scrollTop -= 60;
+          else if (e.key === 'PageDown') scrollEl.scrollTop += h * 0.9;
+          else if (e.key === 'PageUp') scrollEl.scrollTop -= h * 0.9;
+          else if (e.key === 'Home') scrollEl.scrollTop = 0;
+          else if (e.key === 'End') scrollEl.scrollTop = scrollEl.scrollHeight;
+          else return;
+          e.preventDefault();
+        }
+      };
+    }
+
+    /* Открыть статью. Если окно Papers уже развёрнуто, просмотрщик заменяет середину этого окна;
+       если нажали на строку в маленьком окне на MATH, открывается полноэкранное окно (без анимации). */
+    function openPdf(url, title) {
+      const fromList = !fs.hidden;
+      if (!fromList) {
+        fsOrigin = 'direct';
+        fs.hidden = false;
+        lockScroll(true);
+      }
+      destroyPdf();
+      pdfState = { from: fromList ? 'list' : 'direct' };
+      fsCurrent = 'papers';
+      fsMarkNav('papers');
+      fs.classList.add('viewing');
+      fs.querySelector('.tb-title').textContent = 'Papers \u2014 ' + title;
+      pdfCtl = buildPdfView(new URL(url, document.baseURI).href);
+    }
+
+    /* Закрыть просмотрщик: назад к списку (если открывали из него) или совсем (если открывали сразу из маленького окна) */
+    function closePdf() {
+      if (!pdfState) return;
+      const from = pdfState.from;
+      destroyPdf();
+      pdfState = null;
+      fs.classList.remove('viewing');
+      if (from === 'list') {
+        fsShow(fsCurrent);
+      } else {
+        fs.hidden = true;
+        lockScroll(false);
+        fsOrigin = null;
+      }
+    }
+
+    /* Esc и кнопка «свернуть» в заголовке: сначала закрывается просмотрщик, потом само окно */
+    function escFs() {
+      if (busy || fs.hidden) return;
+      if (pdfState) closePdf(); else closeFs();
+    }
+
+    document.addEventListener('click', function (e) {
+      const a = e.target.closest('a.rowlink[data-pdf]');
+      if (!a || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      const cells = a.querySelectorAll(':scope > span');
+      openPdf(a.dataset.pdf, cells[1] ? cells[1].textContent : 'PDF');
+    });
+
     /* =====================  Общие обработчики  ===================== */
 
     /* мгновенно закрыть все полноэкранные окна (при смене страницы) */
     function closeAllInstant() {
       epoch++;
+      destroyPdf();
+      pdfState = null;
+      fs.classList.remove('viewing');
       fs.hidden = true;
       fsOrigin = null;
       wins.forEach(function (st) {
@@ -1995,10 +2298,11 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') {
         if (busy) return;
-        if (!fs.hidden) { closeFs(); return; }
+        if (!fs.hidden) { escFs(); return; }
         const full = wins.filter(function (st) { return st.el.classList.contains('fullscreen'); })[0];
         if (full) { restoreViewer(full); return; }
       }
+      if (!fs.hidden && pdfCtl) { pdfCtl.key(e); return; }
       if (busy || !fs.hidden) return;
       if (!researchSection.hidden) {
         if (e.key === 'ArrowLeft') setTopic(topicIdx - 1);
