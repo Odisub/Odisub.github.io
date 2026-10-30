@@ -1052,6 +1052,11 @@
       padding: 16px;
     }
 
+    .pdfmsg .pdflink,
+    .pdfmsg .pdflink:visited { color: #e4e4e4; }
+
+    .pdfmsg .pdflink:hover { background: #e4e4e4; color: #4a170d; }
+
     .pdffallback {
       flex: 1;
       width: 100%;
@@ -2042,10 +2047,36 @@
       let ro = null;
       const infos = [];
 
+      /* библиотека не загрузилась (например, нет доступа к CDN): показываем файл встроенным просмотрщиком браузера */
       function fallback() {
         if (dead) return;
         wrap.innerHTML = '<iframe class="pdffallback" src="' + url + '" title="PDF"></iframe>';
       }
+
+      /* файл не найден или не открывается: показываем, какой именно адрес запрашивался */
+      function showError(err) {
+        if (dead) return;
+        msg.hidden = false;
+        msg.innerHTML = '';
+        const box = document.createElement('div');
+        box.style.cssText = 'max-width: 100%; overflow-wrap: anywhere; line-height: 1.5;';
+        box.appendChild(document.createTextNode('Не удалось открыть файл:'));
+        box.appendChild(document.createElement('br'));
+        const link = document.createElement('a');
+        link.href = url;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.className = 'plink pdflink';
+        link.textContent = url;
+        box.appendChild(link);
+        if (err && err.name) {
+          box.appendChild(document.createElement('br'));
+          box.appendChild(document.createTextNode('(' + err.name + ')'));
+        }
+        msg.appendChild(box);
+      }
+
+      let libFailed = false;
 
       function renderPage(p) {
         p.busy = true;
@@ -2102,6 +2133,7 @@
       }
 
       loadPdfJs()
+        .catch(function (e) { libFailed = true; throw e; })
         .then(function (lib) {
           if (dead) return null;
           loadTask = lib.getDocument({ url: url });
@@ -2128,7 +2160,7 @@
             ro.observe(scrollEl);
           }
         })
-        .catch(fallback);
+        .catch(function (err) { if (libFailed) fallback(); else showError(err); });
 
       return {
         destroy: function () {
