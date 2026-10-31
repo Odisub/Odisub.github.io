@@ -1171,7 +1171,7 @@
     }
 
     .conftext {
-      align-self: center;   /* высота окна ровно по тексту, по центру высоты панели */
+      align-self: start;   /* высота окна ровно по тексту, у верхнего края панели */
       line-height: 1.45;
     }
 
@@ -1193,15 +1193,9 @@
       cursor: pointer;
     }
 
-    /* квадратная площадка под значок; выемка внутри прижата книзу, чтобы подписи были на одном уровне */
-    .confbox {
-      aspect-ratio: 1 / 1;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-    }
+    /* квадратная выемка значка */
+    .confbox { display: block; }
 
-    /* пропорции выемки задаются скриптом по самой картинке */
     .confimg {
       aspect-ratio: 1 / 1;
       background: #e4e4e4;
@@ -1211,7 +1205,7 @@
     .confimg img {
       width: 100%;
       height: 100%;
-      object-fit: contain;   /* cover заполнит выемку целиком, но обрежет края картинки */
+      object-fit: cover;   /* картинка по центру приближается ровно настолько, чтобы заполнить всю выемку */
       display: block;
     }
 
@@ -2651,20 +2645,6 @@
       openPdf(a.dataset.pdf, cells[1] ? cells[1].textContent : 'PDF');
     });
 
-
-    /* Выемки значков на странице Conference Organization повторяют пропорции своих картинок */
-    document.querySelectorAll('.conficon img').forEach(function (img) {
-      function fit() {
-        if (!img.naturalWidth || !img.naturalHeight) return;
-        const r = img.naturalWidth / img.naturalHeight;
-        img.parentNode.style.aspectRatio = String(r);
-        // рамка + отступ выемки занимают по 9px с каждой стороны (всего 18px)
-        const frame = img.closest('.photo-frame');
-        frame.style.width = r >= 1 ? '100%' : 'calc(' + r + ' * (100% - 18px) + 18px)';
-      }
-      if (img.complete) fit();
-      img.addEventListener('load', fit);
-    });
 
     /* =====================  Общие обработчики  ===================== */
 
