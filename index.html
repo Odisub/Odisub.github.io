@@ -1171,7 +1171,7 @@
     }
 
     .conftext {
-      align-self: start;   /* высота окна ровно по тексту, ниже просто серая панель */
+      align-self: center;   /* высота окна ровно по тексту, по центру высоты панели */
       line-height: 1.45;
     }
 
@@ -1193,6 +1193,15 @@
       cursor: pointer;
     }
 
+    /* квадратная площадка под значок; выемка внутри прижата книзу, чтобы подписи были на одном уровне */
+    .confbox {
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    /* пропорции выемки задаются скриптом по самой картинке */
     .confimg {
       aspect-ratio: 1 / 1;
       background: #e4e4e4;
@@ -1466,49 +1475,61 @@
 
           <div class="conficons">
             <a class="conficon" href="#conf-algeom">
-              <div class="photo-frame">
-                <div class="photo-inner">
-                  <div class="confimg"><img src="images/conferences/ALGEOM/logo.png" alt="" onerror="this.style.visibility='hidden'"></div>
+              <div class="confbox">
+                <div class="photo-frame">
+                  <div class="photo-inner">
+                    <div class="confimg"><img src="images/conferences/ALGEOM/logo.png" alt="" onerror="this.style.visibility='hidden'"></div>
+                  </div>
                 </div>
               </div>
               <div class="confcap">Algebraic Geometry, Homological Algebra, and Algebraic K-Theory 2026</div>
             </a>
             <a class="conficon" href="#conf-is">
-              <div class="photo-frame">
-                <div class="photo-inner">
-                  <div class="confimg"><img src="images/conferences/IS/badge2.jpg" alt="" onerror="this.style.visibility='hidden'"></div>
+              <div class="confbox">
+                <div class="photo-frame">
+                  <div class="photo-inner">
+                    <div class="confimg"><img src="images/conferences/IS/badge2.jpg" alt="" onerror="this.style.visibility='hidden'"></div>
+                  </div>
                 </div>
               </div>
               <div class="confcap">Integrable systems and quantum theory 2024-26</div>
             </a>
             <a class="conficon" href="#conf-pdmi-85">
-              <div class="photo-frame">
-                <div class="photo-inner">
-                  <div class="confimg"><img src="images/conferences/PDMI-85/postcard2.jpg" alt="" onerror="this.style.visibility='hidden'"></div>
+              <div class="confbox">
+                <div class="photo-frame">
+                  <div class="photo-inner">
+                    <div class="confimg"><img src="images/conferences/PDMI-85/postcard2.jpg" alt="" onerror="this.style.visibility='hidden'"></div>
+                  </div>
                 </div>
               </div>
               <div class="confcap">PDMI RAS: 85th Anniversary 2025</div>
             </a>
             <a class="conficon" href="#conf-kmc">
-              <div class="photo-frame">
-                <div class="photo-inner">
-                  <div class="confimg"><img src="images/conferences/KMC/logo.jpg" alt="" onerror="this.style.visibility='hidden'"></div>
+              <div class="confbox">
+                <div class="photo-frame">
+                  <div class="photo-inner">
+                    <div class="confimg"><img src="images/conferences/KMC/logo.jpg" alt="" onerror="this.style.visibility='hidden'"></div>
+                  </div>
                 </div>
               </div>
               <div class="confcap">IV Conference of Mathematical Centers of Russia 2024</div>
             </a>
             <a class="conficon" href="#conf-ldt">
-              <div class="photo-frame">
-                <div class="photo-inner">
-                  <div class="confimg"><img src="images/conferences/LDT/badge2.jpg" alt="" onerror="this.style.visibility='hidden'"></div>
+              <div class="confbox">
+                <div class="photo-frame">
+                  <div class="photo-inner">
+                    <div class="confimg"><img src="images/conferences/LDT/badge2.jpg" alt="" onerror="this.style.visibility='hidden'"></div>
+                  </div>
                 </div>
               </div>
               <div class="confcap">Low-dimensional topology 2025</div>
             </a>
             <a class="conficon" href="#conf-lec">
-              <div class="photo-frame">
-                <div class="photo-inner">
-                  <div class="confimg"><img src="images/conferences/LEC/logo.jpg" alt="" onerror="this.style.visibility='hidden'"></div>
+              <div class="confbox">
+                <div class="photo-frame">
+                  <div class="photo-inner">
+                    <div class="confimg"><img src="images/conferences/LEC/logo.jpg" alt="" onerror="this.style.visibility='hidden'"></div>
+                  </div>
                 </div>
               </div>
               <div class="confcap">Summer Mathematical Lectory 2023-2026</div>
@@ -2628,6 +2649,21 @@
       e.preventDefault();
       const cells = a.querySelectorAll(':scope > span');
       openPdf(a.dataset.pdf, cells[1] ? cells[1].textContent : 'PDF');
+    });
+
+
+    /* Выемки значков на странице Conference Organization повторяют пропорции своих картинок */
+    document.querySelectorAll('.conficon img').forEach(function (img) {
+      function fit() {
+        if (!img.naturalWidth || !img.naturalHeight) return;
+        const r = img.naturalWidth / img.naturalHeight;
+        img.parentNode.style.aspectRatio = String(r);
+        // рамка + отступ выемки занимают по 9px с каждой стороны (всего 18px)
+        const frame = img.closest('.photo-frame');
+        frame.style.width = r >= 1 ? '100%' : 'calc(' + r + ' * (100% - 18px) + 18px)';
+      }
+      if (img.complete) fit();
+      img.addEventListener('load', fit);
     });
 
     /* =====================  Общие обработчики  ===================== */
