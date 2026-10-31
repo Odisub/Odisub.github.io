@@ -1012,22 +1012,113 @@
     }
 
     .pdfwrap {
+      position: relative;
       flex: 1;
       min-width: 0;
       min-height: 0;
-      display: flex;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 16px;
+      grid-template-rows: minmax(0, 1fr) auto;
       background: #808080;
     }
 
-    .pdfscroll {
+    .pdfwrap .pdfscroll {
+      grid-column: 1;
+      grid-row: 1;
       position: relative;
+      min-width: 0;
+      min-height: 0;
+      overflow-x: auto;
       background: #808080;
     }
+
+    .pdfwrap > .vsb { grid-column: 2; grid-row: 1; }
+
+    /* горизонтальная полоса прокрутки */
+    .hsb {
+      grid-column: 1;
+      grid-row: 2;
+      display: flex;
+      height: 16px;
+    }
+
+    .hsb[hidden], .hcorner[hidden] { display: none; }
+
+    .hcorner {
+      grid-column: 2;
+      grid-row: 2;
+      width: 16px;
+      height: 16px;
+      background: #c0c0c0;
+    }
+
+    .hsb .sb-track { height: auto; min-width: 0; }
+
+    .hsb .sb-thumb {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: auto;
+      width: 16px;
+      min-width: 16px;
+      min-height: 0;
+    }
+
+    .hsb .sb-btn svg { width: 4px; height: 7px; }
+    .hsb.disabled .sb-btn { pointer-events: none; }
+    .hsb.disabled .sb-btn polygon { fill: #808080; }
+
+    /* кнопки приближения в правом верхнем углу просмотрщика */
+    .pdfzoom {
+      position: absolute;
+      top: 8px;
+      right: 26px;
+      z-index: 3;
+      display: flex;
+      gap: 4px;
+    }
+
+    .zbtn {
+      width: 32px;
+      height: 26px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: #c0c0c0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow:
+        inset -1px -1px #0a0a0a,
+        inset 1px 1px #ffffff,
+        inset -2px -2px #808080,
+        inset 2px 2px #dfdfdf;
+    }
+
+    .zbtn svg { width: 11px; height: 11px; }
+    .zbtn:hover:not(:disabled) { background: #cfcfcf; }
+
+    .zbtn:active:not(:disabled) {
+      box-shadow:
+        inset 1px 1px #0a0a0a,
+        inset -1px -1px #ffffff,
+        inset 2px 2px #808080,
+        inset -2px -2px #dfdfdf;
+      padding: 2px 0 0 2px;
+    }
+
+    .zbtn:disabled { cursor: default; }
+    .zbtn:disabled path { stroke: #808080; }
 
     .pdfpages {
+      box-sizing: border-box;
+      width: max-content;
+      min-width: 100%;
       padding: 12px;
       display: flex;
       flex-direction: column;
+      align-items: center;
       gap: 12px;
     }
 
@@ -1038,6 +1129,8 @@
     }
 
     .pdfpage canvas { display: block; }
+
+    .pdfmsg[hidden] { display: none; }
 
     .pdfmsg {
       position: absolute;
@@ -2023,7 +2116,88 @@
       if (pdfCtl) { pdfCtl.destroy(); pdfCtl = null; }
     }
 
-    /* Выемка с рамкой #4a170d, внутри страницы PDF и полоса прокрутки Windows 98 */
+    /* Горизонтальная полоса прокрутки Windows 98 (нужна, когда PDF приближен и шире окна) */
+    const SB_LEFT = '<svg viewBox="0 0 4 7" aria-hidden="true"><polygon points="4,0 4,7 0,3.5" fill="#000"/></svg>';
+    const SB_RIGHT = '<svg viewBox="0 0 4 7" aria-hidden="true"><polygon points="0,0 4,3.5 0,7" fill="#000"/></svg>';
+
+    function bindHScrollbar(el, hsb) {
+      const track = hsb.querySelector('.sb-track');
+      const thumb = hsb.querySelector('.sb-thumb');
+
+      function update() {
+        const vw = el.clientWidth;
+        const cw = el.scrollWidth;
+        const tl = track.clientWidth;
+        if (!tl) return;
+        if (cw <= vw + 1) {
+          hsb.classList.add('disabled');
+          thumb.style.display = 'none';
+          return;
+        }
+        hsb.classList.remove('disabled');
+        thumb.style.display = 'block';
+        const tw = Math.max(16, Math.round(tl * vw / cw));
+        thumb.style.width = tw + 'px';
+        thumb.style.left = Math.round((tl - tw) * el.scrollLeft / (cw - vw)) + 'px';
+      }
+
+      el.addEventListener('scroll', update);
+
+      function hold(btn, dir) {
+        btn.addEventListener('pointerdown', function (e) {
+          e.preventDefault();
+          function stepH() { el.scrollLeft += dir * 60; }
+          stepH();
+          let iv = null;
+          const t = setTimeout(function () { iv = setInterval(stepH, 55); }, 350);
+          function stop() {
+            clearTimeout(t);
+            if (iv) clearInterval(iv);
+            window.removeEventListener('pointerup', stop);
+            window.removeEventListener('pointercancel', stop);
+          }
+          window.addEventListener('pointerup', stop);
+          window.addEventListener('pointercancel', stop);
+        });
+      }
+      hold(hsb.querySelector('.left'), -1);
+      hold(hsb.querySelector('.right'), 1);
+
+      track.addEventListener('pointerdown', function (e) {
+        if (e.target === thumb) return;
+        const r = thumb.getBoundingClientRect();
+        el.scrollLeft += (e.clientX < r.left ? -1 : 1) * el.clientWidth * 0.9;
+      });
+
+      thumb.addEventListener('pointerdown', function (e) {
+        e.preventDefault();
+        thumb.setPointerCapture(e.pointerId);
+        const x0 = e.clientX;
+        const s0 = el.scrollLeft;
+        const range = (track.clientWidth - thumb.offsetWidth) || 1;
+        const max = el.scrollWidth - el.clientWidth;
+        function move(ev) { el.scrollLeft = s0 + (ev.clientX - x0) * max / range; }
+        function up() {
+          thumb.removeEventListener('pointermove', move);
+          thumb.removeEventListener('pointerup', up);
+          thumb.removeEventListener('pointercancel', up);
+        }
+        thumb.addEventListener('pointermove', move);
+        thumb.addEventListener('pointerup', up);
+        thumb.addEventListener('pointercancel', up);
+      });
+
+      return { update: update };
+    }
+
+    /* Уровни приближения относительно «по ширине окна» (1 = подгонка по ширине) */
+    const PDF_ZOOMS = [0.5, 0.67, 0.8, 1, 1.25, 1.5, 2, 2.5, 3];
+    const PDF_ZOOM_DEFAULT = 3;   // индекс значения 1
+
+    const ZOOM_IN_ICON = '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1v8M1 5h8" stroke="#000" stroke-width="2" fill="none"/></svg>';
+    const ZOOM_OUT_ICON = '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 5h8" stroke="#000" stroke-width="2" fill="none"/></svg>';
+
+    /* Выемка с рамкой #4a170d, внутри страницы PDF, полосы прокрутки Windows 98 и кнопки приближения */
     function buildPdfView(url) {
       fsCenter.innerHTML =
         '<div class="photo-frame pdfframe"><div class="photo-inner"><div class="pdfwrap">' +
@@ -2033,18 +2207,35 @@
             '<div class="sb-track"><div class="sb-thumb"></div></div>' +
             '<button class="sb-btn down" type="button" tabindex="-1" aria-label="Scroll down">' + SB_DOWN + '</button>' +
           '</div>' +
+          '<div class="hsb" hidden>' +
+            '<button class="sb-btn left" type="button" tabindex="-1" aria-label="Scroll left">' + SB_LEFT + '</button>' +
+            '<div class="sb-track"><div class="sb-thumb"></div></div>' +
+            '<button class="sb-btn right" type="button" tabindex="-1" aria-label="Scroll right">' + SB_RIGHT + '</button>' +
+          '</div>' +
+          '<div class="hcorner" hidden></div>' +
+          '<div class="pdfzoom">' +
+            '<button class="zbtn" type="button" data-z="out" title="Zoom out" aria-label="Zoom out">' + ZOOM_OUT_ICON + '</button>' +
+            '<button class="zbtn" type="button" data-z="in" title="Zoom in" aria-label="Zoom in">' + ZOOM_IN_ICON + '</button>' +
+          '</div>' +
         '</div></div></div>';
 
       const wrap = fsCenter.querySelector('.pdfwrap');
       const scrollEl = fsCenter.querySelector('.pdfscroll');
       const pagesEl = fsCenter.querySelector('.pdfpages');
       const msg = fsCenter.querySelector('.pdfmsg');
+      const hsb = fsCenter.querySelector('.hsb');
+      const hcorner = fsCenter.querySelector('.hcorner');
+      const btnIn = fsCenter.querySelector('[data-z="in"]');
+      const btnOut = fsCenter.querySelector('[data-z="out"]');
       const api = bindScrollbar(scrollEl, fsCenter.querySelector('.vsb'), { step: 60 });
+      const hapi = bindHScrollbar(scrollEl, hsb);
 
       let dead = false;
       let loadTask = null;
       let doc = null;
       let ro = null;
+      let zi = PDF_ZOOM_DEFAULT;
+      let libFailed = false;
       const infos = [];
 
       /* библиотека не загрузилась (например, нет доступа к CDN): показываем файл встроенным просмотрщиком браузера */
@@ -2076,13 +2267,13 @@
         msg.appendChild(box);
       }
 
-      let libFailed = false;
-
       function renderPage(p) {
         p.busy = true;
         const sc = p.scale;
+        /* четкость: учитываем плотность экрана, но ограничиваем размер холста, чтобы не исчерпать память */
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        const vp = p.page.getViewport({ scale: sc * dpr });
+        const out = Math.max(1, Math.min(dpr, Math.sqrt(16e6 / (p.cssW * p.cssH))));
+        const vp = p.page.getViewport({ scale: sc * out });
         const canvas = document.createElement('canvas');
         canvas.width = Math.floor(vp.width);
         canvas.height = Math.floor(vp.height);
@@ -2099,24 +2290,32 @@
         }).catch(function () { p.busy = false; p.task = null; });
       }
 
-      /* рисуем только страницы рядом с видимой областью */
+      /* рисуем только страницы рядом с видимой областью, у далёких освобождаем память */
       function renderVisible() {
         if (dead) return;
         const top = scrollEl.scrollTop;
         const h = scrollEl.clientHeight;
         infos.forEach(function (p) {
           const y = p.el.offsetTop;
-          if (y + p.cssH > top - h && y < top + 2 * h && !p.done && !p.busy) renderPage(p);
+          const near = y + p.cssH > top - h && y < top + 2 * h;
+          if (near && !p.done && !p.busy) renderPage(p);
+          else if (!near && p.done && (y + p.cssH < top - 3 * h || y > top + 4 * h)) { p.el.innerHTML = ''; p.done = false; }
         });
       }
 
-      /* страницы подгоняются по ширине окна просмотра */
+      function updateBars() {
+        api.update();
+        hapi.update();
+      }
+
+      /* страницы подгоняются по ширине окна и умножаются на текущее приближение */
       function layout() {
         if (dead || !infos.length) return;
+        const z = PDF_ZOOMS[zi];
         const availW = Math.max(100, scrollEl.clientWidth - 24);
         infos.forEach(function (p) {
-          const scale = availW / p.w;
-          p.cssW = availW;
+          const scale = availW * z / p.w;
+          p.cssW = Math.round(availW * z);
           p.cssH = Math.round(p.h * scale);
           p.el.style.width = p.cssW + 'px';
           p.el.style.height = p.cssH + 'px';
@@ -2128,9 +2327,43 @@
             p.el.innerHTML = '';
           }
         });
-        api.update();
+        const wide = scrollEl.scrollWidth > scrollEl.clientWidth + 1;
+        hsb.hidden = !wide;
+        hcorner.hidden = !wide;
+        btnOut.disabled = zi === 0;
+        btnIn.disabled = zi === PDF_ZOOMS.length - 1;
+        updateBars();
         renderVisible();
       }
+
+      /* меняем приближение, сохраняя то место документа, которое было в центре окна */
+      function setZoom(next) {
+        if (next < 0 || next >= PDF_ZOOMS.length || next === zi || !infos.length) return;
+        const h = scrollEl.clientHeight;
+        const w = scrollEl.clientWidth;
+        const fy = (scrollEl.scrollTop + h / 2) / Math.max(1, scrollEl.scrollHeight);
+        const fx = (scrollEl.scrollLeft + w / 2) / Math.max(1, scrollEl.scrollWidth);
+        zi = next;
+        layout();
+        scrollEl.scrollTop = fy * scrollEl.scrollHeight - h / 2;
+        scrollEl.scrollLeft = fx * scrollEl.scrollWidth - w / 2;
+        updateBars();
+        renderVisible();
+      }
+
+      btnIn.addEventListener('click', function () { setZoom(zi + 1); });
+      btnOut.addEventListener('click', function () { setZoom(zi - 1); });
+
+      /* Ctrl + колесо: приближаем сам PDF, а не весь сайт */
+      let lastWheel = 0;
+      scrollEl.addEventListener('wheel', function (e) {
+        if (!e.ctrlKey) return;
+        e.preventDefault();
+        const now = Date.now();
+        if (now - lastWheel < 120) return;
+        lastWheel = now;
+        setZoom(zi + (e.deltaY < 0 ? 1 : -1));
+      }, { passive: false });
 
       loadPdfJs()
         .catch(function (e) { libFailed = true; throw e; })
@@ -2174,10 +2407,14 @@
           const h = scrollEl.clientHeight;
           if (e.key === 'ArrowDown') scrollEl.scrollTop += 60;
           else if (e.key === 'ArrowUp') scrollEl.scrollTop -= 60;
+          else if (e.key === 'ArrowRight') scrollEl.scrollLeft += 60;
+          else if (e.key === 'ArrowLeft') scrollEl.scrollLeft -= 60;
           else if (e.key === 'PageDown') scrollEl.scrollTop += h * 0.9;
           else if (e.key === 'PageUp') scrollEl.scrollTop -= h * 0.9;
           else if (e.key === 'Home') scrollEl.scrollTop = 0;
           else if (e.key === 'End') scrollEl.scrollTop = scrollEl.scrollHeight;
+          else if (e.key === '+' || e.key === '=') setZoom(zi + 1);
+          else if (e.key === '-' || e.key === '_') setZoom(zi - 1);
           else return;
           e.preventDefault();
         }
