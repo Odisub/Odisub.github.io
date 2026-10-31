@@ -1161,6 +1161,82 @@
     @media (max-width: 800px) {
       .fs.viewing .fsbody { grid-template-columns: minmax(0, 1fr); }
     }
+
+    /* ---------- Страница Conference Organization ---------- */
+    .confgrid {
+      display: grid;
+      grid-template-columns: minmax(0, 36fr) minmax(0, 64fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .conftext {
+      align-self: start;   /* высота окна ровно по тексту, ниже просто серая панель */
+      line-height: 1.45;
+    }
+
+    .conficons {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 26px 20px;
+      align-items: start;
+    }
+
+    /* значок: вдавленная выемка с рамкой #4a170d и подпись под ней, как ярлык в Windows 98 */
+    .conficon {
+      display: block;
+      width: 100%;
+      max-width: 210px;
+      justify-self: center;
+      color: #000000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .confimg {
+      aspect-ratio: 1 / 1;
+      background: #e4e4e4;
+      display: flex;
+    }
+
+    .confimg img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;   /* cover заполнит выемку целиком, но обрежет края картинки */
+      display: block;
+    }
+
+    .confcap {
+      margin-top: 8px;
+      padding: 2px 4px;
+      text-align: center;
+      font-size: 0.95rem;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }
+
+    .conficon:hover .confcap,
+    .conficon:focus .confcap {
+      background: #4a170d;
+      color: #e4e4e4;
+    }
+
+    .conficon:focus { outline: none; }
+
+    /* длинные названия подстраниц в шапке */
+    #pagename { flex: 1; min-width: 0; }
+    #pagename.mid { font-size: 1.8rem; }
+    #pagename.long { font-size: 1.4rem; line-height: 1.15; }
+
+    @media (max-width: 1000px) {
+      .confgrid { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    @media (max-width: 800px) {
+      .conficons { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #pagename.mid { font-size: 1.3rem; }
+      #pagename.long { font-size: 1.1rem; }
+    }
   </style>
 </head>
 
@@ -1379,8 +1455,68 @@
       <div class="win subpanel emptypanel"></div>
     </section>
 
+    <!-- Подстраница Conference Organization -->
     <section class="page top" id="conference-organization" hidden>
-      <div class="win subpanel emptypanel"></div>
+      <div class="win subpanel">
+        <div class="confgrid">
+
+          <div class="field conftext">
+            I organize mathematical conferences and related events, with a particular focus on visual design and conference branding. I design and produce a wide range of materials, including posters, badges, lanyards, postcards, schedules, banners, notebooks, planners, event tickets, tote bags, and flags.
+          </div>
+
+          <div class="conficons">
+            <a class="conficon" href="#conf-algeom">
+              <div class="photo-frame">
+                <div class="photo-inner">
+                  <div class="confimg"><img src="images/conferences/ALGEOM/logo.png" alt="" onerror="this.style.visibility='hidden'"></div>
+                </div>
+              </div>
+              <div class="confcap">Algebraic Geometry, Homological Algebra, and Algebraic K-Theory 2026</div>
+            </a>
+            <a class="conficon" href="#conf-is">
+              <div class="photo-frame">
+                <div class="photo-inner">
+                  <div class="confimg"><img src="images/conferences/IS/badge2.jpg" alt="" onerror="this.style.visibility='hidden'"></div>
+                </div>
+              </div>
+              <div class="confcap">Integrable systems and quantum theory 2024-26</div>
+            </a>
+            <a class="conficon" href="#conf-pdmi-85">
+              <div class="photo-frame">
+                <div class="photo-inner">
+                  <div class="confimg"><img src="images/conferences/PDMI-85/postcard2.jpg" alt="" onerror="this.style.visibility='hidden'"></div>
+                </div>
+              </div>
+              <div class="confcap">PDMI RAS: 85th Anniversary 2025</div>
+            </a>
+            <a class="conficon" href="#conf-kmc">
+              <div class="photo-frame">
+                <div class="photo-inner">
+                  <div class="confimg"><img src="images/conferences/KMC/logo.jpg" alt="" onerror="this.style.visibility='hidden'"></div>
+                </div>
+              </div>
+              <div class="confcap">IV Conference of Mathematical Centers of Russia 2024</div>
+            </a>
+            <a class="conficon" href="#conf-ldt">
+              <div class="photo-frame">
+                <div class="photo-inner">
+                  <div class="confimg"><img src="images/conferences/LDT/badge2.jpg" alt="" onerror="this.style.visibility='hidden'"></div>
+                </div>
+              </div>
+              <div class="confcap">Low-dimensional topology 2025</div>
+            </a>
+            <a class="conficon" href="#conf-lec">
+              <div class="photo-frame">
+                <div class="photo-inner">
+                  <div class="confimg"><img src="images/conferences/LEC/logo.jpg" alt="" onerror="this.style.visibility='hidden'"></div>
+                </div>
+              </div>
+              <div class="confcap">Summer Mathematical Lectory 2023-2026</div>
+            </a>
+          </div>
+
+        </div>
+      </div>
     </section>
 
     <!-- Подстраница LDTSS -->
@@ -1421,6 +1557,30 @@
       <div class="win subpanel emptypanel"></div>
     </section>
 
+    <section class="page top" id="conf-algeom" data-title="Algebraic Geometry, Homological Algebra, and Algebraic K-Theory 2026" hidden>
+      <div class="win subpanel emptypanel"></div>
+    </section>
+
+    <section class="page top" id="conf-is" data-title="Integrable systems and quantum theory 2024-26" hidden>
+      <div class="win subpanel emptypanel"></div>
+    </section>
+
+    <section class="page top" id="conf-pdmi-85" data-title="PDMI RAS: 85th Anniversary 2025" hidden>
+      <div class="win subpanel emptypanel"></div>
+    </section>
+
+    <section class="page top" id="conf-kmc" data-title="IV Conference of Mathematical Centers of Russia 2024" hidden>
+      <div class="win subpanel emptypanel"></div>
+    </section>
+
+    <section class="page top" id="conf-ldt" data-title="Low-dimensional topology 2025" hidden>
+      <div class="win subpanel emptypanel"></div>
+    </section>
+
+    <section class="page top" id="conf-lec" data-title="Summer Mathematical Lectory 2023-2026" hidden>
+      <div class="win subpanel emptypanel"></div>
+    </section>
+
     <section class="page top" id="viewer" hidden>
       <div class="vgrid" id="vgrid"></div>
       <button class="backbtn" id="backbtn" type="button">Back to Drawings</button>
@@ -1430,7 +1590,8 @@
   </main>
 
   <script>
-    const pages = ['home', 'math', 'art', 'early-life', 'research', 'conference-organization', 'ldtss', 'photo-gallery', 'illustrations'];
+    const pages = ['home', 'math', 'art', 'early-life', 'research', 'conference-organization', 'ldtss', 'photo-gallery', 'illustrations',
+                   'conf-algeom', 'conf-is', 'conf-pdmi-85', 'conf-kmc', 'conf-ldt', 'conf-lec'];
 
     /* Наборы изображений. Каждый набор открывается по ссылке #ключ и состоит из одного
        или нескольких окон-прокруток. Чтобы добавить новый набор, добавьте пункт сюда и
@@ -2607,10 +2768,16 @@
         openSet(current);
       } else {
         token++;
-        label = (current === 'home') ? 'ALEXEY YU. MILLER' : current.replace(/-/g, ' ').toUpperCase();
+        const sec = document.getElementById(current);
+        label = (current === 'home') ? 'ALEXEY YU. MILLER'
+              : (sec && sec.dataset.title) ? sec.dataset.title.toUpperCase()
+              : current.replace(/-/g, ' ').toUpperCase();
         if (current === 'math') refreshAll();
       }
-      document.getElementById('pagename').textContent = label;
+      const nameEl = document.getElementById('pagename');
+      nameEl.textContent = label;
+      nameEl.classList.toggle('mid', label.length > 22 && label.length <= 40);
+      nameEl.classList.toggle('long', label.length > 40);
       document.title = label;
       window.scrollTo(0, 0);
 
