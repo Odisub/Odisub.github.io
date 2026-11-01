@@ -1227,6 +1227,85 @@
 
     .conficon:focus { outline: none; }
 
+    /* ---------- Подстраницы конференций (confsub) ---------- */
+    .confsubpanel { display: flex; flex-direction: column; }
+
+    /* те же две колонки и тот же зазор, что на Conference Organization: окно ввода такой же ширины */
+    .subgrid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 36fr) minmax(0, 64fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .subleft {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .subtext { line-height: 1.45; }
+
+    /* прямоугольник иконок: по 5 в ряд, до 15 штук */
+    .subicons {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px 10px;
+      align-items: start;
+      margin-top: 8px;
+    }
+
+    .subicon {
+      max-width: none;
+      justify-self: stretch;
+      background: none;
+      border: 0;
+      padding: 0;
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .subicon .confcap { font-size: 0.85rem; }
+
+    .confback {
+      width: auto;
+      align-self: flex-start;
+      margin-top: auto;     /* кнопка прижата к низу прямоугольника иконок */
+      padding: 10px 28px;
+    }
+    .confback:active { padding: 11px 27px 9px 29px; }
+
+    /* рабочий прямоугольник: от края панели до окна ввода; выемка с изображением по центру */
+    .subwork {
+      position: relative;
+      min-width: 0;
+      margin: -20px -20px -20px -28px;   /* заходит на поля панели: сверху, справа, снизу — до края панели, слева — до окна ввода */
+    }
+
+    .subframe {
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 0;
+      height: 0;
+    }
+
+    /* изображение в выемке показывается ровно заданного размера (задаёт скрипт) */
+    .subframe img {
+      aspect-ratio: auto;
+      object-fit: fill;
+    }
+
+    .subframe .photo-err[hidden] { display: none; }
+
+    @media (max-width: 1000px) {
+      .subgrid { grid-template-columns: minmax(0, 1fr); }
+      .subwork { position: static; margin: 0; }
+      .subframe { position: static; margin: 0 auto; }
+    }
+
     /* длинные названия подстраниц в шапке */
     #pagename { flex: 1; min-width: 0; }
     #pagename.mid { font-size: 1.8rem; }
@@ -1574,8 +1653,43 @@
       <div class="win subpanel emptypanel"></div>
     </section>
 
-    <section class="page top" id="conf-algeom" data-title="Algebraic Geometry, Homological Algebra, and Algebraic K-Theory 2026" hidden>
-      <div class="win subpanel emptypanel"></div>
+    <!-- Подстраница конференции: ALGEOM (шаблон для остальных подстраниц: класс confsub) -->
+    <section class="page top confsub" id="conf-algeom" data-title="Conference Organization" hidden>
+      <div class="win subpanel confsubpanel">
+        <div class="subgrid">
+
+          <!-- Левая колонка: название конференции, окно ввода, прямоугольник иконок, кнопка Back -->
+          <div class="subleft">
+            <div class="rlabel">ALGEBRAIC GEOMETRY, HOMOLOGICAL ALGEBRA, AND ALGEBRAIC K-THEORY 2026</div>
+            <div class="field subtext">Traditional МИАН-ПОМИ Session. May 18–22, 2026. St. Petersburg Department of the Steklov Mathematical Institute of the Russian Academy of Sciences. The program covered noncommutative and derived algebraic geometry, birational and arithmetic geometry, motives, algebraic K-theory, and homological algebra. <a class="plink" href="https://www.mathnet.ru/php/conference.phtml?confid=2735&amp;option_lang=rus" target="_blank" rel="noopener">Website</a>. I designed the T-shirt logo and created the conference notebooks.</div>
+
+            <!-- Иконки (до 15 штук: по 5 в ряд). Чтобы добавить иконку, скопируйте кнопку и поменяйте путь и подпись -->
+            <div class="subicons">
+              <button class="conficon subicon" type="button" data-src="images/conferences/ALGEOM/logo.png">
+                <div class="photo-frame"><div class="photo-inner"><div class="confimg"><img src="images/conferences/ALGEOM/logo.png" alt="" onerror="this.style.visibility='hidden'"></div></div></div>
+                <div class="confcap">Logo</div>
+              </button>
+              <button class="conficon subicon" type="button" data-src="images/conferences/ALGEOM/notebook.png">
+                <div class="photo-frame"><div class="photo-inner"><div class="confimg"><img src="images/conferences/ALGEOM/notebook.png" alt="" onerror="this.style.visibility='hidden'"></div></div></div>
+                <div class="confcap">Notebook</div>
+              </button>
+            </div>
+
+            <a class="homebtn confback" href="#conference-organization">Back</a>
+          </div>
+
+          <!-- Рабочий прямоугольник: выемка с выбранным изображением -->
+          <div class="subwork">
+            <div class="photo-frame subframe">
+              <div class="photo-inner">
+                <img alt="">
+                <div class="photo-err" hidden></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </section>
 
     <section class="page top" id="conf-is" data-title="Integrable systems and quantum theory 2024-26" hidden>
@@ -2767,6 +2881,90 @@
       refreshAll();
     });
 
+    /* =====================  Подстраницы конференций (.confsub)  ===================== */
+    const CONF_MARGIN = 24;    // минимальные поля выемки (одинаковые со всех сторон), px
+    const FRAME_CHROME = 18;   // рамка выемки: padding 5px + рамка 4px, с двух сторон
+
+    // панель подстраницы делаем точно такой же высоты, как панель на Conference Organization
+    function syncConfPanelHeight(sec) {
+      const panel = sec.querySelector('.confsubpanel');
+      panel.style.minHeight = '';
+      if (window.innerWidth <= 1000) return;
+      const conf = document.getElementById('conference-organization');
+      const wasHidden = conf.hidden;
+      conf.hidden = false;
+      conf.style.visibility = 'hidden';
+      const h = conf.querySelector('.subpanel').offsetHeight;
+      conf.style.visibility = '';
+      conf.hidden = wasHidden;
+      panel.style.minHeight = h + 'px';
+    }
+
+    // выемка ровно по размеру изображения, максимально большая с равными полями
+    function fitConfImage(sec) {
+      const area = sec.querySelector('.subwork');
+      const frame = sec.querySelector('.subframe');
+      const img = frame.querySelector('img');
+      const err = frame.querySelector('.photo-err');
+      const abs = getComputedStyle(frame).position === 'absolute';
+      const aw = abs ? area.clientWidth - 2 * CONF_MARGIN : area.clientWidth;
+      const ah = abs ? area.clientHeight - 2 * CONF_MARGIN : window.innerHeight * 0.8;
+      if (!err.hidden) {
+        frame.style.width = Math.max(120, Math.min(440, aw)) + 'px';
+        frame.style.height = 'auto';
+        if (abs) frame.style.height = '96px';
+        return;
+      }
+      if (!img.naturalWidth) return;
+      const nw = img.naturalWidth, nh = img.naturalHeight;
+      const k = Math.min((aw - FRAME_CHROME) / nw, (ah - FRAME_CHROME) / nh);
+      const w = Math.max(1, Math.floor(nw * k));
+      const h = Math.max(1, Math.round(nh * w / nw));
+      img.style.width = w + 'px';
+      img.style.height = h + 'px';
+      frame.style.width = (w + FRAME_CHROME) + 'px';
+      frame.style.height = (h + FRAME_CHROME) + 'px';
+    }
+
+    function confSubSelect(sec, btn) {
+      const img = sec.querySelector('.subframe img');
+      const err = sec.querySelector('.subframe .photo-err');
+      const src = btn.dataset.src;
+      err.hidden = true;
+      img.hidden = false;
+      img.onload = function () { fitConfImage(sec); };
+      img.onerror = function () {
+        img.hidden = true;
+        err.hidden = false;
+        err.textContent = 'Image not found: ' + src;
+        fitConfImage(sec);
+      };
+      img.removeAttribute('style');
+      img.src = src;
+      if (img.complete && img.naturalWidth) fitConfImage(sec);
+    }
+
+    function openConfSub(sec) {
+      syncConfPanelHeight(sec);
+      const first = sec.querySelector('.subicon');
+      if (first) confSubSelect(sec, first);   // по умолчанию — самая левая верхняя иконка
+    }
+
+    document.querySelectorAll('.confsub .subicon').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        confSubSelect(btn.closest('.confsub'), btn);
+      });
+    });
+
+    function refitVisibleConfSub() {
+      const sec = document.querySelector('.confsub:not([hidden])');
+      if (!sec) return;
+      syncConfPanelHeight(sec);
+      fitConfImage(sec);
+    }
+    window.addEventListener('resize', refitVisibleConfSub);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(refitVisibleConfSub);
+
     function showPage() {
       closeAllInstant();
       let current = location.hash.slice(1);
@@ -2800,6 +2998,9 @@
       window.scrollTo(0, 0);
 
       if (current === 'ldtss') startLatestVideo();
+
+      const curSec = document.getElementById(current);
+      if (curSec && curSec.classList.contains('confsub')) openConfSub(curSec);
 
       if (current === 'math' && pendingFs) {
         const id = pendingFs;
