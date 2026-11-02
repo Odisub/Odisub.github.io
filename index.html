@@ -90,23 +90,6 @@
 
     .page.top { padding: 40px 24px; }
 
-    /* Окна по два в ряд, одинаковой ширины, по центру */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 28px;
-      align-items: start;
-      max-width: 1320px;
-      margin: 0 auto;
-    }
-
-    /* Окно Papers: на всю ширину сетки (две колонки) */
-    .win.papers { grid-column: 1 / -1; }
-
-    @media (max-width: 800px) {
-      .grid { grid-template-columns: minmax(0, 1fr); }
-    }
-
     /* ---------- Окна Windows 98 ---------- */
     .win {
       background: #c0c0c0;
@@ -171,12 +154,6 @@
     }
 
     .tb-max svg { width: 11px; height: 11px; }
-    .tb-max .ic-restore { display: none; }
-    .vwin.fullscreen .tb-max .ic-max,
-    .fswin .tb-max .ic-max { display: none; }
-    .vwin.fullscreen .tb-max .ic-restore,
-    .fswin .tb-max .ic-restore { display: block; }
-
     /* Список как в Проводнике (вид «Таблица») */
     .list {
       background: #e4e4e4;
@@ -275,94 +252,7 @@
       outline: none;
     }
 
-    /* ---------- Окна-прокрутки (просмотрщик изображений) ---------- */
-    .vgrid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 28px;
-      justify-content: center;
-      align-items: stretch;   /* окна в ряду одной высоты: равняемся на большее */
-    }
-
-    .vwin {
-      flex: none;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .vwin .viewer { flex: 1; }
-
-    .viewer {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px;
-    }
-
-    /* Ширина и пропорции поля под картинку задаёт скрипт */
-    .stage {
-      flex: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-
-    .stage img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .verr {
-      font-weight: 400;
-      font-size: 0.95rem;
-      line-height: 1.4;
-      padding: 8px;
-    }
-
-    .vbtn {
-      flex: none;
-      width: 52px;
-      height: 52px;
-      border: 0;
-      border-radius: 0;
-      background: #c0c0c0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow:
-        inset -1px -1px #0a0a0a,
-        inset 1px 1px #ffffff,
-        inset -2px -2px #808080,
-        inset 2px 2px #dfdfdf;
-    }
-
-    .vbtn:hover { background: #cfcfcf; }
-
-    .vbtn:active {
-      box-shadow:
-        inset 1px 1px #0a0a0a,
-        inset -1px -1px #ffffff,
-        inset 2px 2px #808080,
-        inset -2px -2px #dfdfdf;
-      padding: 2px 0 0 2px;
-    }
-
-    .vbtn svg { width: 14px; height: 18px; }
-
-    .vcount {
-      text-align: center;
-      padding: 6px 0 3px;
-      font-size: 0.95rem;
-    }
-
     @media (max-width: 800px) {
-      .vgrid { flex-direction: column; align-items: center; }
-      .viewer { gap: 6px; padding: 8px; }
-      .vbtn { width: 38px; height: 38px; }
       header { flex-wrap: wrap; }
       #pagename { font-size: 1.5rem; }
     }
@@ -488,43 +378,6 @@
     html.noscroll,
     html.noscroll body { overflow: hidden; }
 
-    /* ---------- Окно с картинками на весь экран ---------- */
-    .vwin.fullscreen {
-      position: fixed;
-      inset: 0;
-      z-index: 300;
-      width: auto;
-      height: auto;
-      box-shadow:
-        inset -1px -1px #0a0a0a,
-        inset 1px 1px #dfdfdf,
-        inset -2px -2px #808080,
-        inset 2px 2px #ffffff;
-    }
-
-    .vwin.fullscreen.animating { visibility: hidden; }
-
-    .vwin.fullscreen .viewer {
-      align-items: stretch;
-      min-height: 0;
-      padding: 16px;
-      gap: 16px;
-    }
-
-    .vwin.fullscreen .vbtn {
-      align-self: center;
-      width: 60px;
-      height: 60px;
-    }
-
-    .vwin.fullscreen .stage {
-      flex: 1 1 0 !important;
-      width: auto !important;
-      aspect-ratio: auto !important;
-      min-width: 0;
-      min-height: 0;
-    }
-
     /* ---------- Список на весь экран: панель слева, список по центру, пустая панель справа ---------- */
     .fs {
       position: fixed;
@@ -635,46 +488,6 @@
       .fsnav { flex-direction: row; flex-wrap: wrap; }
       .fsbtn { width: auto; max-width: none; padding: 8px 12px; font-size: 1rem; }
       .fsbtn.on, .fsbtn:active { padding: 9px 11px 7px 13px; }
-    }
-
-    /* ---------- Кнопка «назад» на подстраницах ---------- */
-    #viewer.page.top { padding-bottom: 96px; }
-
-    .backbtn {
-      position: fixed;
-      left: 20px;
-      bottom: 20px;
-      z-index: 20;
-      background: #c0c0c0;
-      color: #000000;
-      border: 0;
-      border-radius: 0;
-      padding: 10px 24px;
-      font-family: inherit;
-      font-weight: 700;
-      font-size: 1.25rem;
-      cursor: pointer;
-      box-shadow:
-        inset -1px -1px #0a0a0a,
-        inset 1px 1px #ffffff,
-        inset -2px -2px #808080,
-        inset 2px 2px #dfdfdf;
-    }
-
-    .backbtn:hover { background: #cfcfcf; }
-
-    .backbtn:active {
-      box-shadow:
-        inset 1px 1px #0a0a0a,
-        inset -1px -1px #ffffff,
-        inset 2px 2px #808080,
-        inset -2px -2px #dfdfdf;
-      padding: 11px 23px 9px 25px;
-    }
-
-    @media (max-width: 800px) {
-      .backbtn { left: 12px; bottom: 12px; padding: 8px 16px; font-size: 1.05rem; }
-      .backbtn:active { padding: 9px 15px 7px 17px; }
     }
 
     /* ---------- Страница HOME ---------- */
@@ -1227,6 +1040,68 @@
 
     .conficon:focus { outline: none; }
 
+    /* ---------- Страница MATH: панель с кнопками и встроенным окном ---------- */
+    .mathpanel {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .mleft {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    /* кнопки: как на HOME, по центру левой части и по центру её высоты */
+    .mbtns {
+      width: 260px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* выбранная кнопка остаётся «нажатой» */
+    .mbtns .homebtn.on {
+      box-shadow:
+        inset 1px 1px #0a0a0a,
+        inset -1px -1px #ffffff,
+        inset 2px 2px #808080,
+        inset -2px -2px #dfdfdf;
+      padding: 13px 15px 11px 17px;
+    }
+
+    .mright {
+      position: relative;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    /* встроенное окно: то же окно, но без шапки и без собственной рамки, занимает всё место справа */
+    .mwin {
+      display: none;
+      position: absolute;
+      inset: 0;
+      flex-direction: column;
+      padding: 0;
+      background: none;
+      box-shadow: none;
+    }
+
+    .mwin.on { display: flex; }
+    .mwin .titlebar { display: none; }
+    .mwin .list { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    .mwin .rowswrap { flex: 1; min-height: 0; }
+    .mwin .rows { height: auto !important; }
+
+    @media (max-width: 1000px) {
+      .mathpanel { grid-template-columns: minmax(0, 1fr); }
+      .mbtns { width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 12px 0 0; }
+      .mright { height: 70vh; }
+    }
+
     /* ---------- Подстраницы конференций (confsub) ---------- */
     .confsubpanel { display: flex; flex-direction: column; }
 
@@ -1295,7 +1170,69 @@
     /* изображение в выемке показывается ровно заданного размера (задаёт скрипт) */
     .subframe img {
       aspect-ratio: auto;
-      object-fit: fill;
+      object-fit: contain;
+    }
+
+    /* листание коллекции: стрелка влево, выемка со счётчиком, стрелка вправо (под изображением) */
+    .subnav {
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: max-content;
+      height: 30px;
+      display: flex;
+      align-items: stretch;
+      gap: 6px;
+    }
+
+    .subnav[hidden] { display: none; }
+
+    .navbtn {
+      flex: none;
+      width: 30px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: #c0c0c0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow:
+        inset -1px -1px #0a0a0a,
+        inset 1px 1px #ffffff,
+        inset -2px -2px #808080,
+        inset 2px 2px #dfdfdf;
+    }
+
+    .navbtn:hover { background: #cfcfcf; }
+
+    .navbtn:active {
+      box-shadow:
+        inset 1px 1px #0a0a0a,
+        inset -1px -1px #ffffff,
+        inset 2px 2px #808080,
+        inset -2px -2px #dfdfdf;
+      padding: 2px 0 0 2px;
+    }
+
+    .navbtn svg { width: 9px; height: 12px; }
+
+    .subcount {
+      min-width: 78px;
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #e4e4e4;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      box-shadow:
+        inset -1px -1px #ffffff,
+        inset 1px 1px #808080,
+        inset -2px -2px #dfdfdf,
+        inset 2px 2px #0a0a0a;
     }
 
     .subframe .photo-err[hidden] { display: none; }
@@ -1304,6 +1241,7 @@
       .subgrid { grid-template-columns: minmax(0, 1fr); }
       .subwork { position: static; margin: 0; }
       .subframe { position: static; margin: 0 auto; }
+      .subnav { position: static; margin: 10px auto 0; }
     }
 
     /* длинные названия подстраниц в шапке */
@@ -1386,119 +1324,132 @@
       </div>
     </section>
 
+    <!-- MATH: одна панель; слева кнопки, справа встроенное окно выбранного раздела -->
     <section class="page top" id="math" hidden>
-      <div class="grid">
-        <div class="win papers" data-id="papers">
-          <div class="titlebar"><span class="tb-title">Papers</span><button class="tb-max" type="button" aria-label="Maximize / Restore" title="Maximize / Restore"><svg class="ic-max" viewBox="0 0 11 11" aria-hidden="true"><rect x="0.5" y="0.5" width="10" height="10" fill="none" stroke="#000"/><rect x="0.5" y="0.5" width="10" height="2.5" fill="#000"/></svg><svg class="ic-restore" viewBox="0 0 11 11" aria-hidden="true"><rect x="3.5" y="0.5" width="7" height="7" fill="none" stroke="#000"/><rect x="3.5" y="0.5" width="7" height="2" fill="#000"/><rect x="0.5" y="3.5" width="7" height="7" fill="#c0c0c0" stroke="#000"/><rect x="0.5" y="3.5" width="7" height="2" fill="#000"/></svg></button></div>
-          <div class="list cols4">
-            <div class="colhead"><span>Author</span><span>Title</span><span>Journal</span><span>Year</span><span>PDF</span></div>
-            <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span><i class="nw">A. Yu. Miller</i></span><span>The Gordian complex is an <span class="nobr">ℝ<sup>∞</sup>-manifold</span></span><span>ArXiv</span><span>2026</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-            </div>
-            <div class="item">
-              <a class="rowlink" href="images/pdf/papers/pattern.pdf" data-pdf="images/pdf/papers/pattern.pdf"><span><i class="nw">A. Yu. Miller</i></span><span>A note on a remarkable pattern in the Gordian graph</span><span>Zap. Nauchn. Sem. POMI</span><span>2026</span></a>
-              <a class="pdf" href="images/pdf/papers/pattern.pdf" download="pattern.pdf" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-            </div>
-            <div class="item">
-              <a class="rowlink" href="images/pdf/papers/ladders.pdf" data-pdf="images/pdf/papers/ladders.pdf"><span><i class="nw">S. A. Kurapova,</i> <i class="nw">A. Yu. Miller</i></span><span>Clique ladders in the Gordian graph</span><span>Zap. Nauchn. Sem. POMI</span><span>2026</span></a>
-              <a class="pdf" href="images/pdf/papers/ladders.pdf" download="ladders.pdf" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-            </div>
-            <div class="item">
-              <a class="rowlink" href="images/pdf/papers/midway.pdf" data-pdf="images/pdf/papers/midway.pdf"><span><i class="nw">A. Yu. Miller,</i> <i class="nw">A. V. Malyutin,</i> <i class="nw">I. S. Alekseev</i></span><span>Infinite midway cliques in the Gordian graph</span><span>Zap. Nauchn. Sem. POMI</span><span>2025</span></a>
-              <a class="pdf" href="images/pdf/papers/midway.pdf" download="midway.pdf" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-            </div>
-            <div class="item">
-              <a class="rowlink" href="images/pdf/papers/one.pdf" data-pdf="images/pdf/papers/one.pdf"><span><i class="nw">A. Yu. Miller</i></span><span>The Gordian graph is one-ended</span><span>Zap. Nauchn. Sem. POMI</span><span>2025</span></a>
-              <a class="pdf" href="images/pdf/papers/one.pdf" download="one.pdf" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-            </div>
-            <div class="item">
-              <a class="rowlink" href="images/pdf/papers/lernaean.pdf" data-pdf="images/pdf/papers/lernaean.pdf"><span><i class="nw">Yu. Belousov,</i> <i class="nw">M. V. Karev,</i> <i class="nw">A. V. Malyutin,</i><br><i class="nw">A. Yu. Miller,</i> <i class="nw">E. A. Fominykh</i></span><span>Lernaean knots and band surgery</span><span>St. Petersburg Mathematical Journal</span><span>2021</span></a>
-              <a class="pdf" href="images/pdf/papers/lernaean.pdf" download="lernaean.pdf" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-            </div>
+      <div class="win subpanel mathpanel">
+        <div class="mleft">
+          <div class="rlabel" id="mlabel">PAPERS</div>
+          <div class="mbtns">
+            <button class="homebtn on" type="button" data-tab="papers">Papers</button>
+            <button class="homebtn" type="button" data-tab="courses">Courses</button>
+            <button class="homebtn" type="button" data-tab="notes">Notes</button>
+            <button class="homebtn" type="button" data-tab="drawings">Drawings</button>
+            <button class="homebtn" type="button" data-tab="talks">Talks</button>
           </div>
         </div>
-        <div class="win" data-id="courses">
-          <div class="titlebar"><span class="tb-title">Courses</span><button class="tb-max" type="button" aria-label="Maximize / Restore" title="Maximize / Restore"><svg class="ic-max" viewBox="0 0 11 11" aria-hidden="true"><rect x="0.5" y="0.5" width="10" height="10" fill="none" stroke="#000"/><rect x="0.5" y="0.5" width="10" height="2.5" fill="#000"/></svg><svg class="ic-restore" viewBox="0 0 11 11" aria-hidden="true"><rect x="3.5" y="0.5" width="7" height="7" fill="none" stroke="#000"/><rect x="3.5" y="0.5" width="7" height="2" fill="#000"/><rect x="0.5" y="3.5" width="7" height="7" fill="#c0c0c0" stroke="#000"/><rect x="0.5" y="3.5" width="7" height="2" fill="#000"/></svg></button></div>
-          <div class="list cols3">
-            <div class="colhead"><span>Title</span><span>Institution</span><span>Year</span></div>
-            <a class="item" href="https://example.com" target="_blank"><span>Low-dimensional dynamics</span><span>SPBU</span><span>2025</span></a>
-            <a class="item" href="https://example.com" target="_blank"><span>Geometric knot theory</span><span>SPBU</span><span>2023</span></a>
-          </div>
-        </div>
-        <div class="win" data-id="notes">
-          <div class="titlebar"><span class="tb-title">Notes</span><button class="tb-max" type="button" aria-label="Maximize / Restore" title="Maximize / Restore"><svg class="ic-max" viewBox="0 0 11 11" aria-hidden="true"><rect x="0.5" y="0.5" width="10" height="10" fill="none" stroke="#000"/><rect x="0.5" y="0.5" width="10" height="2.5" fill="#000"/></svg><svg class="ic-restore" viewBox="0 0 11 11" aria-hidden="true"><rect x="3.5" y="0.5" width="7" height="7" fill="none" stroke="#000"/><rect x="3.5" y="0.5" width="7" height="2" fill="#000"/><rect x="0.5" y="3.5" width="7" height="7" fill="#c0c0c0" stroke="#000"/><rect x="0.5" y="3.5" width="7" height="2" fill="#000"/></svg></button></div>
-          <div class="list cols2p">
-            <div class="colhead"><span>Title</span><span>Year</span><span>PDF</span></div>
-            <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>The 3-Torus in 4-Space</span><span>2025</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-            </div>
-            <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>The Topology of Surfaces</span><span>2025</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-            </div>
-            <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>A Narrative Introduction to Topology</span><span>2024</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-            </div>
-            <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>The Lickorish–Wallace Theorem</span><span>2024</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-            </div>
-            <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>The Diamond Lemma</span><span>2024</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-            </div>
-            <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>The Mazur–Eilenberg Swindle</span><span>2023</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-            </div>
-            <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>The Reidemeister Theorem</span><span>2023</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-            </div>
-            <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>The Knot Group</span><span>2023</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-            </div>
-            <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>The Additivity of Knot Genus</span><span>2023</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-            </div>
-            <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>The Conway Knot</span><span>2022</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-            </div>
-            <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>The Montesinos Trick</span><span>2022</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-            </div>
-            <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>Notes on One-Dimensional Dynamics</span><span>2022</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-            </div>
-            <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>Notes on Complex Analysis</span><span>2018</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+        <div class="mright">
+          <div class="win mwin" data-id="papers">
+            <div class="titlebar"><span class="tb-title">Papers</span></div>
+            <div class="list cols4">
+              <div class="colhead"><span>Author</span><span>Title</span><span>Journal</span><span>Year</span><span>PDF</span></div>
+              <div class="item">
+                <a class="rowlink" href="https://example.com" target="_blank"><span><i class="nw">A. Yu. Miller</i></span><span>The Gordian complex is an <span class="nobr">ℝ<sup>∞</sup>-manifold</span></span><span>ArXiv</span><span>2026</span></a>
+                <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
+              <div class="item">
+                <a class="rowlink" href="images/pdf/papers/pattern.pdf" data-pdf="images/pdf/papers/pattern.pdf"><span><i class="nw">A. Yu. Miller</i></span><span>A note on a remarkable pattern in the Gordian graph</span><span>Zap. Nauchn. Sem. POMI</span><span>2026</span></a>
+                <a class="pdf" href="images/pdf/papers/pattern.pdf" download="pattern.pdf" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
+              <div class="item">
+                <a class="rowlink" href="images/pdf/papers/ladders.pdf" data-pdf="images/pdf/papers/ladders.pdf"><span><i class="nw">S. A. Kurapova,</i> <i class="nw">A. Yu. Miller</i></span><span>Clique ladders in the Gordian graph</span><span>Zap. Nauchn. Sem. POMI</span><span>2026</span></a>
+                <a class="pdf" href="images/pdf/papers/ladders.pdf" download="ladders.pdf" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
+              <div class="item">
+                <a class="rowlink" href="images/pdf/papers/midway.pdf" data-pdf="images/pdf/papers/midway.pdf"><span><i class="nw">A. Yu. Miller,</i> <i class="nw">A. V. Malyutin,</i> <i class="nw">I. S. Alekseev</i></span><span>Infinite midway cliques in the Gordian graph</span><span>Zap. Nauchn. Sem. POMI</span><span>2025</span></a>
+                <a class="pdf" href="images/pdf/papers/midway.pdf" download="midway.pdf" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
+              <div class="item">
+                <a class="rowlink" href="images/pdf/papers/one.pdf" data-pdf="images/pdf/papers/one.pdf"><span><i class="nw">A. Yu. Miller</i></span><span>The Gordian graph is one-ended</span><span>Zap. Nauchn. Sem. POMI</span><span>2025</span></a>
+                <a class="pdf" href="images/pdf/papers/one.pdf" download="one.pdf" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
+              <div class="item">
+                <a class="rowlink" href="images/pdf/papers/lernaean.pdf" data-pdf="images/pdf/papers/lernaean.pdf"><span><i class="nw">Yu. Belousov,</i> <i class="nw">M. V. Karev,</i> <i class="nw">A. V. Malyutin,</i><br><i class="nw">A. Yu. Miller,</i> <i class="nw">E. A. Fominykh</i></span><span>Lernaean knots and band surgery</span><span>St. Petersburg Mathematical Journal</span><span>2021</span></a>
+                <a class="pdf" href="images/pdf/papers/lernaean.pdf" download="lernaean.pdf" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="win" data-id="drawings">
-          <div class="titlebar"><span class="tb-title">Drawings</span><button class="tb-max" type="button" aria-label="Maximize / Restore" title="Maximize / Restore"><svg class="ic-max" viewBox="0 0 11 11" aria-hidden="true"><rect x="0.5" y="0.5" width="10" height="10" fill="none" stroke="#000"/><rect x="0.5" y="0.5" width="10" height="2.5" fill="#000"/></svg><svg class="ic-restore" viewBox="0 0 11 11" aria-hidden="true"><rect x="3.5" y="0.5" width="7" height="7" fill="none" stroke="#000"/><rect x="3.5" y="0.5" width="7" height="2" fill="#000"/><rect x="0.5" y="3.5" width="7" height="7" fill="#c0c0c0" stroke="#000"/><rect x="0.5" y="3.5" width="7" height="2" fill="#000"/></svg></button></div>
-          <div class="list cols2">
-            <div class="colhead"><span>Title</span><span>Year</span></div>
-            <a class="item" href="#grope"><span>The Grope</span><span>2026</span></a>
-            <a class="item" href="#complement"><span>The Knot Complement</span><span>2022</span></a>
+          <div class="win mwin" data-id="courses">
+            <div class="titlebar"><span class="tb-title">Courses</span></div>
+            <div class="list cols3">
+              <div class="colhead"><span>Title</span><span>Institution</span><span>Year</span></div>
+              <a class="item" href="https://example.com" target="_blank"><span>Low-dimensional dynamics</span><span>SPBU</span><span>2025</span></a>
+              <a class="item" href="https://example.com" target="_blank"><span>Geometric knot theory</span><span>SPBU</span><span>2023</span></a>
+            </div>
           </div>
-        </div>
-        <div class="win" data-id="talks">
-          <div class="titlebar"><span class="tb-title">Talks</span><button class="tb-max" type="button" aria-label="Maximize / Restore" title="Maximize / Restore"><svg class="ic-max" viewBox="0 0 11 11" aria-hidden="true"><rect x="0.5" y="0.5" width="10" height="10" fill="none" stroke="#000"/><rect x="0.5" y="0.5" width="10" height="2.5" fill="#000"/></svg><svg class="ic-restore" viewBox="0 0 11 11" aria-hidden="true"><rect x="3.5" y="0.5" width="7" height="7" fill="none" stroke="#000"/><rect x="3.5" y="0.5" width="7" height="2" fill="#000"/><rect x="0.5" y="3.5" width="7" height="7" fill="#c0c0c0" stroke="#000"/><rect x="0.5" y="3.5" width="7" height="2" fill="#000"/></svg></button></div>
-          <div class="list cols3t">
-            <div class="colhead"><span>Title</span><span>Event</span><span>Year</span><span>PDF</span></div>
-            <div class="item">
-              <a class="rowlink" href="https://example.com" target="_blank"><span>The Gordian complex is an <span class="nobr">ℝ<sup>∞</sup>-manifold</span></span><span>Algebraic topology and group actions</span><span>2026</span></a>
-              <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+          <div class="win mwin" data-id="notes">
+            <div class="titlebar"><span class="tb-title">Notes</span></div>
+            <div class="list cols2p">
+              <div class="colhead"><span>Title</span><span>Year</span><span>PDF</span></div>
+              <div class="item">
+                <a class="rowlink" href="https://example.com" target="_blank"><span>The 3-Torus in 4-Space</span><span>2025</span></a>
+                <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
+              <div class="item">
+                <a class="rowlink" href="https://example.com" target="_blank"><span>The Topology of Surfaces</span><span>2025</span></a>
+                <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
+              <div class="item">
+                <a class="rowlink" href="https://example.com" target="_blank"><span>A Narrative Introduction to Topology</span><span>2024</span></a>
+                <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
+              <div class="item">
+                <a class="rowlink" href="https://example.com" target="_blank"><span>The Lickorish–Wallace Theorem</span><span>2024</span></a>
+                <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
+              <div class="item">
+                <a class="rowlink" href="https://example.com" target="_blank"><span>The Diamond Lemma</span><span>2024</span></a>
+                <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
+              <div class="item">
+                <a class="rowlink" href="https://example.com" target="_blank"><span>The Mazur–Eilenberg Swindle</span><span>2023</span></a>
+                <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
+              <div class="item">
+                <a class="rowlink" href="https://example.com" target="_blank"><span>The Reidemeister Theorem</span><span>2023</span></a>
+                <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
+              <div class="item">
+                <a class="rowlink" href="https://example.com" target="_blank"><span>The Knot Group</span><span>2023</span></a>
+                <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
+              <div class="item">
+                <a class="rowlink" href="https://example.com" target="_blank"><span>The Additivity of Knot Genus</span><span>2023</span></a>
+                <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
+              <div class="item">
+                <a class="rowlink" href="https://example.com" target="_blank"><span>The Conway Knot</span><span>2022</span></a>
+                <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
+              <div class="item">
+                <a class="rowlink" href="https://example.com" target="_blank"><span>The Montesinos Trick</span><span>2022</span></a>
+                <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
+              <div class="item">
+                <a class="rowlink" href="https://example.com" target="_blank"><span>Notes on One-Dimensional Dynamics</span><span>2022</span></a>
+                <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
+              <div class="item">
+                <a class="rowlink" href="https://example.com" target="_blank"><span>Notes on Complex Analysis</span><span>2018</span></a>
+                <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
+            </div>
+          </div>
+          <div class="win mwin" data-id="drawings">
+            <div class="titlebar"><span class="tb-title">Drawings</span></div>
+            <div class="list cols2">
+              <div class="colhead"><span>Title</span><span>Year</span></div>
+              <a class="item" href="#grope"><span>The Grope</span><span>2026</span></a>
+              <a class="item" href="#complement"><span>The Knot Complement</span><span>2022</span></a>
+            </div>
+          </div>
+          <div class="win mwin" data-id="talks">
+            <div class="titlebar"><span class="tb-title">Talks</span></div>
+            <div class="list cols3t">
+              <div class="colhead"><span>Title</span><span>Event</span><span>Year</span><span>PDF</span></div>
+              <div class="item">
+                <a class="rowlink" href="https://example.com" target="_blank"><span>The Gordian complex is an <span class="nobr">ℝ<sup>∞</sup>-manifold</span></span><span>Algebraic topology and group actions</span><span>2026</span></a>
+                <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+              </div>
             </div>
           </div>
         </div>
@@ -1971,9 +1922,82 @@
       </div>
     </section>
 
-    <section class="page top" id="viewer" hidden>
-      <div class="vgrid" id="vgrid"></div>
-      <button class="backbtn" id="backbtn" type="button">Back to Drawings</button>
+    <section class="page top confsub" id="grope" data-title="Math" data-mathtab="drawings" hidden>
+      <div class="win subpanel confsubpanel">
+        <div class="subgrid">
+
+          <div class="subleft">
+            <div class="rlabel">THE GROPE</div>
+            <!-- Окно ввода: текст пока не задан -->
+            <div class="field subtext"></div>
+
+            <div class="subicons">
+              <button class="conficon subicon" type="button" data-srcs='["images/grope/toriQ vert 11.png", "images/grope/toriQ vert 10.png", "images/grope/toriQ vert 9.png", "images/grope/toriQ vert 8.png", "images/grope/toriQ vert 7.png", "images/grope/toriQ vert 6.png", "images/grope/toriQ vert 5.png", "images/grope/toriQ vert 4.png", "images/grope/toriQ vert 3.png", "images/grope/toriQ vert 2.png", "images/grope/toriQ vert 1.png", "images/grope/toriQ vert 0.png"]'>
+                <div class="photo-frame"><div class="photo-inner"><div class="confimg"><img src="images/grope/toriQ vert 0.png" alt="" onerror="this.style.visibility='hidden'"></div></div></div>
+                <div class="confcap">Gropes</div>
+              </button>
+            </div>
+
+            <a class="homebtn confback" href="#math">Back</a>
+          </div>
+
+          <div class="subwork">
+            <div class="photo-frame subframe">
+              <div class="photo-inner">
+                <img alt="">
+                <div class="photo-err" hidden></div>
+              </div>
+            </div>
+            <div class="subnav" hidden>
+              <button class="navbtn prev" type="button" aria-label="Previous"><svg viewBox="0 0 12 16" aria-hidden="true"><polygon points="10,1 10,15 2,8" fill="#000"/></svg></button>
+              <div class="subcount">1 / 1</div>
+              <button class="navbtn next" type="button" aria-label="Next"><svg viewBox="0 0 12 16" aria-hidden="true"><polygon points="2,1 2,15 10,8" fill="#000"/></svg></button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="page top confsub" id="complement" data-title="Math" data-mathtab="drawings" hidden>
+      <div class="win subpanel confsubpanel">
+        <div class="subgrid">
+
+          <div class="subleft">
+            <div class="rlabel">THE KNOT COMPLEMENT</div>
+            <!-- Окно ввода: текст пока не задан -->
+            <div class="field subtext"></div>
+
+            <div class="subicons">
+              <button class="conficon subicon" type="button" data-srcs='["images/complement/0.jpg", "images/complement/1.jpg", "images/complement/2.jpg", "images/complement/3.jpg", "images/complement/4.jpg", "images/complement/5.jpg", "images/complement/6.jpg", "images/complement/7.jpg", "images/complement/8.jpg"]'>
+                <div class="photo-frame"><div class="photo-inner"><div class="confimg"><img src="images/complement/2.jpg" alt="" style="object-position:right center" onerror="this.style.visibility='hidden'"></div></div></div>
+                <div class="confcap">Soil</div>
+              </button>
+              <button class="conficon subicon" type="button" data-srcs='["images/complement/vsph1.jpg", "images/complement/vsph2.jpg"]'>
+                <div class="photo-frame"><div class="photo-inner"><div class="confimg"><img src="images/complement/vsph2.jpg" alt="" style="object-position:left center" onerror="this.style.visibility='hidden'"></div></div></div>
+                <div class="confcap">Eversion</div>
+              </button>
+            </div>
+
+            <a class="homebtn confback" href="#math">Back</a>
+          </div>
+
+          <div class="subwork">
+            <div class="photo-frame subframe">
+              <div class="photo-inner">
+                <img alt="">
+                <div class="photo-err" hidden></div>
+              </div>
+            </div>
+            <div class="subnav" hidden>
+              <button class="navbtn prev" type="button" aria-label="Previous"><svg viewBox="0 0 12 16" aria-hidden="true"><polygon points="10,1 10,15 2,8" fill="#000"/></svg></button>
+              <div class="subcount">1 / 1</div>
+              <button class="navbtn next" type="button" aria-label="Next"><svg viewBox="0 0 12 16" aria-hidden="true"><polygon points="2,1 2,15 10,8" fill="#000"/></svg></button>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </section>
 
     <section class="page" id="art" hidden></section>
@@ -1981,60 +2005,13 @@
 
   <script>
     const pages = ['home', 'math', 'art', 'early-life', 'research', 'conference-organization', 'ldtss', 'photo-gallery', 'illustrations',
-                   'conf-algeom', 'conf-is', 'conf-pdmi-85', 'conf-kmc', 'conf-ldt', 'conf-lec'];
+                   'conf-algeom', 'conf-is', 'conf-pdmi-85', 'conf-kmc', 'conf-ldt', 'conf-lec', 'grope', 'complement'];
 
-    /* Наборы изображений. Каждый набор открывается по ссылке #ключ и состоит из одного
-       или нескольких окон-прокруток. Чтобы добавить новый набор, добавьте пункт сюда и
-       ссылку <a href="#ключ"> на нужной странице.
-       У окна: title, folder, files; aspect (необязательно) задаёт пропорции вручную,
-       если его нет, пропорции берутся из первой картинки окна.
-       Номера окон в заголовках пишем в квадратных скобках: [1], [2] ... */
-    const sets = {
-      grope: {
-        title: 'The Grope',
-        from: 'drawings',   /* из какого окна MATH открыт набор: на него ведёт кнопка Back */
-        windows: [
-          {
-            title: 'The Grope',
-            folder: 'images/grope/',
-            aspect: '210 / 297',
-            /* порядок показа: от toriQ vert 11 к toriQ vert 0 */
-            files: Array.from({ length: 12 }, function (_, i) { return 'toriQ vert ' + (11 - i) + '.png'; })
-          }
-        ]
-      },
-      complement: {
-        title: 'The Knot Complement',
-        from: 'drawings',
-        windows: [
-          {
-            title: 'The Knot Complement [1]',
-            folder: 'images/complement/',
-            files: Array.from({ length: 9 }, function (_, i) { return i + '.jpg'; })
-          },
-          {
-            title: 'The Knot Complement [2]',
-            folder: 'images/complement/',
-            files: ['vsph1.jpg', 'vsph2.jpg']
-          }
-        ]
-      }
-    };
-
-    const ARROW_LEFT = '<svg viewBox="0 0 12 16" aria-hidden="true"><polygon points="10,1 10,15 2,8" fill="#000"/></svg>';
-    const ARROW_RIGHT = '<svg viewBox="0 0 12 16" aria-hidden="true"><polygon points="2,1 2,15 10,8" fill="#000"/></svg>';
     const SB_UP = '<svg viewBox="0 0 7 4" aria-hidden="true"><polygon points="3.5,0 7,4 0,4" fill="#000"/></svg>';
     const SB_DOWN = '<svg viewBox="0 0 7 4" aria-hidden="true"><polygon points="0,0 7,0 3.5,4" fill="#000"/></svg>';
-    const MAX_BTN = '<button class="tb-max" type="button" aria-label="Maximize / Restore" title="Maximize / Restore"><svg class="ic-max" viewBox="0 0 11 11" aria-hidden="true"><rect x="0.5" y="0.5" width="10" height="10" fill="none" stroke="#000"/><rect x="0.5" y="0.5" width="10" height="2.5" fill="#000"/></svg><svg class="ic-restore" viewBox="0 0 11 11" aria-hidden="true"><rect x="3.5" y="0.5" width="7" height="7" fill="none" stroke="#000"/><rect x="3.5" y="0.5" width="7" height="2" fill="#000"/><rect x="0.5" y="3.5" width="7" height="7" fill="#c0c0c0" stroke="#000"/><rect x="0.5" y="3.5" width="7" height="2" fill="#000"/></svg></button>';
+    /* Кнопка закрытия в шапке полноэкранного окна: серая кнопка с крестиком, как в Windows 98 */
+    const CLOSE_BTN = '<button class="tb-max" type="button" aria-label="Close" title="Close"><svg viewBox="0 0 11 11" aria-hidden="true"><polygon points="0,0 2,0 5.5,3.5 9,0 11,0 11,1 7.5,5.5 11,10 11,11 9,11 5.5,7.5 2,11 0,11 0,10 3.5,5.5 0,1" fill="#000"/></svg></button>';
 
-    const viewerSection = document.getElementById('viewer');
-    const grid = document.getElementById('vgrid');
-    let currentSet = null;
-    let wins = [];
-    let active = 0;
-    let token = 0;
-
-    let pendingFs = null;  // какое окно MATH открыть на весь экран после перехода (кнопка Back)
     let busy = false;      // идёт анимация, ввод временно игнорируется
     let epoch = 0;         // меняется при переходе на другую страницу, чтобы отменять «хвосты» анимаций
     const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2239,7 +2216,6 @@
     /* =====================  Окна на странице MATH  ===================== */
 
     const FS_ORDER = ['papers', 'notes', 'courses', 'drawings', 'talks'];
-    const ROWS_COLLAPSED = { papers: 6, notes: 5, courses: 5, drawings: 5, talks: 5 };
     const pristine = {};   // исходное содержимое списков (для полноэкранного режима)
 
     document.querySelectorAll('#math .win[data-id]').forEach(function (w) {
@@ -2252,24 +2228,48 @@
 
     const scrollerById = {};
     document.querySelectorAll('#math .win[data-id]').forEach(function (w) {
-      const sc = initScroll(w.querySelector('.list'), { fit: ROWS_COLLAPSED[w.dataset.id], onWidth: refreshAll });
+      const sc = initScroll(w.querySelector('.list'), { onWidth: refreshAll });
       scrollers.push(sc);
       scrollerById[w.dataset.id] = sc;
     });
 
-    /* Окна, стоящие рядом в одном ряду, делаем одинаковой высоты (по большему) */
-    const PAIRS = [['courses', 'notes'], ['drawings', 'talks']];
-
     function refreshAll() {
-      scrollers.forEach(function (s) { s.fit(); });
-      PAIRS.forEach(function (pair) {
-        const a = scrollerById[pair[0]];
-        const b = scrollerById[pair[1]];
-        if (!a || !b) return;
-        const h = Math.max(a.rows.clientHeight, b.rows.clientHeight);
-        if (h) { a.rows.style.height = h + 'px'; b.rows.style.height = h + 'px'; }
-      });
       scrollers.forEach(function (s) { s.update(); });
+    }
+
+    /* Панель MATH: кнопки слева, справа встроенное окно выбранного раздела */
+    let mathTab = 'papers';   // по умолчанию показывается Papers
+
+    function setMathTab(id) {
+      if (!pristine[id]) id = 'papers';
+      mathTab = id;
+      document.querySelectorAll('#math .mbtns [data-tab]').forEach(function (b) {
+        b.classList.toggle('on', b.dataset.tab === id);
+      });
+      document.querySelectorAll('#math .mwin').forEach(function (w) {
+        w.classList.toggle('on', w.dataset.id === id);
+      });
+      document.getElementById('mlabel').textContent = pristine[id].title.toUpperCase();
+      refreshAll();
+    }
+
+    document.querySelectorAll('#math .mbtns [data-tab]').forEach(function (b) {
+      b.addEventListener('click', function () { setMathTab(b.dataset.tab); });
+    });
+
+    /* панель MATH — той же высоты, что панель на HOME */
+    function syncMathPanelHeight() {
+      const panel = document.querySelector('#math .mathpanel');
+      panel.style.minHeight = '';
+      if (window.innerWidth <= 1000) return;
+      const home = document.getElementById('home');
+      const wasHidden = home.hidden;
+      home.hidden = false;
+      home.style.visibility = 'hidden';
+      const h = home.querySelector('.homepanel').offsetHeight;
+      home.style.visibility = '';
+      home.hidden = wasHidden;
+      panel.style.minHeight = h + 'px';
     }
 
     /* Полноэкранное окно списка */
@@ -2278,7 +2278,7 @@
     fs.hidden = true;
     fs.innerHTML =
       '<div class="win fswin">' +
-        '<div class="titlebar"><span class="tb-title"></span>' + MAX_BTN + '</div>' +
+        '<div class="titlebar"><span class="tb-title"></span>' + CLOSE_BTN + '</div>' +
         '<div class="fsbody">' +
           '<div class="fspanel fsnav"></div>' +
           '<div class="fscenter"></div>' +
@@ -2324,57 +2324,22 @@
       fsMarkNav(id);
     }
 
-    function mathWindow(id) {
-      return document.querySelector('#math .win[data-id="' + id + '"]');
-    }
-
-    /* instant: без анимации; origin: откуда открыто (null = страница MATH) */
+    /* Полноэкранное окно открывается сразу, без анимации. origin: откуда открыто (null — со страницы MATH) */
     function openFs(id, instant, origin) {
       if (busy) return;
       fsOrigin = origin || null;
-      if (instant) {
-        fs.hidden = false;
-        lockScroll(true);
-        fsShow(id);
-        return;
-      }
-      busy = true;
-      const my = epoch;
-      zoomOutline(mathWindow(id).getBoundingClientRect(), fullRect(), function () {
-        if (my !== epoch) return;
-        fs.hidden = false;
-        lockScroll(true);
-        fsShow(id);
-        busy = false;
-      });
+      fs.hidden = false;
+      lockScroll(true);
+      fsShow(id);
     }
 
+    /* Закрытие: возвращаемся на ту страницу, откуда открывали (MATH остаётся на том же разделе и месте) */
     function closeFs() {
       if (busy || fs.hidden) return;
-      if (fsOrigin) {   // открыто не со страницы MATH: просто возвращаемся на ту страницу, без анимации
-        fs.hidden = true;
-        lockScroll(false);
-        fsOrigin = null;
-        return;
-      }
-      busy = true;
-      const my = epoch;
-      const w = mathWindow(fsCurrent);
       fs.hidden = true;
       lockScroll(false);
-      w.scrollIntoView({ block: 'nearest' });
-      zoomOutline(fullRect(), w.getBoundingClientRect(), function () {
-        if (my !== epoch) return;
-        busy = false;
-      });
+      fsOrigin = null;
     }
-
-    document.getElementById('math').addEventListener('click', function (e) {
-      const b = e.target.closest('.tb-max');
-      if (!b) return;
-      const w = b.closest('.win[data-id]');
-      if (w) openFs(w.dataset.id);
-    });
 
     fs.querySelector('.tb-max').addEventListener('click', function () { escFs(); });
 
@@ -2383,158 +2348,6 @@
       const a = e.target.closest('a.rowlink, a.item');
       if (a && (a.getAttribute('href') || '').charAt(0) === '#') { epoch++; closeAllInstant(); }
     });
-
-    /* =====================  Окна-прокрутки (картинки)  ===================== */
-
-    function imgUrl(w, i) {
-      return w.folder + encodeURIComponent(w.files[i]);
-    }
-
-    /* пропорции окна: из aspect или из первой картинки */
-    function ratioOf(w) {
-      if (w.ratio) return Promise.resolve(w.ratio);
-      if (w.aspect) {
-        const p = w.aspect.split('/');
-        w.ratio = parseFloat(p[0]) / parseFloat(p[1]);
-        return Promise.resolve(w.ratio);
-      }
-      return new Promise(function (resolve) {
-        const im = new Image();
-        im.onload = function () {
-          w.ratio = (im.naturalWidth / im.naturalHeight) || 1;
-          resolve(w.ratio);
-        };
-        im.onerror = function () { resolve(1); };
-        im.src = imgUrl(w, 0);
-      });
-    }
-
-    function render(st) {
-      const w = st.cfg;
-      const n = w.files.length;
-      const url = imgUrl(w, st.idx);
-      st.err.hidden = true;
-      st.img.hidden = false;
-      st.img.onerror = function () {
-        st.img.hidden = true;
-        st.err.hidden = false;
-        st.err.textContent = 'Не удалось загрузить файл: ' + url;
-      };
-      st.img.src = url;
-      st.img.alt = w.title + ' — ' + (st.idx + 1) + ' / ' + n;
-      st.count.textContent = (st.idx + 1) + ' / ' + n;
-      // подгружаем соседние картинки заранее
-      new Image().src = imgUrl(w, (st.idx + 1) % n);
-      new Image().src = imgUrl(w, (st.idx - 1 + n) % n);
-    }
-
-    function step(st, d) {
-      const n = st.cfg.files.length;
-      st.idx = (st.idx + d + n) % n;
-      render(st);
-    }
-
-    /* Окно картинок на весь экран и обратно */
-    function maxViewer(st) {
-      if (busy) return;
-      busy = true;
-      const my = epoch;
-      const from = st.el.getBoundingClientRect();
-      zoomOutline(from, fullRect(), function () {
-        if (my !== epoch) return;
-        const ph = document.createElement('div');   // держит место в сетке, пока окно развёрнуто
-        ph.style.cssText = 'flex:none;width:' + from.width + 'px;height:' + from.height + 'px';
-        st.el.parentNode.insertBefore(ph, st.el);
-        st.ph = ph;
-        st.el.classList.add('fullscreen');
-        lockScroll(true);
-        active = wins.indexOf(st);
-        busy = false;
-      });
-    }
-
-    function restoreViewer(st) {
-      if (busy || !st.el.classList.contains('fullscreen')) return;
-      busy = true;
-      const my = epoch;
-      st.el.classList.add('animating');
-      zoomOutline(fullRect(), st.ph.getBoundingClientRect(), function () {
-        if (my !== epoch) return;
-        st.el.classList.remove('fullscreen', 'animating');
-        st.ph.remove();
-        st.ph = null;
-        lockScroll(false);
-        busy = false;
-        layout();
-      });
-    }
-
-    function build(key) {
-      grid.innerHTML = '';
-      wins = sets[key].windows.map(function (w, i) {
-        const el = document.createElement('div');
-        el.className = 'win vwin';
-        el.innerHTML =
-          '<div class="titlebar"><span class="tb-title"></span>' + MAX_BTN + '</div>' +
-          '<div class="list viewer">' +
-            '<button class="vbtn prev" type="button" aria-label="Previous">' + ARROW_LEFT + '</button>' +
-            '<div class="stage"><img alt=""><div class="verr" hidden></div></div>' +
-            '<button class="vbtn next" type="button" aria-label="Next">' + ARROW_RIGHT + '</button>' +
-          '</div>' +
-          '<div class="vcount"></div>';
-        el.querySelector('.tb-title').textContent = w.title;
-        grid.appendChild(el);
-        const st = {
-          cfg: w,
-          idx: 0,
-          el: el,
-          ph: null,
-          stage: el.querySelector('.stage'),
-          img: el.querySelector('img'),
-          err: el.querySelector('.verr'),
-          count: el.querySelector('.vcount')
-        };
-        el.querySelector('.prev').addEventListener('click', function () { active = i; step(st, -1); });
-        el.querySelector('.next').addEventListener('click', function () { active = i; step(st, 1); });
-        el.querySelector('.tb-max').addEventListener('click', function () {
-          if (el.classList.contains('fullscreen')) restoreViewer(st); else maxViewer(st);
-        });
-        el.addEventListener('mouseenter', function () { active = i; });
-        return st;
-      });
-      active = 0;
-    }
-
-    /* Все окна набора одной ширины; самое «высокое» помещается на экране по высоте */
-    function layout() {
-      if (!wins.length) return;
-      const n = wins.length;
-      const gap = 28;
-      const mobile = window.innerWidth <= 800;
-      const chrome = mobile ? 112 : 160;   // стрелки, отступы и рамка окна
-      const container = viewerSection.clientWidth - 48;
-      const perWindow = mobile ? container : (container - gap * (n - 1)) / n;
-      let sw = perWindow - chrome;
-      if (!mobile) {
-        const minRatio = Math.min.apply(null, wins.map(function (st) { return st.cfg.ratio || 1; }));
-        sw = Math.min(sw, window.innerHeight * 0.72 * minRatio);
-      }
-      sw = Math.max(sw, 120);
-      wins.forEach(function (st) {
-        st.stage.style.width = sw + 'px';
-        st.stage.style.aspectRatio = String(st.cfg.ratio || 1);
-      });
-    }
-
-    async function openSet(key) {
-      const my = ++token;
-      if (currentSet !== key) { currentSet = key; build(key); }
-      await Promise.all(sets[key].windows.map(ratioOf));
-      if (my !== token) return;
-      layout();
-      wins.forEach(render);
-    }
-
 
     /* =====================  LDTSS: последнее видео плейлиста  ===================== */
 
@@ -3031,10 +2844,6 @@
       fs.classList.remove('viewing');
       fs.hidden = true;
       fsOrigin = null;
-      wins.forEach(function (st) {
-        st.el.classList.remove('fullscreen', 'animating');
-        if (st.ph) { st.ph.remove(); st.ph = null; }
-      });
       lockScroll(false);
       busy = false;
     }
@@ -3120,8 +2929,6 @@
       if (e.key === 'Escape') {
         if (busy) return;
         if (!fs.hidden) { escFs(); return; }
-        const full = wins.filter(function (st) { return st.el.classList.contains('fullscreen'); })[0];
-        if (full) { restoreViewer(full); return; }
       }
       if (!fs.hidden && pdfCtl) { pdfCtl.key(e); return; }
       if (busy || !fs.hidden) return;
@@ -3130,19 +2937,23 @@
         if (e.key === 'ArrowRight') setTopic(topicIdx + 1);
         return;
       }
-      if (viewerSection.hidden || !wins.length) return;
-      if (e.key === 'ArrowLeft') step(wins[active], -1);
-      if (e.key === 'ArrowRight') step(wins[active], 1);
+      const cs = document.querySelector('.confsub:not([hidden])');
+      if (cs && cs.cs && cs.cs.srcs.length > 1) {
+        if (e.key === 'ArrowLeft') confStep(cs, -1);
+        if (e.key === 'ArrowRight') confStep(cs, 1);
+      }
     });
 
     window.addEventListener('resize', function () {
-      if (!viewerSection.hidden) layout();
+      if (!document.getElementById('math').hidden) syncMathPanelHeight();
       refreshAll();
     });
 
-    /* =====================  Подстраницы конференций (.confsub)  ===================== */
+    /* =====================  Подстраницы с иконками (.confsub): конференции и рисунки  ===================== */
     const CONF_MARGIN = 24;    // минимальные поля выемки (одинаковые со всех сторон), px
     const FRAME_CHROME = 18;   // рамка выемки: padding 5px + рамка 4px, с двух сторон
+    const NAV_H = 30;          // высота строки «стрелка – счётчик – стрелка»
+    const NAV_GAP = 10;        // расстояние от выемки до этой строки
 
     // панель подстраницы делаем точно такой же высоты, как панель на Conference Organization
     function syncConfPanelHeight(sec) {
@@ -3159,48 +2970,96 @@
       panel.style.minHeight = h + 'px';
     }
 
-    // выемка ровно по размеру изображения, максимально большая с равными полями
+    // выемка ровно по размеру изображения, максимально большая, с равными полями;
+    // у коллекций под выемкой ещё строка со стрелками и счётчиком, вся группа стоит по центру
     function fitConfImage(sec) {
+      const cs = sec.cs;
+      if (!cs) return;
       const area = sec.querySelector('.subwork');
       const frame = sec.querySelector('.subframe');
       const img = frame.querySelector('img');
       const err = frame.querySelector('.photo-err');
+      const nav = sec.querySelector('.subnav');
+      const hasNav = !!nav && !nav.hidden;
       const abs = getComputedStyle(frame).position === 'absolute';
+      const reserve = hasNav ? NAV_H + NAV_GAP : 0;
       const aw = abs ? area.clientWidth - 2 * CONF_MARGIN : area.clientWidth;
-      const ah = abs ? area.clientHeight - 2 * CONF_MARGIN : window.innerHeight * 0.8;
+      const ah = abs ? area.clientHeight - 2 * CONF_MARGIN - reserve : window.innerHeight * 0.8;
+      let fw, fh;
       if (!err.hidden) {
-        frame.style.width = Math.max(120, Math.min(440, aw)) + 'px';
-        frame.style.height = 'auto';
-        if (abs) frame.style.height = '96px';
-        return;
+        fw = Math.max(120, Math.min(440, aw));
+        fh = abs ? 96 : 0;
+        frame.style.width = fw + 'px';
+        frame.style.height = abs ? fh + 'px' : 'auto';
+      } else {
+        const r = cs.ratio || (img.naturalWidth ? img.naturalWidth / img.naturalHeight : 0);
+        if (!r) return;
+        const w = Math.max(1, Math.floor(Math.min(aw - FRAME_CHROME, (ah - FRAME_CHROME) * r)));
+        const h = Math.max(1, Math.round(w / r));
+        img.style.width = w + 'px';
+        img.style.height = h + 'px';
+        fw = w + FRAME_CHROME;
+        fh = h + FRAME_CHROME;
+        frame.style.width = fw + 'px';
+        frame.style.height = fh + 'px';
       }
-      if (!img.naturalWidth) return;
-      const nw = img.naturalWidth, nh = img.naturalHeight;
-      const k = Math.min((aw - FRAME_CHROME) / nw, (ah - FRAME_CHROME) / nh);
-      const w = Math.max(1, Math.floor(nw * k));
-      const h = Math.max(1, Math.round(nh * w / nw));
-      img.style.width = w + 'px';
-      img.style.height = h + 'px';
-      frame.style.width = (w + FRAME_CHROME) + 'px';
-      frame.style.height = (h + FRAME_CHROME) + 'px';
+      if (hasNav) {
+        if (abs) {
+          const top = Math.max(0, Math.round((area.clientHeight - (fh + reserve)) / 2));
+          frame.style.top = top + 'px';
+          frame.style.bottom = 'auto';
+          nav.style.top = (top + fh + NAV_GAP) + 'px';
+        } else {
+          frame.style.top = frame.style.bottom = nav.style.top = '';
+        }
+      } else {
+        frame.style.top = frame.style.bottom = '';
+      }
     }
 
-    function confSubSelect(sec, btn) {
+    function confShowImage(sec) {
+      const cs = sec.cs;
       const img = sec.querySelector('.subframe img');
       const err = sec.querySelector('.subframe .photo-err');
-      const src = btn.dataset.src;
+      const n = cs.srcs.length;
+      const url = cs.srcs[cs.idx];
       err.hidden = true;
       img.hidden = false;
-      img.onload = function () { fitConfImage(sec); };
+      img.onload = function () {
+        if (!cs.ratio && img.naturalWidth) cs.ratio = img.naturalWidth / img.naturalHeight;   // пропорции берём у первой картинки
+        fitConfImage(sec);
+      };
       img.onerror = function () {
         img.hidden = true;
         err.hidden = false;
-        err.textContent = 'Image not found: ' + src;
+        err.textContent = 'Image not found: ' + url;
         fitConfImage(sec);
       };
+      img.src = url;
+      const count = sec.querySelector('.subcount');
+      if (count) count.textContent = (cs.idx + 1) + ' / ' + n;
+      if (n > 1) {   // подгружаем соседние картинки заранее
+        new Image().src = cs.srcs[(cs.idx + 1) % n];
+        new Image().src = cs.srcs[(cs.idx - 1 + n) % n];
+      }
+    }
+
+    function confStep(sec, d) {
+      const n = sec.cs.srcs.length;
+      sec.cs.idx = (sec.cs.idx + d + n) % n;   // по кругу
+      confShowImage(sec);
+    }
+
+    // иконка: одна картинка (data-src) или коллекция (data-srcs — список адресов в порядке показа)
+    function confSubSelect(sec, btn) {
+      const img = sec.querySelector('.subframe img');
+      const nav = sec.querySelector('.subnav');
+      const list = btn.dataset.srcs ? JSON.parse(btn.dataset.srcs).map(function (u) { return encodeURI(u); }) : [btn.dataset.src];
+      sec.cs = { srcs: list, idx: 0, ratio: null };
+      if (nav) nav.hidden = list.length < 2;
       img.removeAttribute('style');
-      img.src = src;
-      if (img.complete && img.naturalWidth) fitConfImage(sec);
+      confShowImage(sec);
+      if (img.complete && img.naturalWidth) img.onload();
     }
 
     function openConfSub(sec) {
@@ -3215,6 +3074,12 @@
       });
     });
 
+    document.querySelectorAll('.confsub .navbtn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        confStep(btn.closest('.confsub'), btn.classList.contains('prev') ? -1 : 1);
+      });
+    });
+
     function refitVisibleConfSub() {
       const sec = document.querySelector('.confsub:not([hidden])');
       if (!sec) return;
@@ -3222,33 +3087,28 @@
       fitConfImage(sec);
     }
     window.addEventListener('resize', refitVisibleConfSub);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(refitVisibleConfSub);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () {
+      refitVisibleConfSub();
+      if (!document.getElementById('math').hidden) syncMathPanelHeight();
+    });
 
     function showPage() {
       closeAllInstant();
       let current = location.hash.slice(1);
-      const isSet = Object.prototype.hasOwnProperty.call(sets, current);
-      if (!isSet && !pages.includes(current)) current = 'home';
+      if (!pages.includes(current)) current = 'home';
 
       pages.forEach(function (p) {
         document.getElementById(p).hidden = (p !== current);
       });
-      viewerSection.hidden = !isSet;
 
-      let label;
-      if (isSet) {
-        label = sets[current].title.toUpperCase();
-        const from = sets[current].from;
-        document.getElementById('backbtn').textContent = 'Back to ' + (pristine[from] ? pristine[from].title : 'MATH');
-        openSet(current);
-      } else {
-        token++;
-        const sec = document.getElementById(current);
-        label = (current === 'home') ? 'ALEXEY YU. MILLER'
-              : (sec && sec.dataset.title) ? sec.dataset.title.toUpperCase()
-              : current.replace(/-/g, ' ').toUpperCase();
-        if (current === 'math') refreshAll();
-      }
+      const sec = document.getElementById(current);
+      /* MATH помнит выбранный раздел, пока мы в MATH или на его подстраницах рисунков; с других страниц открывается Papers */
+      if (sec.dataset.mathtab) mathTab = sec.dataset.mathtab;
+      else if (current !== 'math') mathTab = 'papers';
+
+      const label = (current === 'home') ? 'ALEXEY YU. MILLER'
+                  : (sec.dataset.title) ? sec.dataset.title.toUpperCase()
+                  : current.replace(/-/g, ' ').toUpperCase();
       const nameEl = document.getElementById('pagename');
       nameEl.textContent = label;
       nameEl.classList.toggle('mid', label.length > 22 && label.length <= 40);
@@ -3256,25 +3116,10 @@
       document.title = label;
       window.scrollTo(0, 0);
 
+      if (current === 'math') { syncMathPanelHeight(); setMathTab(mathTab); }
       if (current === 'ldtss') startLatestVideo();
-
-      const curSec = document.getElementById(current);
-      if (curSec && curSec.classList.contains('confsub')) openConfSub(curSec);
-
-      if (current === 'math' && pendingFs) {
-        const id = pendingFs;
-        pendingFs = null;
-        openFs(id, true);
-      } else {
-        pendingFs = null;
-      }
+      if (sec.classList.contains('confsub')) openConfSub(sec);
     }
-
-    document.getElementById('backbtn').addEventListener('click', function () {
-      if (busy) return;
-      pendingFs = (sets[currentSet] && sets[currentSet].from) || null;
-      location.hash = '#math';
-    });
 
     window.addEventListener('hashchange', showPage);
     showPage();
