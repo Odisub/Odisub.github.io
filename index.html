@@ -1188,6 +1188,10 @@
 
     .subnav[hidden] { display: none; }
 
+    /* пока первая картинка не загрузилась, размер выемки неизвестен: прячем выемку и счётчик */
+    .subwork.loading .subframe,
+    .subwork.loading .subnav { visibility: hidden; }
+
     .navbtn {
       flex: none;
       width: 30px;
@@ -3249,6 +3253,7 @@
         frame.style.width = fw + 'px';
         frame.style.height = fh + 'px';
       }
+      area.classList.remove('loading');   // размер выемки известен — показываем её и счётчик
       if (hasNav) {
         if (abs) {
           const top = Math.max(0, Math.round((area.clientHeight - (fh + reserve)) / 2));
@@ -3302,6 +3307,7 @@
       const nav = sec.querySelector('.subnav');
       const list = btn.dataset.srcs ? JSON.parse(btn.dataset.srcs).map(function (u) { return encodeURI(u); }) : [btn.dataset.src];
       sec.cs = { srcs: list, idx: 0, ratio: null };
+      sec.querySelector('.subwork').classList.add('loading');
       if (nav) nav.hidden = list.length < 2;
       img.removeAttribute('style');
       confShowImage(sec);
