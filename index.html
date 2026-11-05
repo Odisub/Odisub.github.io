@@ -828,6 +828,46 @@
 
     .video16:not(.loading) .ytload { display: none; }
 
+    .video16 video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: #000000;
+      object-fit: contain;
+    }
+
+    .rlabel sup,
+    .ldtext sup { font-size: 0.75em; line-height: 0; }
+
+    /* правая колонка: окно ввода и кнопка Back вместе по высоте равны видеоплееру */
+    .ldright {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .ldright .ldtext {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+    }
+
+    /* кнопка Back в правом нижнем углу */
+    .talkfoot {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .talkback {
+      width: auto;
+      padding: 10px 28px;
+    }
+
+    .talkback:active { padding: 11px 27px 9px 29px; }
+
     .ytnote {
       margin-top: 12px;
       font-weight: 400;
@@ -855,6 +895,17 @@
       min-width: 0;
       min-height: 0;
       display: flex;
+    }
+
+    .embedframe {
+      flex: 1;
+      min-width: 0;
+      min-height: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: #ffffff;
     }
 
     .pdfwrap {
@@ -1353,7 +1404,7 @@
 
         <!-- Кнопки (позже станут ссылками на подстраницы) -->
         <div class="homebtns">
-          <a class="homebtn" href="#early-life">Early Life</a>
+          <a class="homebtn" href="#early-life">Background</a>
           <a class="homebtn" href="#research">Research</a>
           <a class="homebtn" href="#ldtss">LDTSS</a>
           <a class="homebtn" href="#conference-organization">Conference Organization</a>
@@ -1465,12 +1516,8 @@
                 <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
               </div>
               <div class="item">
-                <a class="rowlink" href="https://example.com" target="_blank"><span>Notes on One-Dimensional Dynamics</span><span>2022</span></a>
-                <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
-              </div>
-              <div class="item">
-                <a class="rowlink" href="https://example.com" target="_blank"><span>Notes on Complex Analysis</span><span>2018</span></a>
-                <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
+                <a class="rowlink" href="https://docs.yandex.ru/docs/view?url=ya-disk-public%3A%2F%2FAbFHx5mYue0qm2m7AC2mYfCBXnHVWcPdyS7hiQAeYX3nB3B%2BP2ihColUbgjzl206q%2FJ6bpmRyOJonT3VoXnDag%3D%3D&amp;name=%D0%9E%D0%B4%D0%BD%D0%BE%D0%BC%D0%B5%D1%80%D0%BD%D0%B0%D1%8F%20%D0%94%D0%B8%D0%BD%D0%B0%D0%BC%D0%B8%D0%BA%D0%B0.pdf&amp;nosw=1" data-embed="https://docs.yandex.ru/docs/view?url=ya-disk-public%3A%2F%2FAbFHx5mYue0qm2m7AC2mYfCBXnHVWcPdyS7hiQAeYX3nB3B%2BP2ihColUbgjzl206q%2FJ6bpmRyOJonT3VoXnDag%3D%3D&amp;name=%D0%9E%D0%B4%D0%BD%D0%BE%D0%BC%D0%B5%D1%80%D0%BD%D0%B0%D1%8F%20%D0%94%D0%B8%D0%BD%D0%B0%D0%BC%D0%B8%D0%BA%D0%B0.pdf&amp;nosw=1" target="_blank"><span>Notes on One-Dimensional Dynamics</span><span>2022</span></a>
+                <a class="pdf" href="https://disk.yandex.ru/i/I4mYCelk6B21_A" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
               </div>
             </div>
           </div>
@@ -1493,7 +1540,7 @@
             <div class="list cols3t">
               <div class="colhead"><span>Title</span><span>Event</span><span>Year</span><span>PDF</span></div>
               <div class="item">
-                <a class="rowlink" href="https://example.com" target="_blank"><span>The Gordian complex is an <span class="nobr">ℝ<sup>∞</sup>-manifold</span></span><span>Algebraic topology and group actions</span><span>2026</span></a>
+                <a class="rowlink" href="#gordian-talk"><span>The Gordian complex is an <span class="nobr">ℝ<sup>∞</sup>-manifold</span></span><span>Algebraic topology and group actions</span><span>2026</span></a>
                 <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
               </div>
             </div>
@@ -1531,7 +1578,7 @@
       </div>
     </section>
 
-    <section class="page top" id="early-life" hidden>
+    <section class="page top" id="early-life" data-title="Background" hidden>
       <div class="win subpanel emptypanel"></div>
     </section>
 
@@ -2286,12 +2333,44 @@
       </div>
     </section>
 
+    <!-- Подстраница доклада (по образцу LDTSS): слева видео, справа окно ввода, внизу справа Back -->
+    <section class="page top" id="gordian-talk" data-title="Math" data-mathtab="talks" hidden>
+      <div class="win subpanel">
+        <div class="rlabel">THE GORDIAN COMPLEX IS AN <span class="nobr">ℝ<sup>∞</sup>-MANIFOLD</span></div>
+        <div class="ldgrid">
+
+          <div class="ldleft">
+            <div class="photo-frame">
+              <div class="photo-inner">
+                <div class="video16">
+                  <video id="talkvideo" controls preload="metadata" playsinline src="https://www.mathnet.ru/PresentFiles/52281/52281_hd.mp4"></video>
+                </div>
+              </div>
+            </div>
+            <div class="ytnote" id="talknote" hidden>
+              The video could not be loaded.
+              <a class="plink" href="https://www.mathnet.ru/PresentFiles/52281/52281_hd.mp4" target="_blank" rel="noopener">Open it in a new tab</a>
+            </div>
+          </div>
+
+          <div class="ldright">
+          <div class="field ldtext">
+            <p>International conference “Algebraic topology and group actions”. <span class="nobr">October 19–23</span>, 2026, Steklov Mathematical Institute.</p>
+            <p>Using the Goussarov–Habiro clasper theory, we obtain a visual answer to the Hirasawa–Uchida question on the Gordian complex of knots and prove that its geometric realization is an <span class="nobr">ℝ<sup>∞</sup>-manifold</span>.</p>
+          </div>
+          <div class="talkfoot"><a class="homebtn talkback" href="#math">Back</a></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <section class="page" id="art" hidden></section>
   </main>
 
   <script>
     const pages = ['home', 'math', 'art', 'early-life', 'research', 'conference-organization', 'ldtss', 'photo-gallery', 'illustrations',
-                   'conf-algeom', 'conf-is', 'conf-pdmi-85', 'conf-kmc', 'conf-ldt', 'conf-lec', 'grope', 'complement', 'alexander', 'arms', 'braids-eversion', 'crossing-change', 'reidemeister', 'tomsk'];
+                   'conf-algeom', 'conf-is', 'conf-pdmi-85', 'conf-kmc', 'conf-ldt', 'conf-lec', 'grope', 'complement', 'alexander', 'arms', 'braids-eversion', 'crossing-change', 'reidemeister', 'tomsk', 'gordian-talk'];
 
     const SB_UP = '<svg viewBox="0 0 7 4" aria-hidden="true"><polygon points="3.5,0 7,4 0,4" fill="#000"/></svg>';
     const SB_DOWN = '<svg viewBox="0 0 7 4" aria-hidden="true"><polygon points="0,0 7,0 3.5,4" fill="#000"/></svg>';
@@ -2721,6 +2800,11 @@
       });
     }
 
+    /* видео доклада: если не загрузилось — показываем ссылку */
+    document.getElementById('talkvideo').addEventListener('error', function () {
+      document.getElementById('talknote').hidden = false;
+    });
+
     function startLatestVideo() {
       if (ytStarted) return;
       ytStarted = true;
@@ -3071,9 +3155,20 @@
       };
     }
 
+    /* Встроенная страница (например, просмотрщик Яндекс.Документов) в той же выемке */
+    function buildEmbedView(url) {
+      fsCenter.innerHTML =
+        '<div class="photo-frame pdfframe"><div class="photo-inner">' +
+          '<iframe class="embedframe" title="Document" allowfullscreen></iframe>' +
+        '</div></div>';
+      fsCenter.querySelector('iframe').src = url;
+      return { destroy: function () {}, key: function () {} };
+    }
+
     /* Открыть статью. Если окно Papers уже развёрнуто, просмотрщик заменяет середину этого окна;
        если нажали на строку в маленьком окне на MATH, открывается полноэкранное окно (без анимации). */
-    function openPdf(url, title) {
+    function openPdf(url, title, id, embed) {
+      id = id || 'papers';
       const fromList = !fs.hidden;
       if (!fromList) {
         fsOrigin = 'direct';
@@ -3082,11 +3177,11 @@
       }
       destroyPdf();
       pdfState = { from: fromList ? 'list' : 'direct' };
-      fsCurrent = 'papers';
-      fsMarkNav('papers');
+      fsCurrent = id;
+      fsMarkNav(id);
       fs.classList.add('viewing');
-      fs.querySelector('.tb-title').textContent = 'Papers \u2014 ' + title;
-      pdfCtl = buildPdfView(new URL(url, document.baseURI).href);
+      fs.querySelector('.tb-title').textContent = (pristine[id] ? pristine[id].title : 'Papers') + ' \u2014 ' + title;
+      pdfCtl = embed ? buildEmbedView(url) : buildPdfView(new URL(url, document.baseURI).href);
     }
 
     /* Закрыть просмотрщик: назад к списку (если открывали из него) или совсем (если открывали сразу из маленького окна) */
@@ -3112,11 +3207,14 @@
     }
 
     document.addEventListener('click', function (e) {
-      const a = e.target.closest('a.rowlink[data-pdf]');
+      const a = e.target.closest('a.rowlink[data-pdf], a.rowlink[data-embed]');
       if (!a || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
       e.preventDefault();
+      const win = a.closest('.mwin');
+      const id = win ? win.dataset.id : (fsCurrent || 'papers');
       const cells = a.querySelectorAll(':scope > span');
-      openPdf(a.dataset.pdf, cells[1] ? cells[1].textContent : 'PDF');
+      const cell = cells[id === 'papers' ? 1 : 0];   // в Papers название — во второй колонке, в остальных — в первой
+      openPdf(a.dataset.embed || a.dataset.pdf, cell ? cell.textContent : 'PDF', id, !!a.dataset.embed);
     });
 
 
@@ -3390,6 +3488,7 @@
       });
 
       const sec = document.getElementById(current);
+      document.querySelectorAll('video').forEach(function (v) { if (v.closest('.page').hidden) v.pause(); });   // уходим со страницы — видео останавливаем
       /* MATH помнит выбранный раздел, пока мы в MATH или на его подстраницах рисунков; с других страниц открывается Papers */
       if (sec.dataset.mathtab) mathTab = sec.dataset.mathtab;
       else if (current !== 'math') mathTab = 'papers';
