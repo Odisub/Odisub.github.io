@@ -897,17 +897,6 @@
       display: flex;
     }
 
-    .embedframe {
-      flex: 1;
-      min-width: 0;
-      min-height: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-      display: block;
-      background: #ffffff;
-    }
-
     .pdfwrap {
       position: relative;
       flex: 1;
@@ -1516,7 +1505,7 @@
                 <a class="pdf" href="https://example.com" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
               </div>
               <div class="item">
-                <a class="rowlink" href="https://docs.yandex.ru/docs/view?url=ya-disk-public%3A%2F%2FAbFHx5mYue0qm2m7AC2mYfCBXnHVWcPdyS7hiQAeYX3nB3B%2BP2ihColUbgjzl206q%2FJ6bpmRyOJonT3VoXnDag%3D%3D&amp;name=%D0%9E%D0%B4%D0%BD%D0%BE%D0%BC%D0%B5%D1%80%D0%BD%D0%B0%D1%8F%20%D0%94%D0%B8%D0%BD%D0%B0%D0%BC%D0%B8%D0%BA%D0%B0.pdf&amp;nosw=1" data-embed="https://docs.yandex.ru/docs/view?url=ya-disk-public%3A%2F%2FAbFHx5mYue0qm2m7AC2mYfCBXnHVWcPdyS7hiQAeYX3nB3B%2BP2ihColUbgjzl206q%2FJ6bpmRyOJonT3VoXnDag%3D%3D&amp;name=%D0%9E%D0%B4%D0%BD%D0%BE%D0%BC%D0%B5%D1%80%D0%BD%D0%B0%D1%8F%20%D0%94%D0%B8%D0%BD%D0%B0%D0%BC%D0%B8%D0%BA%D0%B0.pdf&amp;nosw=1" target="_blank"><span>Notes on One-Dimensional Dynamics</span><span>2022</span></a>
+                <a class="rowlink" href="https://disk.yandex.ru/i/I4mYCelk6B21_A" target="_blank"><span>Notes on One-Dimensional Dynamics</span><span>2022</span></a>
                 <a class="pdf" href="https://disk.yandex.ru/i/I4mYCelk6B21_A" target="_blank" title="PDF" aria-label="PDF"><svg viewBox="0 0 16 18" aria-hidden="true"><polygon points="1.5,1.5 10.5,1.5 14.5,5.5 14.5,16.5 1.5,16.5" fill="#fff" stroke="#000" stroke-width="1"/><polygon points="10.5,1.5 10.5,5.5 14.5,5.5" fill="#c0c0c0" stroke="#000" stroke-width="1"/><rect x="2.5" y="9" width="11" height="5" fill="#c4161c"/><text x="8" y="13" font-family="Arial, sans-serif" font-size="4.4" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg></a>
               </div>
             </div>
@@ -3155,19 +3144,9 @@
       };
     }
 
-    /* Встроенная страница (например, просмотрщик Яндекс.Документов) в той же выемке */
-    function buildEmbedView(url) {
-      fsCenter.innerHTML =
-        '<div class="photo-frame pdfframe"><div class="photo-inner">' +
-          '<iframe class="embedframe" title="Document" allowfullscreen></iframe>' +
-        '</div></div>';
-      fsCenter.querySelector('iframe').src = url;
-      return { destroy: function () {}, key: function () {} };
-    }
-
     /* Открыть статью. Если окно Papers уже развёрнуто, просмотрщик заменяет середину этого окна;
        если нажали на строку в маленьком окне на MATH, открывается полноэкранное окно (без анимации). */
-    function openPdf(url, title, id, embed) {
+    function openPdf(url, title, id) {
       id = id || 'papers';
       const fromList = !fs.hidden;
       if (!fromList) {
@@ -3181,7 +3160,7 @@
       fsMarkNav(id);
       fs.classList.add('viewing');
       fs.querySelector('.tb-title').textContent = (pristine[id] ? pristine[id].title : 'Papers') + ' \u2014 ' + title;
-      pdfCtl = embed ? buildEmbedView(url) : buildPdfView(new URL(url, document.baseURI).href);
+      pdfCtl = buildPdfView(new URL(url, document.baseURI).href);
     }
 
     /* Закрыть просмотрщик: назад к списку (если открывали из него) или совсем (если открывали сразу из маленького окна) */
@@ -3207,14 +3186,14 @@
     }
 
     document.addEventListener('click', function (e) {
-      const a = e.target.closest('a.rowlink[data-pdf], a.rowlink[data-embed]');
+      const a = e.target.closest('a.rowlink[data-pdf]');
       if (!a || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
       e.preventDefault();
       const win = a.closest('.mwin');
       const id = win ? win.dataset.id : (fsCurrent || 'papers');
       const cells = a.querySelectorAll(':scope > span');
       const cell = cells[id === 'papers' ? 1 : 0];   // в Papers название — во второй колонке, в остальных — в первой
-      openPdf(a.dataset.embed || a.dataset.pdf, cell ? cell.textContent : 'PDF', id, !!a.dataset.embed);
+      openPdf(a.dataset.pdf, cell ? cell.textContent : 'PDF', id);
     });
 
 
