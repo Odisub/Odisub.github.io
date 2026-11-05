@@ -252,7 +252,40 @@
       outline: none;
     }
 
+    /* Серые кнопки со стрелками в стиле Windows 98 (листание описаний на странице Research) */
+    .vbtn {
+      flex: none;
+      width: 52px;
+      height: 52px;
+      border: 0;
+      border-radius: 0;
+      background: #c0c0c0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow:
+        inset -1px -1px #0a0a0a,
+        inset 1px 1px #ffffff,
+        inset -2px -2px #808080,
+        inset 2px 2px #dfdfdf;
+    }
+
+    .vbtn:hover { background: #cfcfcf; }
+
+    .vbtn:active {
+      box-shadow:
+        inset 1px 1px #0a0a0a,
+        inset -1px -1px #ffffff,
+        inset 2px 2px #808080,
+        inset -2px -2px #dfdfdf;
+      padding: 2px 0 0 2px;
+    }
+
+    .vbtn svg { width: 14px; height: 18px; }
+
     @media (max-width: 800px) {
+      .vbtn { width: 38px; height: 38px; }
       header { flex-wrap: wrap; }
       #pagename { font-size: 1.5rem; }
     }
@@ -1945,8 +1978,8 @@
             <div class="field subtext">Constructing a grope in a knot complement.</div>
 
             <div class="subicons">
-              <button class="conficon subicon" type="button" data-srcs='["images/grope/toriQ vert 11.png", "images/grope/toriQ vert 10.png", "images/grope/toriQ vert 9.png", "images/grope/toriQ vert 8.png", "images/grope/toriQ vert 7.png", "images/grope/toriQ vert 6.png", "images/grope/toriQ vert 5.png", "images/grope/toriQ vert 4.png", "images/grope/toriQ vert 3.png", "images/grope/toriQ vert 2.png", "images/grope/toriQ vert 1.png", "images/grope/toriQ vert 0.png"]'>
-                <div class="photo-frame"><div class="photo-inner"><div class="confimg"><img src="images/grope/toriQ vert 0.png" alt="" onerror="this.style.visibility='hidden'"></div></div></div>
+              <button class="conficon subicon" type="button" data-srcs='["images/grope/toriQ vert 11.jpg", "images/grope/toriQ vert 10.jpg", "images/grope/toriQ vert 9.jpg", "images/grope/toriQ vert 8.jpg", "images/grope/toriQ vert 7.jpg", "images/grope/toriQ vert 6.jpg", "images/grope/toriQ vert 5.jpg", "images/grope/toriQ vert 4.jpg", "images/grope/toriQ vert 3.jpg", "images/grope/toriQ vert 2.jpg", "images/grope/toriQ vert 1.jpg", "images/grope/toriQ vert 0.jpg"]'>
+                <div class="photo-frame"><div class="photo-inner"><div class="confimg"><img src="images/grope/toriQ vert 0.jpg" alt="" onerror="this.style.visibility='hidden'"></div></div></div>
                 <div class="confcap">Gropes</div>
               </button>
             </div>
